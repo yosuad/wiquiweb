@@ -1178,21 +1178,121 @@ body {
   position: relative;
   display: inline-block;
 
-  padding: 0 10rem;
+  padding: 0 4rem;
   z-index: 3;
   text-align: center;
   color: var(--color--white);
 }
 
-.banner__title {
-  font-size: 4.4rem;
+.design__title,
+.design__text {
+  text-align: justify;
+  width: 45%;
+  font-size: 3rem;
   font-weight: 500;
   line-height: 1.2;
   color: var(--color--white);
+}
+
+.design__text {
+  text-align: start;
+}
+
+.design__section {
+  margin: 90px 40px;
+}
+
+.design__container {
+  display: flex;
+  gap: 10rem;
+  margin-right: auto;
+  margin-left: auto;
+  position: relative;
+  width: 70%;
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.design__item--shape1 {
+  width: 62%;
+  top: 0;
+  right: 0;
+  text-align: right;
+}
+.design__text1,
+.design__text2 {
+  width: 80%;
+  padding: 5rem 9rem;
+  width: 52%;
+}
+.design__container-img {
+  width: 20%;
+}
+
+.layout__design-servis {
+  position: relative;
+  z-index: 1;
+  padding-top: 5rem;
+  padding-bottom: 11rem;
+
+  font-family: var(--font);
+}
+
+.design-servis__grid {
+  max-width: 80%;
+  margin: 0 auto;
+}
+
+.design-servis__header {
+  text-align: left;
+  margin-bottom: 6rem;
+}
+
+.design-servis__container {
+  display: flex;
+}
+
+.design-servis__review {
+  width: 30%;
+  background-color: var(--color--white);
+  border-radius: 2rem;
+  box-shadow: 0 0 2rem rgba(0, 0, 0, 0.2);
+  padding: 3em 1rem;
+  min-width: 35rem;
+  height: 38rem;
+  min-height: 35rem;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin: 0 3rem;
+  transition: all 300ms ease-in-out;
+}
+
+.design-servis__review:hover {
+  background: linear-gradient(
+    var(--color-amarillo) 0%,
+    var(--color--white) 50%,
+    var(--color--white) 90%,
+    var(--color--white) 100%
+  );
+  transition: all 0.3s ease 0s;
+}
+
+.design-servis__icon {
+  font-size: 3rem;
   margin-bottom: 3rem;
 }
 
+.design-servis__content {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin: 0 60px;
+}
+
 /* FIN STYLE DISEÑO WEB */
+
 /* BORRAR AL FINAL */
 
 button.review__btn {
