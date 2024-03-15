@@ -4,14 +4,23 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- FAVICON -->
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="/assets/img/favicon.png"
+    />
     <!--  CARGAR FUENTES -->
     <link
       rel="stylesheet"
       href="assets/fonts/fontawesome-6.5.1/css/all.min.css"
     />
-    <link rel="stylesheet" href="assets/fonts/dmsans/dmsans.css" />
-    <link rel="stylesheet" href="assets/css/reset.css" />
-    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/fonts/dmsans/dmsans.css" />
+    <link rel="stylesheet" href="/assets/css/reset.css" />
+    <link rel="stylesheet" href="/assets/css/menu_footer_style.css" />
+
+    <link rel="stylesheet" href="/assets/css/design.css" />
 
     <title>wiquiweb</title>
   </head>
@@ -361,7 +370,11 @@
                   correo electrónico a continuación:
                 </p>
 
-                <form class="fleft__form" action="">
+                <form
+                  class="fleft__form"
+                  action="https://formsubmit.co/e3789f3428c4ac19d42589973fbb530a"
+                  method="POST"
+                >
                   <div class="fleft__group">
                     <span class="fleft__mail-icon">
                       <i class="fa-solid fa-envelope-open-text fleft__img"></i>
@@ -370,10 +383,18 @@
                     <input
                       class="fleft__form-control"
                       placeholder="Correo Electronico"
-                      type="text"
+                      type="email"
+                      name="Email"
                     />
                     <button class="fleft__btn" type="submit">Suscribete</button>
                   </div>
+                  <!-- INPEDIR QUE SE REDIRECCIONE Y SALGA EL CACHA -->
+                  <input
+                    type="hidden"
+                    name="_next"
+                    value="https://wiquiweb.com/"
+                  />
+                  <input type="hidden" name="_captcha" value="false" />
                 </form>
               </div>
             </div>

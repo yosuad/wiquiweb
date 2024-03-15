@@ -1,0 +1,111 @@
+body {
+  background: #f5f5f5;
+}
+
+/* INICIO STILOS SOMOS */
+.content__somos {
+  max-width: 1200px;
+
+  padding: 40px;
+  margin: auto;
+}
+
+.somos__section {
+  display: flex;
+  justify-content: center;
+  margin-top: 10rem;
+  margin-bottom: 7rem;
+}
+
+.somos__content {
+  width: 50%;
+}
+
+.somos__content h1 {
+  font-size: 50px;
+}
+
+.somos__content p {
+  font-size: 18px;
+  margin-top: 40px;
+}
+
+.somos__content--img {
+  width: 50%;
+  padding-right: 5rem;
+}
+
+.somos__content--img video {
+  width: 100%;
+  margin-top: -40px;
+}
+
+/*BANNER*/
+
+.container__banner {
+  margin-top: 20rem;
+  margin-bottom: 20rem;
+}
+
+.banner {
+  height: 250px;
+  display: flex;
+  align-items: center;
+  background: #121214;
+  position: relative;
+}
+
+.banner__icon-heart {
+  width: 35%;
+  height: 100%;
+  padding-left: 20rem;
+}
+
+#icon_heart {
+  width: 400px;
+  margin-top: -20px;
+  position: relative;
+  filter: drop-shadow(-40px 0px 30px rgba(0, 0, 0, 0.5));
+}
+
+.banner__text {
+  width: 60%;
+  position: relative;
+  padding: 40px;
+  padding-right: 20rem;
+}
+
+.banner__text h2 {
+  color: #fff;
+  font-size: 32px;
+  font-weight: 400;
+}
+
+.banner__text a {
+  text-decoration: none;
+  display: block;
+  margin-top: 20px;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  transition: color 300ms;
+}
+
+.banner__text a:hover {
+  color: #69f1a1;
+}
+
+.banner__icon-fire {
+  height: 100%;
+  position: absolute;
+  right: 10px;
+  overflow: hidden;
+}
+
+#icon_fire {
+  width: 300px;
+  position: relative;
+  margin-top: -100px;
+  opacity: 0.6;
+}
+/* FIN STILOS SOMOS */
