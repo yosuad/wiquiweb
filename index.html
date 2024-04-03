@@ -2,6 +2,12 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
+    <!-- Información SEO -->
+    <meta
+      name="description"
+      content="Ofrecemos servicios de desarrollo web, actualizaciones y diseño para ayudar a tu negocio a destacar en línea. Descubre cómo podemos impulsar tu presencia en la web hoy mismo."
+    />
+    <meta name="author" content="wiquiweb" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- FAVICON -->
@@ -10,6 +16,7 @@
       type="image/x-icon"
       href="/assets/img/favicon.png"
     />
+    <!-- fin FAVICON -->
     <!--  CARGAR FUENTES -->
     <link
       rel="stylesheet"
@@ -19,7 +26,23 @@
     <link rel="stylesheet" href="assets/css/reset.css" />
     <link rel="stylesheet" href="assets/css/menu_footer_style.css" />
     <link rel="stylesheet" href="assets/css/inicio_style.css" />
+    <!-- FIN  CARGAR FUENTES -->
+    <!-- INICIO GOOGLE ANALYTICS -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-P3VQQCCJC6"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
 
+      gtag("config", "G-P3VQQCCJC6");
+    </script>
+
+    <!-- FIN GOOGLE ANALYTICS -->
     <title>wiquiweb</title>
   </head>
   <body>
@@ -37,85 +60,8 @@
             </a>
           </div>
           <!-- MENÚ DE NAVEGACIÓN -->
-          <nav class="navbar__nav">
-            <ul class="nav__list">
-              <li class="nav__item">
-                <a href="index.html" class="nav__title">Inicio</a>
-              </li>
 
-              <li class="nav__item">
-                <a href="somos.html" class="nav__title">Somos</a>
-              </li>
-
-              <li class="nav__item">
-                <a href="#" class="nav__title"
-                  >Servicios
-                  <i class="fa-solid fa-chevron-down nav__icon"></i>
-                </a>
-                <ul class="nav__submenu">
-                  <li class="submenu__item">
-                    <a href="design.html" class="submenu__title">Diseño web</a>
-                  </li>
-
-                  <li class="submenu__item">
-                    <a href="update.html" class="submenu__title"
-                      >Actualizaciones</a
-                    >
-                  </li>
-
-                  <li class="submenu__item">
-                    <a href="#" class="submenu__title">correos corporativos</a>
-                  </li>
-
-                  <li class="submenu__item">
-                    <a href="#" class="submenu__title">Creación Contenido</a>
-                  </li>
-
-                  <li class="submenu__item">
-                    <a href="#" class="submenu__title">Campañas</a>
-                  </li>
-
-                  <li class="submenu__item">
-                    <a href="#" class="submenu__title">Capacitaciones</a>
-                  </li>
-                </ul>
-              </li>
-
-              <li class="nav__item">
-                <a href="#" class="nav__title"
-                  >Diseño
-                  <i class="fa-solid fa-chevron-down nav__icon"></i>
-                </a>
-                <ul class="nav__submenu1">
-                  <li class="submenu__item">
-                    <a href="#" class="submenu__title">Logo</a>
-                  </li>
-
-                  <li class="submenu__item">
-                    <a href="#" class="submenu__title">Portafolio</a>
-                  </li>
-
-                  <li class="submenu__item">
-                    <a href="#" class="submenu__title">Volantes </a>
-                  </li>
-
-                  <li class="submenu__item">
-                    <a href="#" class="submenu__title"
-                      >tarjetas de presentación</a
-                    >
-                  </li>
-                </ul>
-              </li>
-
-              <li class="nav__item">
-                <a href="#" class="nav__title">Blog</a>
-              </li>
-
-              <li class="nav__item">
-                <a href="#" class="nav__title">Contacto</a>
-              </li>
-            </ul>
-          </nav>
+          <!-- FIN MENÚ DE NAVEGACIÓN -->
         </header>
       </section>
       <!-- FIN MENÚ DE NAVEGACIÓN -->
@@ -389,7 +335,7 @@
               <div class="review__user">
                 <img
                   class="review__img"
-                  src="/assets/img/users/user1.jpg"
+                  src="assets/img/users/user1.jpg"
                   alt="card image"
                 />
               </div>
@@ -410,7 +356,7 @@
               <div class="review__user">
                 <img
                   class="review__img"
-                  src="/assets/img/users/user2.jpg"
+                  src="assets/img/users/user2.jpg"
                   alt="card image"
                 />
               </div>
@@ -431,7 +377,7 @@
               <div class="review__user">
                 <img
                   class="review__img"
-                  src="/assets/img/users/user3.jpg"
+                  src="assets/img/users/user3.jpg"
                   alt="card image"
                 />
               </div>
@@ -452,7 +398,7 @@
               <div class="review__user">
                 <img
                   class="review__img"
-                  src="/assets/img/users/user4.jpg"
+                  src="assets/img/users/user4.jpg"
                   alt="card image"
                 />
               </div>
@@ -487,6 +433,7 @@
       <!-- FOOTER -->
       <footer class="layout__footer">
         <div class="footer__container">
+          <!--
           <section class="footer__top">
             <ul class="footer__social">
               <li class="social__item">
@@ -520,7 +467,7 @@
               </li>
             </ul>
           </section>
-
+-->
           <section class="footer__main">
             <div class="footer__fleft">
               <div class="fleft__container">

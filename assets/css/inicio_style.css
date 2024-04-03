@@ -620,12 +620,12 @@
   text-align: center;
   font-size: 35px;
   box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.3);
-  z-index: 100;
+  z-index: 998;
   transition: all 300ms ease;
 }
 .btn__wsp:hover {
   background: var(--color--white);
-  z-index: -1;
+  z-index: 997;
 }
 
 .btn__wsp:hover .wps__icono {

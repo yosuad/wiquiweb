@@ -4,32 +4,27 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
     <!-- FAVICON -->
     <link
       rel="shortcut icon"
       type="image/x-icon"
       href="/assets/img/favicon.png"
     />
-
+    <!--  CARGAR FUENTES -->
     <link
       rel="stylesheet"
       href="assets/fonts/fontawesome-6.5.1/css/all.min.css"
     />
-    <link rel="stylesheet" href="/assets/fonts/dmsans/dmsans.css" />
-    <link rel="stylesheet" href="/assets/css/reset.css" />
-    <link rel="stylesheet" href="/assets/css/menu_footer_style.css" />
-
-    <link rel="stylesheet" href="/assets/css/design.css" />
-
-    <link rel="stylesheet" href="/assets/css/responsive.css" />
+    <link rel="stylesheet" href="assets/fonts/dmsans/dmsans.css" />
+    <link rel="stylesheet" href="assets/css/reset.css" />
+    <link rel="stylesheet" href="assets/css/menu_footer_style.css" />
+    <link rel="stylesheet" href="assets/css/inicio_style.css" />
 
     <title>wiquiweb</title>
   </head>
-
-  <!--
-  <body>    
+  <body>
     <div class="layout">
+      <!-- MENÚ DE NAVEGACIÓN LOGO-->
       <section class="layout__menu">
         <header class="menu__navbar">
           <div class="navbar__logo">
@@ -41,7 +36,7 @@
               />
             </a>
           </div>
-
+          <!-- MENÚ DE NAVEGACIÓN -->
           <nav class="navbar__nav">
             <ul class="nav__list">
               <li class="nav__item">
@@ -123,25 +118,25 @@
           </nav>
         </header>
       </section>
-
-      <section class="layout__design">
-        <header class="design__content">
-          <h1 class="design__title">En wiquiweb</h1>
-          <p class="design__text">
-            estamos dedicados a proporcionar soluciones de diseño web que van
-            más allá de lo convencional. Nos enorgullece fusionar la creatividad
-            con la funcionalidad para crear experiencias en línea impactantes y
-            efectivas.
-          </p>
+      <!-- FIN MENÚ DE NAVEGACIÓN -->
+      <!-- BANNER -->
+      <section class="layout__banner">
+        <!-- CONTENIDO DEL BANNER -->
+        <header class="banner__content">
+          <h1 class="banner__title">
+            Diseño <br />
+            Desarrollo web
+          </h1>
+          <a href="#" class="banner__btn">Ver Trabajos</a>
         </header>
-
-        <div class="shapes__design">
-          <ul class="design__list">
-            <li class="shapes__item design__item--shape1">
+        <!-- FORMAS E IMAGENES DEL BANNER -->
+        <div class="banner__shapes">
+          <ul class="shapes__list">
+            <li class="shapes__item shapes__item--shape1">
               <div class="shapes__container">
                 <img
                   class="shapes__img"
-                  src="./assets/img/Diseño web.png"
+                  src="./assets/img/shapes/banner-shape1.png"
                   alt=""
                 />
               </div>
@@ -209,97 +204,268 @@
           </ul>
         </div>
       </section>
-
-      <section class="design__section">
-        <div class="design__container">
-          <div class="design__text1">
-            <p>
-              En cada proyecto, adoptamos un enfoque centrado en el cliente.
-              Comprendemos que cada negocio es único, y por lo tanto, cada sitio
-              web debe ser una expresión auténtica de su identidad. Nos
-              sumergimos en el corazón de tu marca para crear soluciones que no
-              solo sean visualmente atractivas, sino también funcionalmente
-              sólidas.
-            </p>
-          </div>
-
-          <div class="design__container-img">
-            <img src="/assets/img/Diseño web1.png" alt="" />
-          </div>
-        </div>
-      </section>
-
-      <section class="design__section">
-        <div class="design__container">
-          <div class="design__container-img">
-            <img src="/assets/img/Diseño web1.png" alt="" />
-          </div>
-
-          <div class="design__text2">
-            <p>
-              Somos un equipo apasionado de diseñadores web y desarrolladores
-              comprometidos con la excelencia. Nuestra misión es llevar tu
-              visión a la vida digital, asegurando que tu presencia en línea
-              refleje la esencia única de tu marca.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section class="layout__design-servis">
-        <div class="design-servis__grid">
-          <header class="design-servis__header">
-            <h4 class="reviews__subtitle">Destacados</h4>
-            <h2 class="reviews__title">Servicios Destacados</h2>
+      <!-- FIN BANNER -->
+      <!-- SERVICIOS -->
+      <section class="layout__services">
+        <div class="services__grid">
+          <header class="services__header">
+            <p class="services__subtitle">¿Qué Podemos hacer por ti?</p>
+            <h2 class="services__title">
+              Servicios que te <br />
+              Pueden ayudar
+            </h2>
           </header>
 
-          <div class="design-servis__container">
-            <article class="design-servis__review">
-              <div class="design-servis__icon">
-                <i class="fa-solid fa-house"></i>
+          <div class="services__list">
+            <article class="services__service services__service--bottom">
+              <div class="service__container-img">
+                <img
+                  class="service__img"
+                  sizes=""
+                  src="./assets/img/icon/icon-1.png"
+                  alt="Diseño"
+                />
               </div>
 
-              <div class="design-servis__content">
-                <span class="review__title">Diseño Web Responsivo</span>
+              <div class="service__content">
+                <h3 class="service__title">
+                  <a href="design.html" class="service__link">Diseño Web</a>
+                </h3>
 
-                <p class="review__text">
-                  Creamos sitios web que se adaptan a diferentes dispositivos,
-                  asegurando una experiencia fluida para todos tus visitantes,
-                  ya sea desde una computadora de escritorio, una tableta o un
-                  teléfono móvil.
+                <p class="service__description">
+                  Diseño y actualización de páginas web.
                 </p>
+
+                <a class="service__more" href="#">Leer más</a>
               </div>
             </article>
 
-            <article class="design-servis__review">
-              <div class="design-servis__icon">
-                <i class="fa-solid fa-house"></i>
+            <article class="services__service services__service--middle">
+              <div class="service__container-img">
+                <img
+                  class="service__img"
+                  sizes=""
+                  src="./assets/img/icon/icon-2.png"
+                  alt="Diseño"
+                />
               </div>
 
-              <div class="design-servis__content">
-                <span class="review__title">Desarrollo a Medida</span>
+              <div class="service__content">
+                <h3 class="service__title">
+                  <a href="#" class="service__link">Diseño</a>
+                </h3>
 
-                <p class="review__text">
-                  Desde pequeñas empresas hasta empresas corporativas, ofrecemos
-                  soluciones de desarrollo web personalizadas que satisfacen las
-                  necesidades específicas de cada cliente.
+                <p class="service__description">
+                  Diseño gráfico e identidad corporativa para potenciar tu
+                  marca.
                 </p>
+
+                <a class="service__more" href="#">Leer más</a>
               </div>
             </article>
 
-            <article class="design-servis__review">
-              <div class="design-servis__icon">
-                <i class="fa-solid fa-house"></i>
+            <article class="services__service services__service--top">
+              <div class="service__container-img">
+                <img
+                  class="service__img"
+                  sizes=""
+                  src="./assets/img/icon/icon-3.png"
+                  alt="Marketing"
+                />
               </div>
 
-              <div class="design-servis__content">
-                <span class="review__title">Motores de Búsqueda</span>
+              <div class="service__content">
+                <h3 class="service__title">
+                  <a href="#" class="service__link">Gestion empresarial</a>
+                </h3>
 
-                <p class="review__text">
-                  Ayudamos a mejorar tu visibilidad en línea mediante
-                  estrategias de SEO que colocan tu sitio web en las primeras
-                  posiciones de los motores de búsqueda.
+                <p class="service__description">
+                  administración de servicios de hosting y configuración de
+                  correos corporativos.
                 </p>
+
+                <a class="service__more" href="#">Leer más</a>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <ul class="services__service-shapes">
+          <li class="service-shapes__item service-shapes--shape1">
+            <div class="service-shapes__container">
+              <img
+                class="service-shapes__img"
+                src="./assets/img/shapes/circle-1.png"
+                alt=""
+              />
+            </div>
+          </li>
+
+          <li class="service-shapes__item service-shapes--shape2">
+            <div class="service-shapes__container">
+              <img
+                class="service-shapes__img"
+                src="./assets/img/bubble-2.png"
+                alt=""
+              />
+            </div>
+          </li>
+
+          <li class="service-shapes__item service-shapes--shape3">
+            <div class="service-shapes__container">
+              <img
+                class="service-shapes__img"
+                src="./assets/img/bubble-1.png"
+                alt=""
+              />
+            </div>
+          </li>
+        </ul>
+      </section>
+      <!-- FIN SERVICIOS -->
+
+      <!-- ESSTADISTICAS -->
+      <section class="layout__stats">
+        <div class="stats__containter">
+          <header class="stats__header">
+            <h4 class="stats__subtitle">Agencia de Diseño y Desarrollo</h4>
+            <h2 class="stats__title">Estadísticas de trabajos Realizados</h2>
+            <p class="stats__description">
+              Aquí puedes encontrar un resumen de nuestras estadísticas durante
+              estos años de trabajo.
+            </p>
+          </header>
+
+          <div class="stats__progress">
+            <article class="stats__stat">
+              <div class="stat__icon">
+                <img src="./assets/img/icon/icon-stadisticas1.png" alt="" />
+              </div>
+              <span class="stat__count">+10</span>
+              <h6 class="stat__title">Período de Actividad</h6>
+            </article>
+
+            <article class="stats__stat">
+              <div class="stat__icon">
+                <img src="./assets/img/icon/icon-stadisticas2.png" alt="" />
+              </div>
+              <span class="stat__count">+45</span>
+              <h6 class="stat__title">Proyectos realizados</h6>
+            </article>
+
+            <article class="stats__stat">
+              <div class="stat__icon">
+                <img src="./assets/img/icon/icon-stadisticas3.png" alt="" />
+              </div>
+              <span class="stat__count">+20</span>
+              <h6 class="stat__title">Trabajo colaborativo</h6>
+            </article>
+
+            <article class="stats__stat">
+              <div class="stat__icon">
+                <img src="./assets/img/icon/icon-stadisticas4.png" alt="" />
+              </div>
+              <span class="stat__count">+500</span>
+              <h6 class="stat__title">Clientes Contentos</h6>
+            </article>
+          </div>
+        </div>
+      </section>
+      <!-- FIN ESTADISTICAS -->
+
+      <!-- TEXTIMONIOS CLIENTES -->
+      <section class="layoout__reviews">
+        <div class="reviews__grid">
+          <header class="reviews__header">
+            <h4 class="reviews__subtitle">Reseñas</h4>
+            <h2 class="reviews__title">Que dicen nuestros Clientes?</h2>
+            <p class="reviews__description">
+              Nuestros clientes siempre salen satisfechos con sus webs y apps.
+            </p>
+          </header>
+
+          <div class="reviews__container">
+            <article class="reviews__review">
+              <div class="review__user">
+                <img
+                  class="review__img"
+                  src="assets/img/users/user1.jpg"
+                  alt="card image"
+                />
+              </div>
+
+              <div class="review__content">
+                <span class="review__title">Periódico el Taller</span>
+                <span class="review__name">Jorge Mario Escobar</span>
+                <p class="review__text">
+                  Destacamos en la red gracias a su eficaz capacitación y
+                  asesoría constante, permitiéndonos gestionar la página de
+                  forma autónoma.
+                </p>
+                <button class="review__btn">Ver más</button>
+              </div>
+            </article>
+
+            <article class="reviews__review">
+              <div class="review__user">
+                <img
+                  class="review__img"
+                  src="assets/img/users/user2.jpg"
+                  alt="card image"
+                />
+              </div>
+
+              <div class="review__content">
+                <span class="review__title">Mesa de Medios</span>
+                <span class="review__name">Alejandra Osorio</span>
+                <p class="review__text">
+                  La empresa Wiquiweb ha llevado a cabo diversos proyectos de
+                  diseño web, hosting y diseño gráfico para nuestra
+                  organización.
+                </p>
+                <button class="review__btn">Ver más</button>
+              </div>
+            </article>
+
+            <article class="reviews__review">
+              <div class="review__user">
+                <img
+                  class="review__img"
+                  src="assets/img/users/user3.jpg"
+                  alt="card image"
+                />
+              </div>
+
+              <div class="review__content">
+                <span class="review__title">A todo deporte</span>
+                <span class="review__name">Edwin Ortega</span>
+                <p class="review__text">
+                  He recibido un considerable respaldo para llevar a cabo la
+                  implementación tecnológica de mi página web y correo
+                  corporativo.
+                </p>
+                <button class="review__btn">Ver más</button>
+              </div>
+            </article>
+
+            <article class="reviews__review">
+              <div class="review__user">
+                <img
+                  class="review__img"
+                  src="assets/img/users/user4.jpg"
+                  alt="card image"
+                />
+              </div>
+
+              <div class="review__content">
+                <span class="review__title">Web Designer</span>
+                <span class="review__name">Vanessa Martinez</span>
+                <p class="review__text">
+                  Estoy profundamente agradecido con WiquiWeb. Su
+                  profesionalismo y dedicación se reflejan en cada detalle del
+                  sitio.
+                </p>
+                <button class="review__btn">Ver más</button>
               </div>
             </article>
           </div>
@@ -317,7 +483,8 @@
           </li>
         </ul>
       </section>
-
+      <!-- FIN TEXTIMONIOS CLIENTES -->
+      <!-- FOOTER -->
       <footer class="layout__footer">
         <div class="footer__container">
           <section class="footer__top">
@@ -383,7 +550,7 @@
                     />
                     <button class="fleft__btn" type="submit">Suscribete</button>
                   </div>
-
+                  <!-- INPEDIR QUE SE REDIRECCIONE Y SALGA EL CACHA -->
                   <input
                     type="hidden"
                     name="_next"
@@ -493,8 +660,17 @@
           </section>
         </div>
       </footer>
+      <!-- FIN FOOTER -->
+
+      <!-- WHATSAPP -->
+      <a
+        href="https://api.whatsapp.com/send?phone=+3506396283&text=Me%20interesan%20sus%20servicios%20y%20me%20gustar%C3%ADa%20obtener%20m%C3%A1s%20informaci%C3%B3n.%20"
+        class="btn__wsp"
+        target="_blank"
+      >
+        <i class="fa-brands fa-whatsapp wps__icono"></i>
+      </a>
+      <!-- FIN WHATSAPP -->
     </div>
   </body>
-  
-    -->
 </html>
