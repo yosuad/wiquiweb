@@ -643,7 +643,9 @@
 /* FIN WHATSAPP */
 
 /* BORRAR AL FINAL */
-
+.footer__fright {
+  display: none;
+}
 button.review__btn {
   pointer-events: none;
 }
