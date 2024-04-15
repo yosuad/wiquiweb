@@ -1,3 +1,8 @@
+/* VARIABLES */
+:root {
+  --primary-color: #219ebc;
+}
+/* FIN VARIABLES */
 /* ESTILOS PARA EL BANNER */
 .navbar__logo {
   width: 180px;
