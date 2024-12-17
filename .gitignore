@@ -1,0 +1,5 @@
+# Ignora una carpeta y su contenido
+/1-Templates/*
+
+# Ignora un archivo específico
+archivo.txt
