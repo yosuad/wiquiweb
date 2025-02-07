@@ -1,7 +1,7 @@
 <?php
 
 //define("BASE_URL", "http://localhost/tienda_virtual/");
-const BASE_URL = "http://localhost/wiquiweb";
+const BASE_URL = "http://localhost/wiquiwebphp/";
 const LIBS = "Libraries/";
 const VIEWS = "Views/";
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 	<head>
 		<!-- Meta -->
@@ -10,33 +10,33 @@
 		<!-- SITE TITLE -->
 		<title>Portfx - Personal / Portfolio HTML Template</title>			
 		<!-- Latest Bootstrap min CSS -->
-		<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">		
+		<link rel="stylesheet" href="Assets/bootstrap/css/bootstrap.min.css">		
 		<!-- Google Font -->	
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Rubik:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 		<!-- Icon CSS -->
-		<link rel="stylesheet" href="assets/fonts/themify-icons.css">
+		<link rel="stylesheet" href="<?= base_url(); ?>/Assets/fonts/themify-icons.css">
 		<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-		<link rel="stylesheet" href="assets/css/line-awesome.css">
-		<link rel="stylesheet" href="assets/fonts/fontawesome/fontawesome.css">
+		<link rel="stylesheet" href="<?= base_url(); ?>Assets/css/line-awesome.css">
+		<link rel="stylesheet" href="<?= base_url(); ?>Assets/fonts/fontawesome/fontawesome.css">
 		<!--- owl carousel Css-->
-		<link rel="stylesheet" href="assets/owlcarousel/css/owl.carousel.min.css">
-		<link rel="stylesheet" href="assets/owlcarousel/css/owl.theme.default.min.css">	
+		<link rel="stylesheet" href="<?= base_url(); ?>Assets/owlcarousel/css/owl.carousel.min.css">
+		<link rel="stylesheet" href="<?= base_url(); ?>Assets/owlcarousel/css/owl.theme.default.min.css">	
 		<!--jquery-simple-mobilemenu Css-->
-        <link rel="stylesheet" href="assets/css/jquery-simple-mobilemenu.css">	
+        <link rel="stylesheet" href="<?= base_url(); ?>Assets/css/jquery-simple-mobilemenu.css">	
 		<!--magnific-popup Css-->
-        <link rel="stylesheet" href="assets/css/magnific-popup.css">	
+        <link rel="stylesheet" href="<?= base_url(); ?>Assets/css/magnific-popup.css">	
 		<!--animate Css-->
-        <link rel="stylesheet" href="assets/css/animate.css">		
+        <link rel="stylesheet" href="<?= base_url(); ?>Assets/css/animate.css">		
 		<!--YouTubePopUp Css-->
-        <link rel="stylesheet" href="assets/css/YouTubePopUp.css">	
+        <link rel="stylesheet" href="<?= base_url(); ?>Assets/css/YouTubePopUp.css">	
 		 <!--Slick Css-->
-        <link rel="stylesheet" href="assets/css/slick.css">	
+        <link rel="stylesheet" href="<?= base_url(); ?>Assets/css/slick.css">	
 		<!--slick theme Css-->
-		<link rel="stylesheet" href="assets/css/slick-theme.css">					
+		<link rel="stylesheet" href="<?= base_url(); ?>Assets/css/slick-theme.css">					
 		<!-- Style CSS -->
-		<link rel="stylesheet" href="assets/css/style.css">		
+		<link rel="stylesheet" href="<?= base_url(); ?>Assets/css/style.css">		
 
 	</head>
 	
@@ -44,11 +44,8 @@
 	
 		<!-- START PRELOADER --> 
 		<div class="preloader">
-    <div class="loader">
-        <img src="http://localhost/wiquiweb/Assets/images/logo_loader.png" alt="Cargando" class="loader__img">
-    </div>
-</div>
-
+			<span class="loader"></span>
+		</div>	
 		<!-- END PRELOADER -->	
 
 		<!-- START NAVBAR -->  
@@ -1015,4 +1012,5 @@
 		<script src="assets/js/scripts.js"></script>
 		
     </body>
-</html>
+
+	</html>
