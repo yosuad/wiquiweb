@@ -14,8 +14,8 @@ const DB_PASSWORD = "";
 const DB_CHARSET = "charset=utf8";
 
 //Deliminadores decimal y millar Ej. 24,1989.00
-const SPD = ".";
-const SPM = ",";
+const SPD = ",";
+const SPM = ".";
 
 //Simbolo de moneda
-const SMONEY = "Q";
+const SMONEY = "$";

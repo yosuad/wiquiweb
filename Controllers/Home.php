@@ -8,7 +8,7 @@ class Home extends Controllers
     }
     public function home()
     {
-        $data['tag_page'] = "wiquiweb | Inicio";
+        $data['page_tag'] = "wiquiweb | Inicio";
         $data['page_title'] = "Págoma Principal";
         $data['page_name'] = "home";
 
