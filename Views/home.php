@@ -37,7 +37,7 @@
 	<link rel="stylesheet" href="<?= base_url(); ?>Assets/css/slick-theme.css">
 	<!-- Style CSS -->
 	<link rel="stylesheet" href="<?= base_url(); ?>Assets/css/style.css">
-
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
 </head>
 
 
@@ -45,21 +45,31 @@
 
 	<!-- START PRELOADER -->
 	<div class="preloader" id="preloader">
-		<div class="loader">
+		<div id="animacion-container" style="width: 150px; height: 150px;"></div>
+		<!-- <div class="loader">
 			<img src="<?= base_url(); ?>Assets/img/logo_loader.png" alt="Cargando" class="loader__img">
-		</div>
+		</div> -->
 	</div>
 	<!-- END PRELOADER -->
 
 <!-- ensayo carga -->
 <script>
-        window.onload = function() {
-            // Tiempo de espera de 1 minuto (60,000 ms)
-            setTimeout(function() {
-                var preloader = document.getElementById('preloader');
-                preloader.style.display = 'none'; // Oculta el preloader después de 1 minuto
-            }, 60000); // 60000 milisegundos = 1 minuto
-        };
+        // window.onload = function() {
+        //     // Tiempo de espera de 1 minuto (60,000 ms)
+        //     setTimeout(function() {
+        //         var preloader = document.getElementById('preloader');
+        //         preloader.style.display = 'none'; // Oculta el preloader después de 1 minuto
+        //     }, 60000); // 60000 milisegundos = 1 minuto
+        // };
+		
+		var animation = lottie.loadAnimation({
+			container: document.getElementById('animacion-container'),
+			renderer: 'svg',
+			loop: true,
+			autoplay: true,
+			path: '../Assets/img/loader.json'
+		});
+        
     </script>
 <!-- FIN ENSAYO -->
 

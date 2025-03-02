@@ -37,7 +37,7 @@
 		<link rel="stylesheet" href="<?= base_url(); ?>Assets/css/slick-theme.css">					
 		<!-- Style CSS -->
 		<link rel="stylesheet" href="<?= base_url(); ?>Assets/css/style.css">		
-
+		
 	</head>
 	
     <body data-spy="scroll" data-offset="80">
@@ -1010,7 +1010,7 @@
 		<script src="assets/js/slick.js"></script>									
 		<!-- scripts js -->
 		<script src="assets/js/scripts.js"></script>
-		
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js" integrity="sha512-jEnuDt6jfecL0CjpQAJLWlim7n8Ey+4PaWriZ/nW6uDxQ72i0uPlaeddCaXUbbN9eS7UqbcchF8Fdyw8N4HI9S4g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     </body>
 
 	</html>
