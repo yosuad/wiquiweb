@@ -54,21 +54,27 @@
 
 <!-- ensayo carga -->
 <script>
-        // window.onload = function() {
-        //     // Tiempo de espera de 1 minuto (60,000 ms)
-        //     setTimeout(function() {
-        //         var preloader = document.getElementById('preloader');
-        //         preloader.style.display = 'none'; // Oculta el preloader después de 1 minuto
-        //     }, 60000); // 60000 milisegundos = 1 minuto
-        // };
-		
 		var animation = lottie.loadAnimation({
 			container: document.getElementById('animacion-container'),
 			renderer: 'svg',
 			loop: true,
-			autoplay: true,
-			path: '../Assets/img/loader.json'
+			autoplay: false,
+			path: '../Assets/img/loader.json',
+			
 		});
+        window.onload = function() {
+			animation.goToAndStop(20, true);
+            // Tiempo de espera de 1 minuto (60,000 ms)
+            setTimeout(function() {
+				animation.play();
+                // var preloader = document.getElementById('preloader');
+                // preloader.style.display = 'none'; // Oculta el preloader después de 1 minuto
+            }, 5000); // 60000 milisegundos = 1 minuto
+        };
+		
+		
+
+		
         
     </script>
 <!-- FIN ENSAYO -->
