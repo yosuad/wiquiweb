@@ -1,118 +1,57 @@
-<!DOCTYPE html>
-<html lang="es">
+<?php headerGlobal($data); ?>
 
-<head>
-	<!-- Meta -->
-	<meta charset="utf-8">
-	<!-- SEO information -->
-	<meta
-      name="description"
-      content="Agencia especializada en diseño y desarrollo de páginas web, actualizaciones y diseño para ayudar a tu empresa a destacar. Contáctanos para crear una presencia digital única y efectiva."
-    />
-	<!-- END SEO information -->
-	<meta name="author" content="wiquiweb" />
-<!-- Información SEO -->
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-	<!-- SITE TITLE -->
-	<title><?php echo $data['page_tag']; ?></title>
-	 <!-- FAVICON -->
-	 <link
-      rel="shortcut icon"
-      type="image/x-icon"
-      href="<?= base_url(); ?>/Assets/img/favicon.png"
-    />
-    <!-- fin FAVICON -->
-	  <!-- INICIO GOOGLE ANALYTICS -->
-	  <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-P3VQQCCJC6"
-    ></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
-
-      gtag("config", "G-P3VQQCCJC6");
-    </script>
-    <!-- FIN GOOGLE ANALYTICS -->
-	<!-- Latest Bootstrap min CSS -->
-	<link rel="stylesheet" href="Assets/bootstrap/css/bootstrap.min.css">
-	<!-- Google Font -->
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Rubik:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-	<!-- Icon CSS -->
-	<link rel="stylesheet" href="<?= base_url(); ?>/Assets/fonts/themify-icons.css">
-	<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-	<link rel="stylesheet" href="<?= base_url(); ?>/Assets/css/line-awesome.css">
-	<link rel="stylesheet" href="<?= base_url(); ?>/Assets/fonts/fontawesome/fontawesome.css">
-	<!--- owl carousel Css-->
-	<link rel="stylesheet" href="<?= base_url(); ?>/Assets/owlcarousel/css/owl.carousel.min.css">
-	<link rel="stylesheet" href="<?= base_url(); ?>/Assets/owlcarousel/css/owl.theme.default.min.css">
-	<!--jquery-simple-mobilemenu Css-->
-	<link rel="stylesheet" href="<?= base_url(); ?>/Assets/css/jquery-simple-mobilemenu.css">
-	<!--magnific-popup Css-->
-	<link rel="stylesheet" href="<?= base_url(); ?>/Assets/css/magnific-popup.css">
-	<!--animate Css-->
-	<link rel="stylesheet" href="<?= base_url(); ?>/Assets/css/animate.css">
-	<!--YouTubePopUp Css-->
-	<link rel="stylesheet" href="<?= base_url(); ?>/Assets/css/YouTubePopUp.css">
-	<!--Slick Css-->
-	<link rel="stylesheet" href="<?= base_url(); ?>/Assets/css/slick.css">
-	<!--slick theme Css-->
-	<link rel="stylesheet" href="<?= base_url(); ?>/Assets/css/slick-theme.css">
-	<!-- Style CSS -->
-	<link rel="stylesheet" href="<?= base_url(); ?>/Assets/css/style.css">
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
-</head>
-
-
-<body data-spy="scroll" data-offset="80">
-
-	<!-- START PRELOADER -->
-	<div class="preloader" id="preloader">
-		<div id="animacion-container" style="width: 150px; height: 150px;"></div>
-		<!-- <div class="loader">
-			<img src="<?= base_url(); ?>Assets/img/logo_loader.png" alt="Cargando" class="loader__img">
-		</div> -->
-	</div>
-	<!-- END PRELOADER -->
-
-<!-- ensayo carga -->
-<script>
-		var animation = lottie.loadAnimation({
-			container: document.getElementById('animacion-container'),
-			renderer: 'svg',
-			loop: true,
-			autoplay: false,
-			path: '<?= base_url(); ?>/Assets/img/loader.json',
+<!-- ENSAYO PAGINA -->
+<section class="home-banner" style="background-image: url('assets/img/banner.jpg');">		
+			<div class="container">			
+				<div class="row">
+					<div class="col-xl-6 col-lg-12 col-12 align-self-center">
+						<div class="home_banner_content">					
+							<h3 class="wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">Hello I’m Masum !</h3>
+							<h2 class="wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">A UI/UX <span>Designer</span></h2>
+							<p class="wow fadeInDown" style="visibility: visible; animation-name: fadeInDown;">
+								Solution-oriented mindset, problem-solving enthusiasm, positive attitude 
+								towards challenges, overcoming obstacles with enthusiasm .
+							</p>
+							<a href="#" class="yellow_btn wow fadeInLeft" style="visibility: visible; animation-name: fadeInLeft;">Hire Me</a>
+							<a href="#" class="normal_btn wow fadeInRight" style="visibility: visible; animation-name: fadeInRight;">Download CV</a>
+						</div>
+					</div><!-- End Col -->
+				</div>
+			</div>
 			
-		});
-        window.onload = function() {
-			animation.goToAndStop(20, true);
-            // Tiempo de espera de 1 minuto (60,000 ms)
-            setTimeout(function() {
-				animation.play();
-                // var preloader = document.getElementById('preloader');
-                // preloader.style.display = 'none'; // Oculta el preloader después de 1 minuto
-            }); // 60000 milisegundos = 1 minuto
-        };
-		
-		
+			<div class="about-con">
+				<img src="assets/img/icons/about-icon.svg" alt="about-icon">
+			</div>
+			
+			<div class="social_link">
+				<ul>
+					<li><a href="#"><i class="bx bxl-facebook"></i></a></li>
+					<li><a href="#"><i class="bx bxl-twitter"></i></a></li>
+					<li><a href="#"><i class="bx bxl-pinterest"></i></a></li>
+					<li><a href="#"><i class="bx bxl-linkedin"></i></a></li>
+					<li><a href="#"><i class="bx bxl-dribbble"></i></a></li>
+				</ul>
+			</div>
+			<div class="bshape_1">
+				<img src="assets/img/bg/bshape1.svg" alt="shape">
+			</div>			
+			
+			<div class="bshape_2">
+				<img src="assets/img/bg/bshape2.svg" alt="shape">
+			</div>			
+			
+			<div class="bshape_3">
+				<img src="assets/img/bg/bshape3.svg" alt="shape">
+			</div>
+		</section>
 
-		
-        
-    </script>
-<!-- FIN ENSAYO -->
+<!-- ENSAYO PAGINA -->
 
 
 
 
 
-</body>
 
-</html>
+
+
+<?php footerGlobal($data); ?>

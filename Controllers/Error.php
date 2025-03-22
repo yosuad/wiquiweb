@@ -9,7 +9,8 @@ class Errors extends Controllers
 
     public function notFound()
     {
-        $this->views->getView($this, "error");
+        $data['page_tag'] = "Error | 404";
+        $this->views->getView($this, "error", $data);
     }
 }
 

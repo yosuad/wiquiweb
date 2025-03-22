@@ -10,6 +10,8 @@
     {
         return BASE_URL."/Assets";
     }
+
+    // IMPORTAR CODIGO
     function headerAdmin($data="")
     {
         $view_header = "Views/Template/header_admin.php";
@@ -20,6 +22,20 @@
         $view_footer = "Views/Template/footer_admin.php";
         require_once ($view_footer);        
     }
+
+    function headerGlobal($data="")
+    {
+        $view_header = "Views/Template/header.php";
+        require_once ($view_header);
+    }
+    function FooterGlobal($data="")
+    {
+        $view_footer = "Views/Template/footer.php";
+        require_once ($view_footer);        
+    }
+
+    // IMPORTAR CODIGO
+
 	//Muestra información formateada
 	function dep($data)
     {
