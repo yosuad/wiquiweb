@@ -1,0 +1,100 @@
+.error404 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 70vh;
+    text-align: center;
+}
+
+
+.error404__title {
+    font-size: 120px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.error404__subtitle {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.error404__text {
+    font-size: 18px;
+    color: #6b7280;
+    margin-bottom: 25px;
+}
+
+.error404__actions {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.error404__btn {
+    padding: 1rem 2rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+
+
+@media (max-width: 768px) {
+
+    .error404 {
+        padding: 0 1.5rem;
+    }
+
+    .error404__title,
+    .error404__subtitle {
+        margin: 0;
+    }
+
+    .error404__text {
+        padding: 0 0.5rem;
+    }
+
+    .error404__btn--primary::before {
+        background: none;
+        content: none;
+    }
+
+}
+
+
+
+.error404__btn--primary {
+  background: var(--primary_color);
+  color: #fff;
+  border: 1px solid var(--grey_color);
+  position: relative;
+  overflow: hidden; /* importante para contener el ::before */
+  z-index: 1;
+  transition: color 0.5s ease, border-color 0.5s ease;
+}
+
+.error404__btn--primary::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  right: 50%;
+  bottom: 0;
+  background: var(--grey_color);
+  opacity: 0;
+  transition: all 0.5s ease;
+  z-index: -1;
+}
+
+.error404__btn--primary:hover::before {
+  left: 0;
+  right: 0;
+  opacity: 1;
+}
+
+.error404__btn--primary:hover {  
+  color: #fff; /* lo dejamos fijo blanco, pero puedes cambiarlo */
+}

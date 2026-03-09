@@ -1,0 +1,124 @@
+@extends('layouts.admin')
+
+@section('title', 'Add Lead')
+
+@php $pageTitle = 'Add Lead'; @endphp
+
+@section('content')
+
+    <div class="dashboard__title-section">
+        <div class="dashboard__title-row">
+            <p class="dashboard__page-desc">Register new prospect</p>
+            <a href="{{ route('prospects.index') }}" class="btn-secondary">
+                <i class="fas fa-arrow-left"></i> Back to prospects
+            </a>
+        </div>
+    </div>
+
+    <div class="form-container">
+        <form method="POST" action="{{ route('prospects.store') }}">
+            @csrf
+
+            {{-- Row 1: First name and Last name --}}
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="first_name">First name <span class="required">*</span></label>
+                    <input type="text" id="first_name" name="first_name" value="{{ old('first_name') }}"
+                        class="form-input @error('first_name') is-invalid @enderror" placeholder="First name">
+                    @error('first_name')
+                        <span class="form-error">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <label for="last_name">Last name</label>
+                    <input type="text" id="last_name" name="last_name" value="{{ old('last_name') }}" class="form-input"
+                        placeholder="Last name">
+                </div>
+            </div>
+
+            {{-- Row 2: WhatsApp and Phone --}}
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="whatsapp">WhatsApp</label>
+                    <input type="text" id="whatsapp" name="whatsapp" value="{{ old('whatsapp') }}" class="form-input"
+                        placeholder="+57 320 413 25 00">
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone</label>
+                    <input type="text" id="phone" name="phone" value="{{ old('phone') }}" class="form-input"
+                        placeholder="+57 300 758 35 00">
+                </div>
+            </div>
+
+            {{-- Row 3: Email and Company --}}
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" value="{{ old('email') }}"
+                        class="form-input @error('email') is-invalid @enderror" placeholder="email@example.com">
+                    @error('email')
+                        <span class="form-error">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <label for="company_name">Company</label>
+                    <input type="text" id="company_name" name="company_name" value="{{ old('company_name') }}"
+                        class="form-input" placeholder="Company name (optional)">
+                </div>
+            </div>
+
+            {{-- Row 4: Origin and Service interest --}}
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="origin">Origin</label>
+                    <select id="origin" name="origin" class="form-input">
+                        <option value="">— Select —</option>
+                        <option value="facebook" {{ old('origin') == 'facebook' ? 'selected' : '' }}>Facebook</option>
+                        <option value="instagram" {{ old('origin') == 'instagram' ? 'selected' : '' }}>Instagram</option>
+                        <option value="referral" {{ old('origin') == 'referral' ? 'selected' : '' }}>Referral</option>
+                        <option value="web" {{ old('origin') == 'web' ? 'selected' : '' }}>Web</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="service_interest">Service interest</label>
+                    <select id="service_interest" name="service_interest" class="form-input">
+                        <option value="">— Select —</option>
+                        <option value="pagina_web" {{ old('service_interest') == 'pagina_web' ? 'selected' : '' }}>
+                            Página web</option>
+                        <option value="asistente_virtual"
+                            {{ old('service_interest') == 'asistente_virtual' ? 'selected' : '' }}>Asistente virtual
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            {{-- Row 5: Assigned agent --}}
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="assigned_to">Assigned to</label>
+                    <select id="assigned_to" name="assigned_to" class="form-input">
+                        <option value="">— Select —</option>
+                        @foreach ($agents as $agent)
+                            <option value="{{ $agent->id }}"
+                                {{ old('assigned_to', auth()->id()) == $agent->id ? 'selected' : '' }}>
+                                {{ $agent->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-primary">
+                    <i class="fas fa-save"></i> Save lead
+                </button>
+            </div>
+
+        </form>
+    </div>
+
+@endsection

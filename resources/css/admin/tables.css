@@ -1,0 +1,218 @@
+/* ═══════════════════════════════════════
+   TABLES — Compartido entre todas las vistas
+   ═══════════════════════════════════════ */
+
+
+   /* ---- Botton ---- */
+.dashboard__title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 1.25rem;
+    background: var(--primary-color);
+    color: var(--white-color);
+    border-radius: var(--radius);
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: opacity 0.2s;
+}
+
+.btn-primary:hover {
+    opacity: 0.9;
+}
+
+/* ---- Title Section ---- */
+
+.dashboard__title-section {
+    margin-bottom: 1.5rem;
+}
+
+.dashboard__page-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.dashboard__page-desc {
+    color: var(--text-secondary);
+    margin-top: 0.25rem;
+    font-size: 0.95rem;
+}
+
+
+/* ---- Table Container ---- */
+
+.table-container {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+}
+
+
+/* ---- Table Head ---- */
+
+.data-table thead tr {
+    background: var(--bg-body);
+    border-bottom: 1px solid var(--border);
+}
+
+.data-table th {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+    white-space: nowrap;
+}
+
+
+/* ---- Table Body ---- */
+
+.data-table td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-primary);
+}
+
+.data-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.data-table tbody tr:hover {
+    background: var(--bg-body);
+}
+
+
+/* ---- Cell Modifiers ---- */
+
+.text-center   { text-align: center; }
+.font-medium   { font-weight: 500; }
+.font-semibold { font-weight: 600; }
+
+.td-email {
+    color: var(--primary-color);
+    font-size: 0.85rem;
+}
+
+.td-paid    { color: var(--paid); font-weight: 500; }
+.td-pending { color: var(--pending); font-weight: 500; }
+
+
+/* ---- Badges ---- */
+
+.badge {
+    padding: 0.25rem 0.65rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.badge-new       { background: var(--bg-primary);  color: var(--primary-color); }
+.badge-contact { background: var(--bg-secondary); color: var(--secondary-color); }
+.badge-follow    { background: var(--bg-purple);    color: var(--purple-color); }
+.badge-closed    { background: var(--bg-paid);      color: var(--paid); }
+
+
+/* ---- Checkbox ---- */
+
+.check-msg {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--primary-color);
+    cursor: pointer;
+}
+
+
+/* ---- Action Buttons ---- */
+
+.td-actions {
+    text-align: left;
+    white-space: nowrap;
+}
+
+.td-actions form {
+    display: inline;
+}
+
+.btn-action {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.4rem 0.5rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    transition: background 0.2s, color 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-edit:hover   { background: var(--bg-primary); color: var(--primary-color); }
+.btn-delete:hover { background: var(--bg-danger);  color: var(--danger); }
+.btn-notes:hover  { background: var(--bg-purple);  color: var(--purple-color); }
+
+
+/* ---- Filter Buttons (Billing) ---- */
+
+.table-filter {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.filter-btn {
+    padding: 0.4rem 1rem;
+    border-radius: 9999px;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.filter-btn:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.filter-btn--active {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    color: var(--white-color);
+}
+
+
+/* ---- Responsive ---- */
+
+@media (max-width: 1024px) {
+    .table-container {
+        overflow-x: auto;
+    }
+
+    .data-table {
+        min-width: 900px;
+    }
+}
+
+
