@@ -107,11 +107,9 @@
                     <select id="origin" name="origin" class="form-input">
                         <option value="">— Select —</option>
                         <option value="facebook"  {{ old('origin', $contact->origin) == 'facebook'  ? 'selected' : '' }}>Facebook</option>
-                        <option value="instagram" {{ old('origin', $contact->origin) == 'instagram' ? 'selected' : '' }}>Instagram</option>
-                        <option value="referido"  {{ old('origin', $contact->origin) == 'referido'  ? 'selected' : '' }}>Referido</option>
-                        <option value="web"       {{ old('origin', $contact->origin) == 'web'       ? 'selected' : '' }}>Web</option>
-                        <option value="agente"    {{ old('origin', $contact->origin) == 'agente'    ? 'selected' : '' }}>Agente</option>
-                        <option value="meta"      {{ old('origin', $contact->origin) == 'meta'      ? 'selected' : '' }}>Meta</option>
+                        <option value="instagram" {{ old('origin') == 'instagram' ? 'selected' : '' }}>Instagram</option>
+                        <option value="referido"  {{ old('origin') == 'referido'  ? 'selected' : '' }}>Referido</option>
+                        <option value="agente"    {{ old('origin') == 'agente'    ? 'selected' : '' }}>Agente</option>
                     </select>
                 </div>
             </div>

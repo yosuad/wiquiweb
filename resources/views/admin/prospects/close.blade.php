@@ -62,12 +62,12 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="billing_cycle">Billing cycle <span class="required">*</span></label>
+                    <label for="billing_cycle">Ciclo <span class="required">*</span></label>
                     <select id="billing_cycle" name="billing_cycle" class="form-input" onchange="calcularPrecio()">
                         <option value="">— Select —</option>
-                        <option value="monthly"  {{ old('billing_cycle') == 'monthly'  ? 'selected' : '' }}>Monthly</option>
-                        <option value="annual"   {{ old('billing_cycle') == 'annual'   ? 'selected' : '' }}>Annual</option>
-                        <option value="one_time" {{ old('billing_cycle') == 'one_time' ? 'selected' : '' }}>One time</option>
+                        <option value="monthly"  {{ old('billing_cycle') == 'monthly'  ? 'selected' : '' }}>Pago mensual</option>
+                        <option value="annual"   {{ old('billing_cycle') == 'annual'   ? 'selected' : '' }}>Pago anual</option>
+                        <option value="one_time" {{ old('billing_cycle') == 'one_time' ? 'selected' : '' }}>Pago único</option>
                     </select>
                     @error('billing_cycle') <span class="form-error">{{ $message }}</span> @enderror
                 </div>
@@ -139,7 +139,6 @@
         }
     }
 
-    // Auto-calculate on page load if values are pre-selected
     document.addEventListener('DOMContentLoaded', calcularPrecio);
 </script>
 @endpush

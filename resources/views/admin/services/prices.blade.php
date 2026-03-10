@@ -24,7 +24,7 @@
                 <div class="form-group">
                     <label for="region">Region <span class="required">*</span></label>
                     <select id="region" name="region" class="form-input">
-                        <option value="">— Select —</option>
+                        <option value="" disabled selected>— Select —</option>
                         <option value="colombia"      {{ old('region') == 'colombia'      ? 'selected' : '' }}>Colombia</option>
                         <option value="international" {{ old('region') == 'international' ? 'selected' : '' }}>International</option>
                     </select>
@@ -34,7 +34,7 @@
                 <div class="form-group">
                     <label for="client_type">Client type <span class="required">*</span></label>
                     <select id="client_type" name="client_type" class="form-input">
-                        <option value="">— Select —</option>
+                        <option value="" disabled selected>— Select —</option>
                         <option value="persona_natural"     {{ old('client_type') == 'persona_natural'     ? 'selected' : '' }}>Persona natural</option>
                         <option value="empresa"             {{ old('client_type') == 'empresa'             ? 'selected' : '' }}>Empresa</option>
                         <option value="emprendimiento"      {{ old('client_type') == 'emprendimiento'      ? 'selected' : '' }}>Emprendimiento</option>
@@ -47,12 +47,12 @@
 
             <div class="form-row">
                 <div class="form-group">
-                    <label for="billing_cycle">Billing cycle <span class="required">*</span></label>
+                    <label for="billing_cycle">Ciclo <span class="required">*</span></label>
                     <select id="billing_cycle" name="billing_cycle" class="form-input">
-                        <option value="">— Select —</option>
-                        <option value="monthly"  {{ old('billing_cycle') == 'monthly'  ? 'selected' : '' }}>Monthly</option>
-                        <option value="annual"   {{ old('billing_cycle') == 'annual'   ? 'selected' : '' }}>Annual</option>
-                        <option value="one_time" {{ old('billing_cycle') == 'one_time' ? 'selected' : '' }}>One time</option>
+                        <option value="" disabled selected>— Select —</option>
+                        <option value="monthly"  {{ old('billing_cycle') == 'monthly'  ? 'selected' : '' }}>Pago mensual</option>
+                        <option value="annual"   {{ old('billing_cycle') == 'annual'   ? 'selected' : '' }}>Pago anual</option>
+                        <option value="one_time" {{ old('billing_cycle') == 'one_time' ? 'selected' : '' }}>Pago único</option>
                     </select>
                     @error('billing_cycle') <span class="form-error">{{ $message }}</span> @enderror
                 </div>
@@ -93,7 +93,7 @@
                 <tr>
                     <th>Region</th>
                     <th>Client type</th>
-                    <th>Cycle</th>
+                    <th>Ciclo</th>
                     <th>Plan</th>
                     <th>USD</th>
                     <th>COP</th>
@@ -107,9 +107,9 @@
                         <td>{{ ucfirst($price->client_type) }}</td>
                         <td>
                             {{ match($price->billing_cycle) {
-                                'monthly'  => 'Monthly',
-                                'annual'   => 'Annual',
-                                'one_time' => 'One time',
+                                'monthly'  => 'Pago mensual',
+                                'annual'   => 'Pago anual',
+                                'one_time' => 'Pago único',
                                 default    => $price->billing_cycle
                             } }}
                         </td>

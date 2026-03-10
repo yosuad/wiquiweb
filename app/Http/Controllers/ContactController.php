@@ -83,7 +83,16 @@ class ContactController extends Controller
             Invoice::whereHas('contactService', fn($q) => $q->where('contact_id', $contact->id))->where('status', 'pending')->update(['status' => 'cancelled']);
         }
 
-        $contact->update(['first_name' => $request->first_name, 'last_name' => $request->last_name, 'email' => $request->email, 'phone' => $request->phone, 'whatsapp' => $request->whatsapp, 'company_name' => $request->company_name, 'assigned_to' => $request->assigned_to, 'status' => $request->status]);
+        $contact->update([
+            'first_name'   => $request->first_name,
+            'last_name'    => $request->last_name,
+            'email'        => $request->email,
+            'phone'        => $request->phone,
+            'whatsapp'     => $request->whatsapp,
+            'company_name' => $request->company_name,
+            'assigned_to'  => $request->assigned_to,
+            'status'       => $request->status,
+        ]);
 
         return $request->status === 'lost'
             ? redirect()->route('prospects.lost')->with('success', 'Customer marked as lost.')
@@ -105,7 +114,7 @@ class ContactController extends Controller
             'phone'            => 'nullable|string|max:20',
             'whatsapp'         => 'nullable|string|max:20',
             'company_name'     => 'nullable|string|max:255',
-            'origin'           => 'nullable|in:facebook,instagram,referral,web',
+            'origin'           => 'nullable|in:facebook,instagram,referido,web,agente,meta',
             'client_type'      => 'nullable|in:persona_natural,empresa,emprendimiento,artista,organizacion_social',
             'service_interest' => 'nullable|string|max:255',
             'assigned_to'      => 'nullable|exists:users,id',
@@ -151,14 +160,15 @@ class ContactController extends Controller
 
     public function update(Request $request, Contact $contact)
     {
-        $request->validate([
+
+       $request->validate([
             'first_name'       => 'required|string|max:255',
             'last_name'        => 'nullable|string|max:255',
             'email'            => 'nullable|email|unique:contacts,email,' . $contact->id,
             'phone'            => 'nullable|string|max:20',
             'whatsapp'         => 'nullable|string|max:20',
             'company_name'     => 'nullable|string|max:255',
-            'origin'           => 'nullable|in:facebook,instagram,referral,web',
+            'origin'           => 'nullable|in:facebook,instagram,referido,web,agente,meta',
             'client_type'      => 'nullable|in:persona_natural,empresa,emprendimiento,artista,organizacion_social',
             'service_interest' => 'nullable|string|max:255',
             'assigned_to'      => 'nullable|exists:users,id',
@@ -185,9 +195,9 @@ class ContactController extends Controller
             'phone'            => $request->phone,
             'whatsapp'         => $request->whatsapp,
             'company_name'     => $request->company_name,
-            'origin'           => $request->origin,
-            'client_type'      => $request->client_type,
-            'service_interest' => $request->service_interest,
+            'origin'           => $request->has('origin') ? $request->origin : $contact->origin,
+            'client_type'      => $request->has('client_type') ? $request->client_type : $contact->client_type,
+            'service_interest' => $request->has('service_interest') ? $request->service_interest : $contact->service_interest,
             'assigned_to'      => $request->assigned_to,
             'status'           => $request->status === 'customer' ? 'prospect' : $request->status,
             'pipeline_stage'   => $request->status === 'customer' ? 'closing' : 'new',
@@ -215,8 +225,8 @@ class ContactController extends Controller
             'amount'           => 'required|numeric|min:0',
         ]);
 
-        $servicePrice   = ServicePrice::findOrFail($request->service_price_id);
-        $existing       = ContactService::where('contact_id', $contact->id)->where('service_id', $request->service_id)->whereIn('status', ['active', 'cancelled'])->first();
+        $servicePrice = ServicePrice::findOrFail($request->service_price_id);
+        $existing     = ContactService::where('contact_id', $contact->id)->where('service_id', $request->service_id)->whereIn('status', ['active', 'cancelled'])->first();
 
         if ($existing) {
             $existing->update(['status' => 'active', 'service_price_id' => $request->service_price_id, 'price' => $servicePrice->price, 'currency' => $servicePrice->currency, 'billing_cycle' => $request->billing_cycle, 'started_at' => now()]);

@@ -50,9 +50,9 @@
                     <label for="billing_cycle">Ciclo <span class="required">*</span></label>
                     <select id="billing_cycle" name="billing_cycle" class="form-input">
                         <option value="">— Seleccionar —</option>
-                        <option value="monthly"  {{ old('billing_cycle', $price->billing_cycle) == 'monthly'  ? 'selected' : '' }}>Mensual</option>
-                        <option value="annual"   {{ old('billing_cycle', $price->billing_cycle) == 'annual'   ? 'selected' : '' }}>Anual</option>
-                        <option value="one_time" {{ old('billing_cycle', $price->billing_cycle) == 'one_time' ? 'selected' : '' }}>Único</option>
+                        <option value="monthly"  {{ old('billing_cycle', $price->billing_cycle) == 'monthly'  ? 'selected' : '' }}>Pago mensual</option>
+                        <option value="annual"   {{ old('billing_cycle', $price->billing_cycle) == 'annual'   ? 'selected' : '' }}>Pago anual</option>
+                        <option value="one_time" {{ old('billing_cycle', $price->billing_cycle) == 'one_time' ? 'selected' : '' }}>Pago único</option>
                     </select>
                     @error('billing_cycle') <span class="form-error">{{ $message }}</span> @enderror
                 </div>

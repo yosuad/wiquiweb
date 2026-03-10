@@ -79,7 +79,7 @@
                 <div class="form-group">
                     <label for="origin">Origin</label>
                     <select id="origin" name="origin" class="form-input">
-                        <option value="">— Select —</option>
+                        <option value="" disabled selected>— Select —</option>
                         <option value="facebook"  {{ old('origin') == 'facebook'  ? 'selected' : '' }}>Facebook</option>
                         <option value="instagram" {{ old('origin') == 'instagram' ? 'selected' : '' }}>Instagram</option>
                         <option value="referido"  {{ old('origin') == 'referido'  ? 'selected' : '' }}>Referido</option>
@@ -90,7 +90,7 @@
                 <div class="form-group">
                     <label for="client_type">Client type</label>
                     <select id="client_type" name="client_type" class="form-input">
-                        <option value="">— Select —</option>
+                        <option value="" disabled selected>— Select —</option>
                         <option value="persona_natural"     {{ old('client_type') == 'persona_natural'     ? 'selected' : '' }}>Persona natural</option>
                         <option value="empresa"             {{ old('client_type') == 'empresa'             ? 'selected' : '' }}>Empresa</option>
                         <option value="emprendimiento"      {{ old('client_type') == 'emprendimiento'      ? 'selected' : '' }}>Emprendimiento</option>
@@ -105,7 +105,7 @@
                 <div class="form-group">
                     <label for="service_interest">Service interest</label>
                     <select id="service_interest" name="service_interest" class="form-input">
-                        <option value="">— Select —</option>
+                        <option value="" disabled selected>— Select —</option>
                         <option value="pagina_web"           {{ old('service_interest') == 'pagina_web'           ? 'selected' : '' }}>Página web</option>
                         <option value="asistente_virtual"    {{ old('service_interest') == 'asistente_virtual'    ? 'selected' : '' }}>Asistente virtual</option>
                         <option value="landing_page"         {{ old('service_interest') == 'landing_page'         ? 'selected' : '' }}>Landing page</option>
@@ -119,7 +119,7 @@
                 <div class="form-group">
                     <label for="assigned_to">Assigned to</label>
                     <select id="assigned_to" name="assigned_to" class="form-input">
-                        <option value="">— Select —</option>
+                        <option value="" disabled selected>— Select —</option>
                         @foreach ($agents as $agent)
                             <option value="{{ $agent->id }}"
                                 {{ old('assigned_to', auth()->id()) == $agent->id ? 'selected' : '' }}>
