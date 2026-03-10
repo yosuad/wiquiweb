@@ -125,10 +125,11 @@
     white-space: nowrap;
 }
 
-.badge-new       { background: var(--bg-primary);  color: var(--primary-color); }
+.badge-new     { background: var(--bg-orange);   color: var(--orange); }    /* prospect */
 .badge-contact { background: var(--bg-secondary); color: var(--secondary-color); }
-.badge-follow    { background: var(--bg-purple);    color: var(--purple-color); }
-.badge-closed    { background: var(--bg-paid);      color: var(--paid); }
+.badge-follow  { background: var(--bg-purple);    color: var(--purple-color); }
+.badge-closed  { background: var(--bg-paid);      color: var(--paid); }     /* customer */
+.badge-lost    { background: var(--bg-danger);    color: var(--danger); }   /* lost */
 
 
 /* ---- Checkbox ---- */

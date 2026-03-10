@@ -8,10 +8,10 @@ use Spatie\Permission\Models\Role;
 
 class AdminController extends Controller
 {
-    // ========= Listar administradores =========
+    // ========= List internal users =========
     public function index()
     {
-        $admins = User::role(['admin', 'editor', 'agente-cobros', 'agente-ventas', 'soporte'])
+        $admins = User::role(['administrator', 'agent', 'sales-agent', 'billing-agent', 'support'])
             ->get();
 
         $roles = Role::all();
@@ -19,7 +19,7 @@ class AdminController extends Controller
         return view('admin.admin', compact('admins', 'roles'));
     }
 
-    // ========= Crear usuario interno =========
+    // ========= Create internal user =========
     public function store(Request $request)
     {
         $request->validate([
@@ -37,10 +37,10 @@ class AdminController extends Controller
 
         $user->assignRole($request->role);
 
-        return redirect()->route('admin')->with('success', 'Usuario creado correctamente.');
+        return redirect()->route('admin')->with('success', 'User created successfully.');
     }
 
-    // ========= Actualizar usuario interno =========
+    // ========= Update internal user =========
     public function update(Request $request, User $user)
     {
         $request->validate([
@@ -56,14 +56,14 @@ class AdminController extends Controller
 
         $user->syncRoles($request->role);
 
-        return redirect()->route('admin')->with('success', 'Usuario actualizado correctamente.');
+        return redirect()->route('admin')->with('success', 'User updated successfully.');
     }
 
-    // ========= Eliminar usuario interno =========
+    // ========= Delete internal user =========
     public function destroy(User $user)
     {
         $user->delete();
 
-        return redirect()->route('admin')->with('success', 'Usuario eliminado correctamente.');
+        return redirect()->route('admin')->with('success', 'User deleted successfully.');
     }
 }

@@ -13,18 +13,25 @@
                 Dashboard
             </a>
 
+            @php
+                $editingLost     = request()->routeIs('prospects.edit') && (isset($redirectTo) && $redirectTo === 'prospects.lost');
+                $editingCustomer = (request()->routeIs('prospects.edit') && isset($redirectTo) && $redirectTo === 'customers')
+                                || request()->routeIs('customers.edit')
+                                || request()->routeIs('customers.show');
+            @endphp
+
             <a href="{{ route('prospects.lost') }}"
-                class="sidebar__link {{ request()->routeIs('prospects.lost') || (request()->routeIs('prospects.edit') && url()->previous() === route('prospects.lost')) || (request()->routeIs('prospects.notes.*') && request()->get('from') === 'lost') ? 'sidebar__link--active' : '' }}">
+                class="sidebar__link {{ request()->routeIs('prospects.lost') || $editingLost || (request()->routeIs('prospects.notes.*') && request()->get('from') === 'lost') ? 'sidebar__link--active' : '' }}">
                 Prospectos perdidos
             </a>
 
             <a href="{{ route('prospects.index') }}"
-                class="sidebar__link {{ request()->routeIs('prospects.index') || request()->routeIs('prospects.create') || (request()->routeIs('prospects.notes.*') && request()->get('from') !== 'lost') ? 'sidebar__link--active' : '' }}">
+                class="sidebar__link {{ request()->routeIs('prospects.index') || request()->routeIs('prospects.create') || request()->routeIs('prospects.close') || (request()->routeIs('prospects.edit') && !$editingLost && !$editingCustomer) || (request()->routeIs('prospects.notes.*') && request()->get('from') !== 'lost') ? 'sidebar__link--active' : '' }}">
                 Prospectos
             </a>
 
             <a href="{{ route('customers') }}"
-                class="sidebar__link {{ request()->routeIs('customers') ? 'sidebar__link--active' : '' }}">
+                class="sidebar__link {{ request()->routeIs('customers') || $editingCustomer ? 'sidebar__link--active' : '' }}">
                 Clientes
             </a>
 

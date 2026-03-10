@@ -1,16 +1,16 @@
 @extends('layouts.admin')
 
-@section('title', 'Prospectos')
+@section('title', 'Prospects')
 
-@php $pageTitle = 'Prospectos'; @endphp
+@php $pageTitle = 'Prospects'; @endphp
 
 @section('content')
 
     <div class="dashboard__title-section">
         <div class="dashboard__title-row">
-            <p class="dashboard__page-desc">Leads y seguimiento de conversión</p>
+            <p class="dashboard__page-desc">Leads and conversion tracking</p>
             <a href="{{ route('prospects.create') }}" class="btn-primary">
-                <i class="fas fa-plus"></i> Agregar lead
+                <i class="fas fa-plus"></i> Add lead
             </a>
         </div>
     </div>
@@ -19,66 +19,67 @@
         <table class="data-table">
             <thead>
                 <tr>
-                    <th>Empresa</th>
-                    <th>Nombre</th>
+                    <th>Name</th>
                     <th>WhatsApp</th>
-                    <th>Correo</th>
-                    <th>Origen</th>
-                    <th>Servicio</th>
-                    <th>Estado</th>
-                    <th>Fecha</th>
-                    <th>Asignado</th>
-                    <th class="text-center">Notas</th>
-                    <th class="text-center">Acciones</th>
+                    <th>Origin</th>
+                    <th>Type / Interest</th>
+                    <th>Status</th>
+                    <th>Assigned to</th>
+                    <th>Date</th>
+                    <th class="text-center">Notes</th>
+                    <th class="text-center">Actions</th>
                 </tr>
             </thead>
             <tbody>
                 @forelse($prospects as $prospect)
                     @php
-                        $prospectStatus = $prospect->prospectDetail->status ?? 'nuevo';
-                        $badgeClass = match ($prospectStatus) {
-                            'nuevo'       => 'badge-new',
-                            'contactado'  => 'badge-contact',
-                            'seguimiento' => 'badge-follow',
-                            'cerrado'     => 'badge-closed',
-                            'perdido'     => 'badge-lost',
-                            default       => 'badge-new',
+                        [$badgeClass, $badgeText] = match ($prospect->pipeline_stage) {
+                            'closing'         => ['badge-follow',  'Closing'],
+                            'pending_payment' => ['badge-contact', 'Pending payment'],
+                            default           => match ($prospect->status) {
+                                'prospect' => ['badge-new',    'Prospect'],
+                                'customer' => ['badge-closed', 'Customer'],
+                                'lost'     => ['badge-lost',   'Lost'],
+                                default    => ['badge-new',    'Prospect'],
+                            },
                         };
                     @endphp
                     <tr>
-                        <td class="font-medium">{{ $prospect->company ?? '—' }}</td>
-                        <td>{{ $prospect->name }}</td>
+                        <td class="font-medium">{{ $prospect->first_name }} {{ $prospect->last_name }}</td>
                         <td>{{ $prospect->whatsapp ?? '—' }}</td>
-                        <td class="td-email">{{ $prospect->email ?? '—' }}</td>
-                        <td>{{ ucfirst($prospect->prospectDetail->origin ?? '—') }}</td>
-                        <td>{{ $prospect->prospectDetail->service->name ?? '—' }}</td>
+                        <td>{{ ucfirst($prospect->origin ?? '—') }}</td>
+                        <td>
+                            @if($prospect->client_type)
+                                <span class="badge badge-contact" style="font-size:0.65rem;">{{ ucfirst($prospect->client_type) }}</span>
+                               
+                            @endif
+                            @if($prospect->service_interest)
+                                <span class="badge badge-new" style="font-size:0.65rem;">{{ $prospect->service_interest }}</span>
+                            @endif
+                            @if(!$prospect->client_type && !$prospect->service_interest)
+                                —
+                            @endif
+                        </td>
                         <td>
                             <span class="badge {{ $badgeClass }}">
-                                {{ ucfirst($prospectStatus) }}
+                                {{ $badgeText }}
                             </span>
                         </td>
+                        <td>{{ $prospect->agent->name ?? '—' }}</td>
                         <td>{{ $prospect->created_at->format('Y-m-d') }}</td>
-                        <td>{{ $prospect->prospectDetail->agent->name ?? '—' }}</td>
                         <td class="text-center">
-                            <a href="{{ route('prospects.notes.index', $prospect->id) }}" class="btn-action btn-notes"
-                                title="Ver notas">
+                            <a href="{{ route('prospects.notes.index', $prospect->id) }}" class="btn-action btn-notes" title="View notes">
                                 <i class="fas fa-clipboard-list"></i>
                             </a>
                         </td>
                         <td class="td-actions">
-                            @if($prospectStatus === 'cerrado')
-                                <a href="{{ route('prospects.close', $prospect->id) }}" class="btn-action btn-notes" title="Generar factura">
-                                    <i class="fas fa-file-invoice"></i>
-                                </a>
-                            @endif
-                            <a href="{{ route('prospects.edit', $prospect->id) }}" class="btn-action btn-edit"
-                                title="Editar">
+                            <a href="{{ route('prospects.edit', $prospect->id) }}" class="btn-action btn-edit" title="Edit">
                                 <i class="fas fa-pen"></i>
                             </a>
                             <form method="POST" action="{{ route('prospects.destroy', $prospect->id) }}">
                                 @csrf
                                 @method('DELETE')
-                                <button class="btn-action btn-delete" title="Eliminar">
+                                <button class="btn-action btn-delete" title="Delete">
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </form>
@@ -86,7 +87,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="11" class="text-center">No hay prospectos registrados.</td>
+                        <td colspan="9" class="text-center">No prospects registered.</td>
                     </tr>
                 @endforelse
             </tbody>

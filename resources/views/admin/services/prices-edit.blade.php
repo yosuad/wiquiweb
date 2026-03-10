@@ -25,8 +25,8 @@
                     <label for="region">Región <span class="required">*</span></label>
                     <select id="region" name="region" class="form-input">
                         <option value="">— Seleccionar —</option>
-                        <option value="colombia" {{ old('region', $price->region) == 'colombia' ? 'selected' : '' }}>Colombia</option>
-                        <option value="exterior" {{ old('region', $price->region) == 'exterior' ? 'selected' : '' }}>Exterior</option>
+                        <option value="colombia"      {{ old('region', $price->region) == 'colombia'      ? 'selected' : '' }}>Colombia</option>
+                        <option value="international" {{ old('region', $price->region) == 'international' ? 'selected' : '' }}>Internacional</option>
                     </select>
                     @error('region') <span class="form-error">{{ $message }}</span> @enderror
                 </div>
@@ -35,7 +35,7 @@
                     <label for="client_type">Tipo de cliente <span class="required">*</span></label>
                     <select id="client_type" name="client_type" class="form-input">
                         <option value="">— Seleccionar —</option>
-                        <option value="natural"             {{ old('client_type', $price->client_type) == 'natural'             ? 'selected' : '' }}>Persona natural</option>
+                        <option value="persona_natural"     {{ old('client_type', $price->client_type) == 'persona_natural'     ? 'selected' : '' }}>Persona natural</option>
                         <option value="empresa"             {{ old('client_type', $price->client_type) == 'empresa'             ? 'selected' : '' }}>Empresa</option>
                         <option value="emprendimiento"      {{ old('client_type', $price->client_type) == 'emprendimiento'      ? 'selected' : '' }}>Emprendimiento</option>
                         <option value="artista"             {{ old('client_type', $price->client_type) == 'artista'             ? 'selected' : '' }}>Artista</option>

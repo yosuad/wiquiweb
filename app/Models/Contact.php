@@ -24,8 +24,10 @@ class Contact extends Authenticatable
         'region',
         'client_type',
         'origin',
+        'service_interest',
         'assigned_to',
         'status',
+        'pipeline_stage',
         'is_active',
         'privacy_accepted_at',
     ];
@@ -83,19 +85,16 @@ class Contact extends Authenticatable
 
     // ========= Relationships =========
 
-    // Assigned agent
     public function agent()
     {
         return $this->belongsTo(User::class, 'assigned_to');
     }
 
-    // Contracted services
     public function services()
     {
         return $this->hasMany(ContactService::class);
     }
 
-    // Notes
     public function notes()
     {
         return $this->hasMany(ContactNote::class);

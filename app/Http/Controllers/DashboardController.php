@@ -35,7 +35,7 @@ class DashboardController extends Controller
         $totalServices = Service::count();
 
         // ─── Row 2 ────────────────────────────────────────────────────────────
-        $totalStaff      = User::role(['administrator', 'sales-agent', 'billing-agent'])->count();
+        $totalStaff = User::role(['administrator', 'agent', 'sales-agent', 'billing-agent', 'support'])->count();
         $totalSupports   = SupportTicket::whereIn('status', ['open', 'in_progress'])->count();
         $totalVendedores = User::role('sales-agent')->count();
         $totalCustomers  = Contact::where('status', 'customer')->count();

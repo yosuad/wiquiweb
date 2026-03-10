@@ -1,53 +1,53 @@
 @extends('layouts.admin')
 
-@section('title', 'Detalle de Factura')
+@section('title', 'Invoice Detail')
 
-@php $pageTitle = 'Detalle de Factura'; @endphp
+@php $pageTitle = 'Invoice Detail'; @endphp
 
 @section('content')
 
     <div class="dashboard__title-section">
         <div class="dashboard__title-row">
-            <p class="dashboard__page-desc">Factura #{{ $invoice->id }} — {{ $invoice->user->name }} {{ $invoice->user->last_name ?? '' }}</p>
+            <p class="dashboard__page-desc">Invoice #{{ $invoice->id }} — {{ $invoice->contactService->contact->first_name }} {{ $invoice->contactService->contact->last_name }}</p>
             <a href="{{ route('billing') }}" class="btn-secondary">
-                <i class="fas fa-arrow-left"></i> Volver a facturación
+                <i class="fas fa-arrow-left"></i> Back to billing
             </a>
         </div>
     </div>
 
-    {{-- Datos de la factura --}}
+    {{-- Invoice data --}}
     <div class="form-container" style="margin-bottom: 1.5rem;">
 
         <div class="form-row">
             <div class="form-group">
-                <label>Cliente</label>
-                <div class="form-input" style="background: var(--card); cursor:default;">
-                    {{ $invoice->user->name }} {{ $invoice->user->last_name ?? '' }}
+                <label>Client</label>
+                <div class="form-input" style="background: var(--bg-body); cursor:default;">
+                    {{ $invoice->contactService->contact->first_name }} {{ $invoice->contactService->contact->last_name }}
                 </div>
             </div>
             <div class="form-group">
-                <label>Empresa</label>
-                <div class="form-input" style="background: var(--card); cursor:default;">
-                    {{ $invoice->user->company ?? '—' }}
+                <label>Company</label>
+                <div class="form-input" style="background: var(--bg-body); cursor:default;">
+                    {{ $invoice->contactService->contact->company_name ?? '—' }}
                 </div>
             </div>
         </div>
 
         <div class="form-row">
             <div class="form-group">
-                <label>Servicio</label>
-                <div class="form-input" style="background: var(--card); cursor:default;">
-                    {{ $invoice->service->name ?? '—' }}
+                <label>Service</label>
+                <div class="form-input" style="background: var(--bg-body); cursor:default;">
+                    {{ $invoice->contactService->service->name ?? '—' }}
                 </div>
             </div>
             <div class="form-group">
-                <label>Ciclo</label>
-                <div class="form-input" style="background: var(--card); cursor:default;">
-                    {{ match($invoice->billing_cycle) {
-                        'monthly'  => 'Mensual',
-                        'annual'   => 'Anual',
-                        'one_time' => 'Único',
-                        default    => $invoice->billing_cycle
+                <label>Billing cycle</label>
+                <div class="form-input" style="background: var(--bg-body); cursor:default;">
+                    {{ match($invoice->contactService->billing_cycle) {
+                        'monthly'  => 'Monthly',
+                        'annual'   => 'Annual',
+                        'one_time' => 'One time',
+                        default    => $invoice->contactService->billing_cycle
                     } }}
                 </div>
             </div>
@@ -55,29 +55,29 @@
 
         <div class="form-row">
             <div class="form-group">
-                <label>Región</label>
-                <div class="form-input" style="background: var(--card); cursor:default;">
-                    {{ ucfirst($invoice->region) }}
+                <label>Region</label>
+                <div class="form-input" style="background: var(--bg-body); cursor:default;">
+                    {{ ucfirst($invoice->contactService->servicePrice->region ?? '—') }}
                 </div>
             </div>
             <div class="form-group">
-                <label>Tipo de cliente</label>
-                <div class="form-input" style="background: var(--card); cursor:default;">
-                    {{ ucfirst(str_replace('_', ' ', $invoice->client_type)) }}
+                <label>Client type</label>
+                <div class="form-input" style="background: var(--bg-body); cursor:default;">
+                    {{ ucfirst($invoice->contactService->servicePrice->client_type ?? '—') }}
                 </div>
             </div>
         </div>
 
         <div class="form-row">
             <div class="form-group">
-                <label>Monto USD</label>
-                <div class="form-input" style="background: var(--card); cursor:default;">
+                <label>Amount USD</label>
+                <div class="form-input" style="background: var(--bg-body); cursor:default;">
                     $ {{ number_format($invoice->amount, 2) }} USD
                 </div>
             </div>
             <div class="form-group">
-                <label>Monto COP</label>
-                <div class="form-input" style="background: var(--card); cursor:default;">
+                <label>Amount COP</label>
+                <div class="form-input" style="background: var(--bg-body); cursor:default;">
                     $ {{ number_format($invoice->amount * config('settings.usd_to_cop'), 0, ',', '.') }} COP
                 </div>
             </div>
@@ -85,36 +85,37 @@
 
         <div class="form-row">
             <div class="form-group">
-                <label>Agente</label>
-                <div class="form-input" style="background: var(--card); cursor:default;">
+                <label>Agent</label>
+                <div class="form-input" style="background: var(--bg-body); cursor:default;">
                     {{ $invoice->agent->name ?? '—' }}
                 </div>
             </div>
             <div class="form-group">
-                <label>Fecha</label>
-                <div class="form-input" style="background: var(--card); cursor:default;">
+                <label>Date</label>
+                <div class="form-input" style="background: var(--bg-body); cursor:default;">
                     {{ $invoice->created_at->format('Y-m-d') }}
                 </div>
             </div>
         </div>
 
-        {{-- Cambiar estado y link de pago --}}
+        {{-- Update status and payment link --}}
+        @if($invoice->status !== 'cancelled')
         <form method="POST" action="{{ route('billing.update', $invoice->id) }}">
             @csrf
             @method('PUT')
 
             <div class="form-row">
                 <div class="form-group">
-                    <label for="status">Estado <span class="required">*</span></label>
+                    <label for="status">Status <span class="required">*</span></label>
                     <select id="status" name="status" class="form-input">
-                        <option value="pendiente" {{ $invoice->status == 'pendiente' ? 'selected' : '' }}>Pendiente</option>
-                        <option value="pagado"    {{ $invoice->status == 'pagado'    ? 'selected' : '' }}>Pagado</option>
-                        <option value="aprobado"  {{ $invoice->status == 'aprobado'  ? 'selected' : '' }}>Aprobado</option>
+                        <option value="pending"  {{ $invoice->status == 'pending'  ? 'selected' : '' }}>Pending</option>
+                        <option value="paid"     {{ $invoice->status == 'paid'     ? 'selected' : '' }}>Paid</option>
+                        <option value="approved" {{ $invoice->status == 'approved' ? 'selected' : '' }}>Approved</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="payment_link">Link de pago</label>
+                    <label for="payment_link">Payment link</label>
                     <input type="url" id="payment_link" name="payment_link"
                            value="{{ old('payment_link', $invoice->payment_link ?? '') }}"
                            class="form-input"
@@ -124,45 +125,52 @@
 
             <div class="form-actions">
                 <button type="submit" class="btn-primary">
-                    <i class="fas fa-save"></i> Guardar cambios
+                    <i class="fas fa-save"></i> Save changes
                 </button>
             </div>
 
         </form>
+        @else
+            <div style="padding: 1rem; background: var(--bg-danger); border-radius: var(--radius); color: var(--danger); font-weight: 600;">
+                <i class="fas fa-ban"></i> This invoice has been cancelled.
+            </div>
+        @endif
+
     </div>
 
-    {{-- Historial de facturas del cliente --}}
+    {{-- Invoice history for this client --}}
     <div class="table-container">
         <table class="data-table">
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Servicio</th>
-                    <th>Ciclo</th>
-                    <th>Monto USD</th>
-                    <th>Estado</th>
-                    <th>Fecha</th>
+                    <th>Service</th>
+                    <th>Cycle</th>
+                    <th>Amount USD</th>
+                    <th>Status</th>
+                    <th>Date</th>
                 </tr>
             </thead>
             <tbody>
                 @forelse($history as $item)
                     <tr style="{{ $item->id == $invoice->id ? 'font-weight: 600;' : '' }}">
                         <td># {{ $item->id }}</td>
-                        <td>{{ $item->service->name ?? '—' }}</td>
+                        <td>{{ $item->contactService->service->name ?? '—' }}</td>
                         <td>
-                            {{ match($item->billing_cycle) {
-                                'monthly'  => 'Mensual',
-                                'annual'   => 'Anual',
-                                'one_time' => 'Único',
-                                default    => $item->billing_cycle
+                            {{ match($item->contactService->billing_cycle ?? '') {
+                                'monthly'  => 'Monthly',
+                                'annual'   => 'Annual',
+                                'one_time' => 'One time',
+                                default    => '—'
                             } }}
                         </td>
                         <td>$ {{ number_format($item->amount, 2) }}</td>
                         <td>
                             <span class="badge {{ match($item->status) {
-                                'pendiente' => 'badge-new',
-                                'pagado'    => 'badge-contact',
-                                'aprobado'  => 'badge-closed',
+                                'pending'   => 'badge-new',
+                                'paid'      => 'badge-contact',
+                                'approved'  => 'badge-closed',
+                                'cancelled' => 'badge-lost',
                                 default     => 'badge-new'
                             } }}">
                                 {{ ucfirst($item->status) }}
@@ -172,7 +180,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="6" class="text-center">No hay historial.</td>
+                        <td colspan="6" class="text-center">No invoice history.</td>
                     </tr>
                 @endforelse
             </tbody>

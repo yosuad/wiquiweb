@@ -1,26 +1,48 @@
 @extends('layouts.admin')
 
-@section('title', 'Edit Lead')
+@section('title', 'Edit Customer')
 
-@php $pageTitle = 'Edit Lead'; @endphp
+@php $pageTitle = 'Edit Customer'; @endphp
 
 @section('content')
 
     <div class="dashboard__title-section">
         <div class="dashboard__title-row">
-            <p class="dashboard__page-desc">Edit prospect</p>
-            <a href="{{ route($redirectTo) }}" class="btn-secondary">
-                <i class="fas fa-arrow-left"></i> Back
+            <p class="dashboard__page-desc">Edit customer</p>
+            <a href="{{ route('customers') }}" class="btn-secondary">
+                <i class="fas fa-arrow-left"></i> Back to customers
             </a>
         </div>
     </div>
 
+    {{-- Read-only info --}}
+    <div class="form-container" style="margin-bottom: 1rem;">
+        <div class="form-row">
+            <div class="form-group">
+                <label>Origin</label>
+                <div class="form-input" style="background: var(--bg-body); cursor:default;">
+                    {{ ucfirst($contact->origin ?? '—') }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Client type</label>
+                <div class="form-input" style="background: var(--bg-body); cursor:default;">
+                    {{ ucfirst($contact->client_type ?? '—') }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Service interest</label>
+                <div class="form-input" style="background: var(--bg-body); cursor:default;">
+                    {{ $contact->service_interest ?? '—' }}
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="form-container">
-        <form method="POST" action="{{ route('prospects.update', $contact->id) }}">
+        <form method="POST" action="{{ route('customers.update', $contact->id) }}">
             @csrf
             @method('PUT')
-
-            <input type="hidden" name="redirect_to" value="{{ $redirectTo }}">
 
             {{-- Row 1: First name and Last name --}}
             <div class="form-row">
@@ -48,20 +70,18 @@
             <div class="form-row">
                 <div class="form-group">
                     <label for="whatsapp">WhatsApp</label>
-                    <input type="tel" id="whatsapp" name="whatsapp"
+                    <input type="text" id="whatsapp" name="whatsapp"
                            value="{{ old('whatsapp', $contact->whatsapp) }}"
-                           class="form-input" placeholder="+57 320 413 25 00"
-                           inputmode="tel" pattern="[\+\d\s\-\(\)]{7,20}"
-                           title="Solo números, +, espacios, guiones y paréntesis">
+                           class="form-input"
+                           placeholder="+57 320 413 25 00">
                 </div>
 
                 <div class="form-group">
                     <label for="phone">Phone</label>
-                    <input type="tel" id="phone" name="phone"
+                    <input type="text" id="phone" name="phone"
                            value="{{ old('phone', $contact->phone) }}"
-                           class="form-input" placeholder="+57 300 758 35 00"
-                           inputmode="tel" pattern="[\+\d\s\-\(\)]{7,20}"
-                           title="Solo números, +, espacios, guiones y paréntesis">
+                           class="form-input"
+                           placeholder="+57 300 758 35 00">
                 </div>
             </div>
 
@@ -87,7 +107,7 @@
                 </div>
             </div>
 
-            {{-- Row 4: Assigned and Origin --}}
+            {{-- Row 4: Assigned to and Status --}}
             <div class="form-row">
                 <div class="form-group">
                     <label for="assigned_to">Assigned to</label>
@@ -103,66 +123,17 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="origin">Origin</label>
-                    <select id="origin" name="origin" class="form-input">
-                        <option value="">— Select —</option>
-                        <option value="facebook"  {{ old('origin', $contact->origin) == 'facebook'  ? 'selected' : '' }}>Facebook</option>
-                        <option value="instagram" {{ old('origin', $contact->origin) == 'instagram' ? 'selected' : '' }}>Instagram</option>
-                        <option value="referido"  {{ old('origin', $contact->origin) == 'referido'  ? 'selected' : '' }}>Referido</option>
-                        <option value="web"       {{ old('origin', $contact->origin) == 'web'       ? 'selected' : '' }}>Web</option>
-                        <option value="agente"    {{ old('origin', $contact->origin) == 'agente'    ? 'selected' : '' }}>Agente</option>
-                        <option value="meta"      {{ old('origin', $contact->origin) == 'meta'      ? 'selected' : '' }}>Meta</option>
-                    </select>
-                </div>
-            </div>
-
-            {{-- Row 5: Client type and Service interest --}}
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="client_type">Client type</label>
-                    <select id="client_type" name="client_type" class="form-input">
-                        <option value="">— Select —</option>
-                        <option value="persona_natural"     {{ old('client_type', $contact->client_type) == 'persona_natural'     ? 'selected' : '' }}>Persona natural</option>
-                        <option value="empresa"             {{ old('client_type', $contact->client_type) == 'empresa'             ? 'selected' : '' }}>Empresa</option>
-                        <option value="emprendimiento"      {{ old('client_type', $contact->client_type) == 'emprendimiento'      ? 'selected' : '' }}>Emprendimiento</option>
-                        <option value="artista"             {{ old('client_type', $contact->client_type) == 'artista'             ? 'selected' : '' }}>Artista</option>
-                        <option value="organizacion_social" {{ old('client_type', $contact->client_type) == 'organizacion_social' ? 'selected' : '' }}>Organización social</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="service_interest">Service interest</label>
-                    <select id="service_interest" name="service_interest" class="form-input">
-                        <option value="">— Select —</option>
-                        <option value="pagina_web"           {{ old('service_interest', $contact->service_interest) == 'pagina_web'           ? 'selected' : '' }}>Página web</option>
-                        <option value="asistente_virtual"    {{ old('service_interest', $contact->service_interest) == 'asistente_virtual'    ? 'selected' : '' }}>Asistente virtual</option>
-                        <option value="landing_page"         {{ old('service_interest', $contact->service_interest) == 'landing_page'         ? 'selected' : '' }}>Landing page</option>
-                        <option value="crm"                  {{ old('service_interest', $contact->service_interest) == 'crm'                  ? 'selected' : '' }}>CRM</option>
-                        <option value="erp"                  {{ old('service_interest', $contact->service_interest) == 'erp'                  ? 'selected' : '' }}>ERP</option>
-                        <option value="campana_publicitaria" {{ old('service_interest', $contact->service_interest) == 'campana_publicitaria' ? 'selected' : '' }}>Campaña publicitaria</option>
-                        <option value="diseno"               {{ old('service_interest', $contact->service_interest) == 'diseno'               ? 'selected' : '' }}>Diseño</option>
-                    </select>
-                </div>
-            </div>
-
-            {{-- Row 6: Status --}}
-            <div class="form-row">
-                <div class="form-group">
                     <label for="status">Status</label>
                     <select id="status" name="status" class="form-input">
-                        @foreach(['prospect', 'customer', 'lost'] as $status)
-                            <option value="{{ $status }}"
-                                {{ old('status', $contact->status) == $status ? 'selected' : '' }}>
-                                {{ ucfirst($status) }}
-                            </option>
-                        @endforeach
+                        <option value="customer" {{ old('status', $contact->status) == 'customer' ? 'selected' : '' }}>Customer</option>
+                        <option value="lost"     {{ old('status', $contact->status) == 'lost'     ? 'selected' : '' }}>Lost</option>
                     </select>
                 </div>
             </div>
 
             <div class="form-actions">
                 <button type="submit" class="btn-primary">
-                    <i class="fas fa-save"></i> Update lead
+                    <i class="fas fa-save"></i> Update customer
                 </button>
             </div>
 
@@ -213,13 +184,3 @@
     </div>
 
 @endsection
-
-@push('scripts')
-<script>
-    ['whatsapp', 'phone'].forEach(id => {
-        document.getElementById(id).addEventListener('input', function () {
-            this.value = this.value.replace(/[^\d\+\s\-\(\)]/g, '');
-        });
-    });
-</script>
-@endpush

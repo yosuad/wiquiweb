@@ -14,7 +14,7 @@ return new class extends Migration
             // Personal data
             $table->string('first_name');
             $table->string('last_name')->nullable();
-            $table->string('email')->unique();
+            $table->string('email')->unique()->nullable();
             $table->string('password');
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
@@ -32,15 +32,18 @@ return new class extends Migration
             // Segmentation
             $table->enum('region', ['colombia', 'international'])->nullable();
             $table->enum('client_type', [
-                'individual',
-                'company',
-                'startup',
-                'artist',
-                'nonprofit'
+                'persona_natural',
+                'empresa',
+                'emprendimiento',
+                'artista',
+                'organizacion_social'
             ])->nullable();
 
             // Lead origin
-            $table->enum('origin', ['facebook', 'instagram', 'referral', 'web'])->nullable();
+            $table->enum('origin', ['facebook', 'instagram', 'referido', 'web', 'agente', 'meta'])->nullable();
+
+            // Service of interest (free text)
+            $table->string('service_interest')->nullable();
 
             // Assigned agent
             $table->foreignId('assigned_to')
@@ -51,6 +54,9 @@ return new class extends Migration
             // Funnel status
             $table->enum('status', ['prospect', 'customer', 'lost'])
                   ->default('prospect');
+
+            $table->enum('pipeline_stage', ['new', 'closing', 'pending_payment'])
+                  ->default('new');
 
             $table->boolean('is_active')->default(true);
 

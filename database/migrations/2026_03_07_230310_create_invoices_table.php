@@ -11,27 +11,21 @@ return new class extends Migration
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
 
-            // Contracted service
             $table->foreignId('contact_service_id')
                   ->constrained('contact_services')
                   ->cascadeOnDelete();
 
-            // Invoice amount
             $table->decimal('amount', 10, 2);
 
-            // Payment link
             $table->string('payment_link')->nullable();
 
-            // Agent who created the invoice
             $table->foreignId('created_by')
                   ->constrained('users')
                   ->cascadeOnDelete();
 
-            // Status
-            $table->enum('status', ['pending', 'paid', 'approved'])
+            $table->enum('status', ['pending', 'paid', 'approved', 'cancelled'])
                   ->default('pending');
 
-            // Dates
             $table->timestamp('paid_at')->nullable();
             $table->timestamp('approved_at')->nullable();
 

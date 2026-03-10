@@ -96,12 +96,16 @@ body {
     --danger: #ef4444;
 
     /* Status backgrounds */
-    --bg-primary: rgba(24, 157, 187, 0.12);
-    --bg-secondary: rgba(26, 188, 156, 0.12);
-    --bg-purple: rgba(124, 58, 237, 0.12);
-    --bg-paid: rgba(16, 185, 129, 0.12);
-    --bg-pending: rgba(245, 158, 11, 0.12);
-    --bg-danger: rgba(239, 68, 68, 0.12);
+  --bg-primary:  rgba(24, 157, 187, 0.12);
+  --bg-secondary: rgba(26, 188, 156, 0.12);
+  --bg-purple:   rgba(124, 58, 237, 0.12);
+  --bg-paid:     rgba(16, 185, 129, 0.12);
+  --bg-pending:  rgba(245, 158, 11, 0.12);
+  --bg-danger:   rgba(239, 68, 68, 0.12);
+  --bg-orange:   #ffedd5;   /* ← nuevo */
+
+  /* Badge colors */
+  --orange:      #c2410c;   /* ← nuevo */
 
     /* Global */
     --radius: 0.75rem;

@@ -41,14 +41,18 @@
             <div class="form-row">
                 <div class="form-group">
                     <label for="whatsapp">WhatsApp</label>
-                    <input type="text" id="whatsapp" name="whatsapp" value="{{ old('whatsapp') }}" class="form-input"
-                        placeholder="+57 320 413 25 00">
+                    <input type="tel" id="whatsapp" name="whatsapp" value="{{ old('whatsapp') }}"
+                        class="form-input" placeholder="+57 320 413 25 00"
+                        inputmode="tel" pattern="[\+\d\s\-\(\)]{7,20}"
+                        title="Solo números, +, espacios, guiones y paréntesis">
                 </div>
 
                 <div class="form-group">
                     <label for="phone">Phone</label>
-                    <input type="text" id="phone" name="phone" value="{{ old('phone') }}" class="form-input"
-                        placeholder="+57 300 758 35 00">
+                    <input type="tel" id="phone" name="phone" value="{{ old('phone') }}"
+                        class="form-input" placeholder="+57 300 758 35 00"
+                        inputmode="tel" pattern="[\+\d\s\-\(\)]{7,20}"
+                        title="Solo números, +, espacios, guiones y paréntesis">
                 </div>
             </div>
 
@@ -70,34 +74,48 @@
                 </div>
             </div>
 
-            {{-- Row 4: Origin and Service interest --}}
+            {{-- Row 4: Origin and Client type --}}
             <div class="form-row">
                 <div class="form-group">
                     <label for="origin">Origin</label>
                     <select id="origin" name="origin" class="form-input">
                         <option value="">— Select —</option>
-                        <option value="facebook" {{ old('origin') == 'facebook' ? 'selected' : '' }}>Facebook</option>
+                        <option value="facebook"  {{ old('origin') == 'facebook'  ? 'selected' : '' }}>Facebook</option>
                         <option value="instagram" {{ old('origin') == 'instagram' ? 'selected' : '' }}>Instagram</option>
-                        <option value="referral" {{ old('origin') == 'referral' ? 'selected' : '' }}>Referral</option>
-                        <option value="web" {{ old('origin') == 'web' ? 'selected' : '' }}>Web</option>
+                        <option value="referido"  {{ old('origin') == 'referido'  ? 'selected' : '' }}>Referido</option>
+                        <option value="agente"    {{ old('origin') == 'agente'    ? 'selected' : '' }}>Agente</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="service_interest">Service interest</label>
-                    <select id="service_interest" name="service_interest" class="form-input">
+                    <label for="client_type">Client type</label>
+                    <select id="client_type" name="client_type" class="form-input">
                         <option value="">— Select —</option>
-                        <option value="pagina_web" {{ old('service_interest') == 'pagina_web' ? 'selected' : '' }}>
-                            Página web</option>
-                        <option value="asistente_virtual"
-                            {{ old('service_interest') == 'asistente_virtual' ? 'selected' : '' }}>Asistente virtual
-                        </option>
+                        <option value="persona_natural"     {{ old('client_type') == 'persona_natural'     ? 'selected' : '' }}>Persona natural</option>
+                        <option value="empresa"             {{ old('client_type') == 'empresa'             ? 'selected' : '' }}>Empresa</option>
+                        <option value="emprendimiento"      {{ old('client_type') == 'emprendimiento'      ? 'selected' : '' }}>Emprendimiento</option>
+                        <option value="artista"             {{ old('client_type') == 'artista'             ? 'selected' : '' }}>Artista</option>
+                        <option value="organizacion_social" {{ old('client_type') == 'organizacion_social' ? 'selected' : '' }}>Organización social</option>
                     </select>
                 </div>
             </div>
 
-            {{-- Row 5: Assigned agent --}}
+            {{-- Row 5: Service interest and Assigned agent --}}
             <div class="form-row">
+                <div class="form-group">
+                    <label for="service_interest">Service interest</label>
+                    <select id="service_interest" name="service_interest" class="form-input">
+                        <option value="">— Select —</option>
+                        <option value="pagina_web"           {{ old('service_interest') == 'pagina_web'           ? 'selected' : '' }}>Página web</option>
+                        <option value="asistente_virtual"    {{ old('service_interest') == 'asistente_virtual'    ? 'selected' : '' }}>Asistente virtual</option>
+                        <option value="landing_page"         {{ old('service_interest') == 'landing_page'         ? 'selected' : '' }}>Landing page</option>
+                        <option value="crm"                  {{ old('service_interest') == 'crm'                  ? 'selected' : '' }}>CRM</option>
+                        <option value="erp"                  {{ old('service_interest') == 'erp'                  ? 'selected' : '' }}>ERP</option>
+                        <option value="campana_publicitaria" {{ old('service_interest') == 'campana_publicitaria' ? 'selected' : '' }}>Campaña publicitaria</option>
+                        <option value="diseno"               {{ old('service_interest') == 'diseno'               ? 'selected' : '' }}>Diseño</option>
+                    </select>
+                </div>
+
                 <div class="form-group">
                     <label for="assigned_to">Assigned to</label>
                     <select id="assigned_to" name="assigned_to" class="form-input">
@@ -122,3 +140,13 @@
     </div>
 
 @endsection
+
+@push('scripts')
+<script>
+    ['whatsapp', 'phone'].forEach(id => {
+        document.getElementById(id).addEventListener('input', function () {
+            this.value = this.value.replace(/[^\d\+\s\-\(\)]/g, '');
+        });
+    });
+</script>
+@endpush

@@ -58,12 +58,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Contact notes
     Route::get('/prospects/{contact}/notes', [ContactNoteController::class, 'index'])->name('prospects.notes.index');
     Route::post('/prospects/{contact}/notes', [ContactNoteController::class, 'store'])->name('prospects.notes.store');
+    Route::put('/prospects/{contact}/notes/{note}', [ContactNoteController::class, 'update'])->name('prospects.notes.update');
     Route::delete('/prospects/{contact}/notes/{note}', [ContactNoteController::class, 'destroy'])->name('prospects.notes.destroy');
 
     // Customers
     Route::get('/customers', [ContactController::class, 'customers'])->name('customers');
-    Route::get('/customers/{contact}/edit', [ContactController::class, 'edit'])->name('customers.edit');
-    Route::put('/customers/{contact}', [ContactController::class, 'update'])->name('customers.update');
+    Route::get('/customers/{contact}', [ContactController::class, 'show'])->name('customers.show');
+    Route::get('/customers/{contact}/edit', [ContactController::class, 'customerEdit'])->name('customers.edit');
+    Route::put('/customers/{contact}', [ContactController::class, 'customerUpdate'])->name('customers.update');
     Route::delete('/customers/{contact}', [ContactController::class, 'destroy'])->name('customers.destroy');
 
     // Billing

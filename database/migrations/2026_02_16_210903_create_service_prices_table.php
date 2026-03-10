@@ -21,11 +21,11 @@ return new class extends Migration
 
             // Client type
             $table->enum('client_type', [
-                'individual',
-                'company',
-                'startup',
-                'artist',
-                'nonprofit'
+                'persona_natural',
+                'empresa',
+                'emprendimiento',
+                'artista',
+                'organizacion_social'
             ]);
 
             // Service type
