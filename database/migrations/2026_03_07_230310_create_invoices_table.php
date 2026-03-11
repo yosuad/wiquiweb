@@ -17,6 +17,9 @@ return new class extends Migration
 
             $table->decimal('amount', 10, 2);
 
+            $table->date('period_start')->nullable();
+            $table->date('period_end')->nullable();
+
             $table->string('payment_link')->nullable();
 
             $table->foreignId('created_by')

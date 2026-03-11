@@ -11,7 +11,7 @@ class BillingController extends Controller
     // ========= List invoices =========
     public function index()
     {
-        $invoices = Invoice::with(['contactService.contact', 'agent'])
+        $invoices = Invoice::with(['contactService.contact', 'contactService.service'])
             ->orderBy('created_at', 'desc')
             ->get();
 
@@ -21,7 +21,7 @@ class BillingController extends Controller
     // ========= Invoice detail =========
     public function show(Invoice $invoice)
     {
-        $invoice->load(['contactService.contact', 'contactService.service', 'agent']);
+        $invoice->load(['contactService.contact', 'contactService.service']);
 
         $history = Invoice::with(['contactService.service'])
             ->whereHas('contactService', function($q) use ($invoice) {
@@ -53,7 +53,6 @@ class BillingController extends Controller
             $contact = $invoice->contactService->contact;
             $contact->update(['status' => 'customer']);
 
-            // Log the customer activation
             \App\Models\ContactLog::create([
                 'contact_id' => $contact->id,
                 'created_by' => auth()->id(),
@@ -67,12 +66,30 @@ class BillingController extends Controller
             ->with('success', 'Invoice updated successfully.');
     }
 
-
     // ========= Delete invoice =========
     public function destroy(Invoice $invoice)
     {
         $invoice->delete();
 
         return redirect()->route('billing')->with('success', 'Invoice deleted successfully.');
+    }
+
+    // ========= Print / Download invoice =========
+    public function invoice(Invoice $invoice)
+    {
+        $invoice->load([
+            'contactService.contact',
+            'contactService.service',
+            'contactService.servicePrice',
+        ]);
+
+        $history = Invoice::with(['contactService.service'])
+            ->whereHas('contactService', function($q) use ($invoice) {
+                $q->where('contact_id', $invoice->contactService->contact_id);
+            })
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('admin.billing.invoice', compact('invoice', 'history'));
     }
 }

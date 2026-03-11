@@ -17,6 +17,7 @@ import '../css/components/sidebar.css';
 import '../css/admin/dashboard.css';
 import '../css/admin/tables.css';
 import '../css/admin/create.css';
+import '../css/admin/invoice.css';
 
 
 

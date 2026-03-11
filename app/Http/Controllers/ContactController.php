@@ -216,7 +216,7 @@ class ContactController extends Controller
         return view('admin.prospects.close', compact('contact', 'services'));
     }
 
-    public function generateInvoice(Request $request, Contact $contact)
+   public function generateInvoice(Request $request, Contact $contact)
     {
         $request->validate([
             'service_id'       => 'required|exists:services,id',
@@ -226,16 +226,43 @@ class ContactController extends Controller
         ]);
 
         $servicePrice = ServicePrice::findOrFail($request->service_price_id);
-        $existing     = ContactService::where('contact_id', $contact->id)->where('service_id', $request->service_id)->whereIn('status', ['active', 'cancelled'])->first();
+        $existing     = ContactService::where('contact_id', $contact->id)
+                            ->where('service_id', $request->service_id)
+                            ->whereIn('status', ['active', 'cancelled'])
+                            ->first();
 
         if ($existing) {
-            $existing->update(['status' => 'active', 'service_price_id' => $request->service_price_id, 'price' => $servicePrice->price, 'currency' => $servicePrice->currency, 'billing_cycle' => $request->billing_cycle, 'started_at' => now()]);
+            $existing->update([
+                'status'           => 'active',
+                'service_price_id' => $request->service_price_id,
+                'price'            => $servicePrice->price,
+                'currency'         => $servicePrice->currency,
+                'billing_cycle'    => $request->billing_cycle,
+                'started_at'       => now(),
+            ]);
             $contactService = $existing;
         } else {
-            $contactService = ContactService::create(['contact_id' => $contact->id, 'service_id' => $request->service_id, 'service_price_id' => $request->service_price_id, 'price' => $servicePrice->price, 'currency' => $servicePrice->currency, 'billing_cycle' => $request->billing_cycle, 'status' => 'active', 'started_at' => now()]);
+            $contactService = ContactService::create([
+                'contact_id'       => $contact->id,
+                'service_id'       => $request->service_id,
+                'service_price_id' => $request->service_price_id,
+                'price'            => $servicePrice->price,
+                'currency'         => $servicePrice->currency,
+                'billing_cycle'    => $request->billing_cycle,
+                'status'           => 'active',
+                'started_at'       => now(),
+            ]);
         }
 
-        Invoice::create(['contact_service_id' => $contactService->id, 'amount' => $request->amount, 'created_by' => auth()->id(), 'status' => 'pending']);
+        Invoice::create([
+            'contact_service_id' => $contactService->id,
+            'amount'             => $request->amount,
+            'created_by'         => auth()->id(),
+            'status'             => 'pending',
+            'period_start'       => $request->billing_cycle === 'monthly' ? now()->startOfMonth() : null,
+            'period_end'         => $request->billing_cycle === 'monthly' ? now()->endOfMonth()   : null,
+        ]);
+
         $contact->update(['pipeline_stage' => 'pending_payment']);
 
         return redirect()->route('billing')->with('success', 'Invoice generated successfully.');

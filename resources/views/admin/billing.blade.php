@@ -22,7 +22,6 @@
                     <th>USD</th>
                     <th>COP</th>
                     <th>Status</th>
-                    <th>Agent</th>
                     <th>Date</th>
                     <th class="text-center">Actions</th>
                 </tr>
@@ -35,12 +34,16 @@
                         </td>
                         <td>{{ $invoice->contactService->service->name ?? '—' }}</td>
                         <td>
-                            {{ match($invoice->contactService->billing_cycle ?? '') {
-                                'monthly'  => 'Monthly',
-                                'annual'   => 'Annual',
-                                'one_time' => 'One time',
-                                default    => '—'
-                            } }}
+                            @php $cycle = $invoice->contactService->billing_cycle ?? ''; @endphp
+                            @if($cycle === 'monthly')
+                                Mensual — {{ ucfirst($invoice->created_at->locale('es')->translatedFormat('F Y')) }}
+                            @elseif($cycle === 'annual')
+                                Anual — {{ $invoice->created_at->format('Y') }}
+                            @elseif($cycle === 'one_time')
+                                Pago único
+                            @else
+                                —
+                            @endif
                         </td>
                         <td class="font-medium">$ {{ number_format($invoice->amount, 2) }}</td>
                         <td>$ {{ number_format($invoice->amount * config('settings.usd_to_cop'), 0, ',', '.') }}</td>
@@ -55,7 +58,6 @@
                                 {{ ucfirst($invoice->status) }}
                             </span>
                         </td>
-                        <td>{{ $invoice->agent->name ?? '—' }}</td>
                         <td>{{ $invoice->created_at->format('Y-m-d') }}</td>
                         <td class="td-actions">
                             <a href="{{ route('billing.show', $invoice->id) }}" class="btn-action btn-notes" title="View detail">
@@ -72,7 +74,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="9" class="text-center">No invoices registered.</td>
+                        <td colspan="8" class="text-center">No invoices registered.</td>
                     </tr>
                 @endforelse
             </tbody>

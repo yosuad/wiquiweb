@@ -1,0 +1,291 @@
+/* ═══════════════════════════════════════
+   INVOICE — BEM
+   ═══════════════════════════════════════ */
+
+/* ── Print bar ── */
+.invoice-print-bar {
+    max-width: 760px;
+    margin: 0 auto 1rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+}
+
+.invoice-print-bar__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 1.25rem;
+    border-radius: var(--radius);
+    font-size: 0.875rem;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    font-family: 'Rajdhani', sans-serif;
+}
+
+.invoice-print-bar__btn--back {
+    background: var(--bg-card);
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+}
+
+.invoice-print-bar__btn--print {
+    background: var(--primary-color);
+    color: var(--white-color);
+}
+
+/* ── Wrapper ── */
+.invoice {
+    max-width: 760px;
+    margin: 0 auto;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+/* ── Header ── */
+.invoice__header {
+    background: var(--primary-color);
+    color: var(--white-color);
+    padding: 2rem 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.invoice__brand-name {
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    text-align: left;
+}
+
+.invoice__brand-info {
+    font-size: 0.85rem;
+    opacity: 0.85;
+    margin-top: 2px;
+    display: block;
+}
+
+.invoice__meta {
+    text-align: right;
+}
+
+.invoice__meta-number {
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.invoice__meta-date {
+    font-size: 0.85rem;
+    opacity: 0.85;
+    margin-top: 4px;
+    display: block;
+}
+
+/* ── Status ── */
+.invoice__status {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 3px 12px;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.invoice__status--pending   { background: var(--bg-body);   color: var(--pending); }
+.invoice__status--paid      { background: var(--bg-secondary);  color: var(--secondary-color); }
+.invoice__status--approved  { background: var(--bg-body);       color: var(--paid); }
+.invoice__status--cancelled { background: var(--bg-danger);     color: var(--danger); }
+
+/* ── Body ── */
+.invoice__body {
+    padding: 2rem 2.5rem;
+}
+
+/* ── Parties ── */
+.invoice__parties {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.invoice__party {
+    flex: 1;
+}
+
+.invoice__party--right {
+    text-align: right;
+}
+
+.invoice__party-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.invoice__party-name {
+    font-weight: 700;
+    color: var(--text-primary);
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+}
+
+.invoice__party-info {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    display: block;
+}
+
+/* ── Divider ── */
+.invoice__divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 1.5rem 0;
+}
+
+/* ── Period (monthly only) ── */
+.invoice__period {
+    background: var(--bg-primary);
+    border-radius: var(--radius);
+    padding: 0.75rem 1rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.875rem;
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+/* ── Table ── */
+.invoice__table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1.5rem;
+    font-size: 0.875rem;
+}
+
+.invoice__table thead tr {
+    background: var(--bg-body);
+    border-bottom: 1px solid var(--border);
+}
+
+.invoice__table th {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+}
+
+.invoice__table td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-primary);
+}
+
+.invoice__table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.invoice__table--right {
+    text-align: right;
+}
+
+/* ── Totals ── */
+.invoice__totals {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 2rem;
+}
+
+.invoice__totals-box {
+    min-width: 280px;
+}
+
+.invoice__totals-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.4rem 0;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.invoice__totals-row--total {
+    border-top: 2px solid var(--primary-color);
+    margin-top: 0.5rem;
+    padding-top: 0.75rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+/* ── Payment link ── */
+.invoice__payment-link {
+    background: var(--bg-paid);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    border-radius: var(--radius);
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.invoice__payment-link-label {
+    font-size: 0.85rem;
+    color: var(--paid);
+    font-weight: 600;
+    margin-bottom: 4px;
+    display: block;
+}
+
+.invoice__payment-link-url {
+    color: var(--primary-color);
+    font-size: 0.9rem;
+}
+
+/* ── Footer ── */
+.invoice__footer {
+    background: var(--bg-body);
+    border-top: 1px solid var(--border);
+    padding: 1.25rem 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+/* ── Print ── */
+@media print {
+    body { background: #fff; padding: 0; }
+    .invoice-print-bar { display: none; }
+    .invoice { box-shadow: none; border-radius: 0; border: none; }
+}
+
+@media print {
+    .sidebar,
+    .topbar,
+    .dashboard__title-section {
+        display: none !important;
+    }
+
+    .main-content {
+        margin-left: 0 !important;
+        padding: 0 !important;
+    }
+
+    .invoice {
+        box-shadow: none;
+        border: none;
+    }
+}

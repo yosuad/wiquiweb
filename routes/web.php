@@ -73,6 +73,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/billing/{invoice}', [BillingController::class, 'show'])->name('billing.show');
     Route::put('/billing/{invoice}', [BillingController::class, 'update'])->name('billing.update');
     Route::delete('/billing/{invoice}', [BillingController::class, 'destroy'])->name('billing.destroy');
+    Route::get('/billing/{invoice}/invoice', [BillingController::class, 'invoice'])->name('billing.invoice');
 
     // Services
     Route::get('/services', [ServiceController::class, 'index'])->name('services.index');
