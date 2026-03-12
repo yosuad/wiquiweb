@@ -9,35 +9,44 @@ use Illuminate\Http\Request;
 class BillingController extends Controller
 {
     // ========= List invoices =========
-    public function index()
+    public function index(Request $request)
     {
-        $invoices = Invoice::with(['contactService.contact', 'contactService.service'])
-            ->orderBy('created_at', 'desc')
+        $search = $request->input('search');
+
+        $contacts = Contact::whereHas('services.invoices')
+            ->with(['services.invoices' => function($q) {
+                $q->orderBy('created_at', 'desc');
+            }, 'services.service'])
+            ->when($search, function($q) use ($search) {
+                $q->where(function($q) use ($search) {
+                    $q->where('first_name', 'like', "%$search%")
+                    ->orWhere('last_name', 'like', "%$search%")
+                    ->orWhere('company_name', 'like', "%$search%");
+                });
+            })
+            ->orderBy('first_name')
             ->get();
 
-        return view('admin.billing', compact('invoices'));
+        return view('admin.billing', compact('contacts', 'search'));
     }
 
     // ========= Invoice detail =========
-    public function show(Invoice $invoice)
+    public function show(Contact $contact)
     {
-        $invoice->load(['contactService.contact', 'contactService.service']);
-
-        $history = Invoice::with(['contactService.service'])
-            ->whereHas('contactService', function($q) use ($invoice) {
-                $q->where('contact_id', $invoice->contactService->contact_id);
-            })
+        $invoices = Invoice::with(['contactService.service', 'contactService.contact'])
+            ->whereHas('contactService', fn($q) => $q->where('contact_id', $contact->id))
             ->orderBy('created_at', 'desc')
             ->get();
 
-        return view('admin.billing.show', compact('invoice', 'history'));
+        return view('admin.billing.show', compact('contact', 'invoices'));
     }
+
 
     // ========= Update invoice status =========
     public function update(Request $request, Invoice $invoice)
     {
         $request->validate([
-            'status'       => 'required|in:pending,paid,approved,cancelled',
+            'status'       => 'required|in:pending,paid,approved,courtesy,cancelled',
             'payment_link' => 'nullable|url',
         ]);
 
@@ -45,11 +54,11 @@ class BillingController extends Controller
             'status'       => $request->status,
             'payment_link' => $request->payment_link,
             'paid_at'      => $request->status === 'paid'     ? now() : $invoice->paid_at,
-            'approved_at'  => $request->status === 'approved' ? now() : $invoice->approved_at,
+            'approved_at'  => in_array($request->status, ['approved', 'courtesy']) ? now() : $invoice->approved_at,
         ]);
 
-        // Activate as customer only when invoice is approved
-        if ($request->status === 'approved') {
+        // Activate as customer when invoice is approved or courtesy
+        if (in_array($request->status, ['approved', 'courtesy'])) {
             $contact = $invoice->contactService->contact;
             $contact->update(['status' => 'customer']);
 
@@ -62,10 +71,10 @@ class BillingController extends Controller
             ]);
         }
 
-        return redirect()->route('billing.show', $invoice->id)
+        return redirect()->route('billing.show', $invoice->contactService->contact_id)
             ->with('success', 'Invoice updated successfully.');
     }
-
+    
     // ========= Delete invoice =========
     public function destroy(Invoice $invoice)
     {

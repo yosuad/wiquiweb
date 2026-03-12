@@ -11,35 +11,25 @@ return new class extends Migration
         Schema::create('contact_services', function (Blueprint $table) {
             $table->id();
 
-            // Contact (prospect or customer)
             $table->foreignId('contact_id')
                   ->constrained('contacts')
                   ->cascadeOnDelete();
 
-            // Contracted service
             $table->foreignId('service_id')
                   ->constrained()
                   ->cascadeOnDelete();
 
-            // Catalog price used to create the contract
+            // Optional description to differentiate same service (e.g. two hostings)
+            $table->string('description')->nullable();
+
             $table->foreignId('service_price_id')
                   ->constrained('service_prices')
                   ->cascadeOnDelete();
 
-            // Frozen price at time of contract
             $table->decimal('price', 10, 2);
-
-            // Currency
             $table->char('currency', 3)->default('USD');
-
-            // Billing cycle
             $table->enum('billing_cycle', ['monthly', 'annual', 'one_time']);
-
-            // Service status
-            $table->enum('status', ['active', 'suspended', 'cancelled'])
-                  ->default('active');
-
-            // Service dates
+            $table->enum('status', ['active', 'suspended', 'cancelled'])->default('active');
             $table->date('started_at')->nullable();
             $table->date('ends_at')->nullable();
 

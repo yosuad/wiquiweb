@@ -12,69 +12,91 @@
         </div>
     </div>
 
+    {{-- Search --}}
+    <div class="form-container form-container--spaced">
+        <form method="GET" action="{{ route('billing') }}">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="search">Search client</label>
+                    <input type="text" id="search" name="search"
+                           value="{{ $search ?? '' }}"
+                           class="form-input"
+                           placeholder="Name or company...">
+                </div>
+                <div class="form-group" style="justify-content: flex-end; align-items: flex-end; display: flex;">
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-search"></i> Search
+                    </button>
+                    @if($search)
+                        <a href="{{ route('billing') }}" class="btn-secondary" style="margin-left: 0.5rem;">
+                            <i class="fas fa-times"></i> Clear
+                        </a>
+                    @endif
+                </div>
+            </div>
+        </form>
+    </div>
+
+    {{-- Clients table --}}
     <div class="table-container">
         <table class="data-table">
             <thead>
                 <tr>
                     <th>Client</th>
-                    <th>Service</th>
-                    <th>Cycle</th>
-                    <th>USD</th>
-                    <th>COP</th>
+                    <th>Last invoice</th>
+                    <th>Amount</th>
                     <th>Status</th>
                     <th>Date</th>
                     <th class="text-center">Actions</th>
                 </tr>
             </thead>
             <tbody>
-                @forelse($invoices as $invoice)
+                @forelse($contacts as $contact)
+                    @php
+                        $lastInvoice = $contact->services->flatMap->invoices->sortByDesc('created_at')->first();
+                    @endphp
                     <tr>
                         <td class="font-medium">
-                            {{ $invoice->contactService->contact->company_name ?? $invoice->contactService->contact->first_name . ' ' . $invoice->contactService->contact->last_name ?? '—' }}
+                            {{ $contact->company_name ?? $contact->first_name . ' ' . $contact->last_name }}
                         </td>
-                        <td>{{ $invoice->contactService->service->name ?? '—' }}</td>
                         <td>
-                            @php $cycle = $invoice->contactService->billing_cycle ?? ''; @endphp
-                            @if($cycle === 'monthly')
-                                Mensual — {{ ucfirst($invoice->created_at->locale('es')->translatedFormat('F Y')) }}
-                            @elseif($cycle === 'annual')
-                                Anual — {{ $invoice->created_at->format('Y') }}
-                            @elseif($cycle === 'one_time')
-                                Pago único
+                            @if($lastInvoice)
+                                {{ $lastInvoice->contactService->service->name ?? '—' }}
+                                @if($lastInvoice->contactService->description)
+                                    <span class="text-muted"> — {{ $lastInvoice->contactService->description }}</span>
+                                @endif
                             @else
                                 —
                             @endif
                         </td>
-                        <td class="font-medium">$ {{ number_format($invoice->amount, 2) }}</td>
-                        <td>$ {{ number_format($invoice->amount * config('settings.usd_to_cop'), 0, ',', '.') }}</td>
-                        <td>
-                            <span class="badge {{ match($invoice->status) {
-                                'pending'   => 'badge-new',
-                                'paid'      => 'badge-contact',
-                                'approved'  => 'badge-closed',
-                                'cancelled' => 'badge-lost',
-                                default     => 'badge-new'
-                            } }}">
-                                {{ ucfirst($invoice->status) }}
-                            </span>
+                        <td class="font-medium">
+                            {{ $lastInvoice ? '$ ' . number_format($lastInvoice->amount, 2) : '—' }}
                         </td>
-                        <td>{{ $invoice->created_at->format('Y-m-d') }}</td>
+                        <td>
+                            @if($lastInvoice)
+                                <span class="badge {{ match($lastInvoice->status) {
+                                    'pending'   => 'badge-new',
+                                    'paid'      => 'badge-contact',
+                                    'approved'  => 'badge-closed',
+                                    'cancelled' => 'badge-lost',
+                                    default     => 'badge-new'
+                                } }}">
+                                    {{ ucfirst($lastInvoice->status) }}
+                                </span>
+                            @else
+                                —
+                            @endif
+                        </td>
+                        <td>{{ $lastInvoice ? $lastInvoice->created_at->format('Y-m-d') : '—' }}</td>
                         <td class="td-actions">
-                            <a href="{{ route('billing.show', $invoice->id) }}" class="btn-action btn-notes" title="View detail">
+                            <a href="{{ route('billing.show', $contact->id) }}" class="btn-action btn-notes" title="View invoices">
                                 <i class="fas fa-eye"></i>
                             </a>
-                            <form method="POST" action="{{ route('billing.destroy', $invoice->id) }}">
-                                @csrf
-                                @method('DELETE')
-                                <button class="btn-action btn-delete" title="Delete">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </form>
                         </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="8" class="text-center">No invoices registered.</td>
+                        <td colspan="6" class="text-center">No clients with invoices found.</td>
                     </tr>
                 @endforelse
             </tbody>

@@ -9,6 +9,8 @@ class Invoice extends Model
     protected $fillable = [
         'contact_service_id',
         'amount',
+        'period_start',
+        'period_end',
         'payment_link',
         'created_by',
         'status',

@@ -19,7 +19,6 @@
         <form method="POST" action="{{ route('prospects.invoice.generate', $contact->id) }}">
             @csrf
 
-            {{-- Row 1: Region and Client type --}}
             <div class="form-row">
                 <div class="form-group">
                     <label for="region">Region <span class="required">*</span></label>
@@ -45,7 +44,6 @@
                 </div>
             </div>
 
-            {{-- Row 2: Service and Billing cycle --}}
             <div class="form-row">
                 <div class="form-group">
                     <label for="service_id">Service <span class="required">*</span></label>
@@ -63,7 +61,7 @@
 
                 <div class="form-group">
                     <label for="billing_cycle">Ciclo <span class="required">*</span></label>
-                    <select id="billing_cycle" name="billing_cycle" class="form-input" onchange="calcularPrecio()">
+                    <select id="billing_cycle" name="billing_cycle" class="form-input" onchange="calcularPrecio(); togglePeriod();">
                         <option value="">— Select —</option>
                         <option value="monthly"  {{ old('billing_cycle') == 'monthly'  ? 'selected' : '' }}>Pago mensual</option>
                         <option value="annual"   {{ old('billing_cycle') == 'annual'   ? 'selected' : '' }}>Pago anual</option>
@@ -73,11 +71,35 @@
                 </div>
             </div>
 
-            {{-- Suggested price and final price --}}
+            {{-- Mes de facturación (solo monthly) --}}
+            <div class="form-row" id="period-row" style="display: none;">
+                <div class="form-group">
+                    <label for="billing_month">Mes de facturación <span class="required">*</span></label>
+                    <input type="month" id="billing_month" name="billing_month"
+                           disabled
+                           value="{{ old('billing_month', now()->format('Y-m')) }}"
+                           class="form-input @error('billing_month') is-invalid @enderror">
+                    @error('billing_month') <span class="form-error">{{ $message }}</span> @enderror
+                </div>
+                <div class="form-group"></div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <input type="text" id="description" name="description"
+                           value="{{ old('description') }}"
+                           class="form-input"
+                           placeholder="Ej: Hosting página web, Hosting landing redes...">
+                    @error('description') <span class="form-error">{{ $message }}</span> @enderror
+                </div>
+                <div class="form-group"></div>
+            </div>
+
             <div class="form-row">
                 <div class="form-group">
                     <label>Suggested price</label>
-                    <div id="precio-sugerido" class="form-input" style="background: var(--bg-body); cursor:default; color: var(--text-secondary);">
+                    <div id="precio-sugerido" class="form-input form-input--readonly">
                         — Select service, region, type and cycle —
                     </div>
                     <input type="hidden" id="service_price_id" name="service_price_id">
@@ -106,7 +128,7 @@
 
 @push('scripts')
 <script>
-    const precios = @json(
+    window.preciosData = @json(
         \App\Models\ServicePrice::all()->mapWithKeys(fn($p) => [
             $p->service_id . '_' . $p->region . '_' . $p->client_type . '_' . $p->billing_cycle => [
                 'price' => $p->price,
@@ -114,31 +136,5 @@
             ]
         ])
     );
-
-    function calcularPrecio() {
-        const serviceId    = document.getElementById('service_id').value;
-        const region       = document.getElementById('region').value;
-        const clientType   = document.getElementById('client_type').value;
-        const billingCycle = document.getElementById('billing_cycle').value;
-
-        const key   = `${serviceId}_${region}_${clientType}_${billingCycle}`;
-        const entry = precios[key];
-
-        const sugerido       = document.getElementById('precio-sugerido');
-        const amount         = document.getElementById('amount');
-        const servicePriceId = document.getElementById('service_price_id');
-
-        if (entry) {
-            sugerido.textContent = `$ ${parseFloat(entry.price).toFixed(2)} USD`;
-            amount.value         = parseFloat(entry.price).toFixed(2);
-            servicePriceId.value = entry.id;
-        } else {
-            sugerido.textContent = '— No price configured —';
-            amount.value         = '';
-            servicePriceId.value = '';
-        }
-    }
-
-    document.addEventListener('DOMContentLoaded', calcularPrecio);
 </script>
 @endpush

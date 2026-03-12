@@ -160,8 +160,7 @@ class ContactController extends Controller
 
     public function update(Request $request, Contact $contact)
     {
-
-       $request->validate([
+        $request->validate([
             'first_name'       => 'required|string|max:255',
             'last_name'        => 'nullable|string|max:255',
             'email'            => 'nullable|email|unique:contacts,email,' . $contact->id,
@@ -216,35 +215,32 @@ class ContactController extends Controller
         return view('admin.prospects.close', compact('contact', 'services'));
     }
 
-   public function generateInvoice(Request $request, Contact $contact)
+    public function generateInvoice(Request $request, Contact $contact)
     {
         $request->validate([
             'service_id'       => 'required|exists:services,id',
             'service_price_id' => 'required|exists:service_prices,id',
             'billing_cycle'    => 'required|in:monthly,annual,one_time',
             'amount'           => 'required|numeric|min:0',
+            'billing_month'    => 'required_if:billing_cycle,monthly|nullable|date_format:Y-m',
+            'description'      => 'nullable|string|max:255',
         ]);
 
         $servicePrice = ServicePrice::findOrFail($request->service_price_id);
-        $existing     = ContactService::where('contact_id', $contact->id)
-                            ->where('service_id', $request->service_id)
-                            ->whereIn('status', ['active', 'cancelled'])
-                            ->first();
+
+        $existing = ContactService::where('contact_id', $contact->id)
+                        ->where('service_id', $request->service_id)
+                        ->where('description', $request->description)
+                        ->where('status', 'active')
+                        ->first();
 
         if ($existing) {
-            $existing->update([
-                'status'           => 'active',
-                'service_price_id' => $request->service_price_id,
-                'price'            => $servicePrice->price,
-                'currency'         => $servicePrice->currency,
-                'billing_cycle'    => $request->billing_cycle,
-                'started_at'       => now(),
-            ]);
             $contactService = $existing;
         } else {
             $contactService = ContactService::create([
                 'contact_id'       => $contact->id,
                 'service_id'       => $request->service_id,
+                'description'      => $request->description,
                 'service_price_id' => $request->service_price_id,
                 'price'            => $servicePrice->price,
                 'currency'         => $servicePrice->currency,
@@ -254,18 +250,43 @@ class ContactController extends Controller
             ]);
         }
 
+        $periodStart = null;
+        $periodEnd   = null;
+
+        if ($request->billing_cycle === 'monthly' && $request->billing_month) {
+            $periodStart = \Carbon\Carbon::createFromFormat('Y-m', $request->billing_month)->startOfMonth();
+            $periodEnd   = \Carbon\Carbon::createFromFormat('Y-m', $request->billing_month)->endOfMonth();
+        }
+
         Invoice::create([
             'contact_service_id' => $contactService->id,
             'amount'             => $request->amount,
             'created_by'         => auth()->id(),
             'status'             => 'pending',
-            'period_start'       => $request->billing_cycle === 'monthly' ? now()->startOfMonth() : null,
-            'period_end'         => $request->billing_cycle === 'monthly' ? now()->endOfMonth()   : null,
+            'period_start'       => $periodStart,
+            'period_end'         => $periodEnd,
         ]);
 
         $contact->update(['pipeline_stage' => 'pending_payment']);
 
         return redirect()->route('billing')->with('success', 'Invoice generated successfully.');
+    }
+
+    // ========= Update contact service status =========
+    public function updateServiceStatus(Request $request, ContactService $contactService)
+    {
+        $request->validate([
+            'status' => 'required|in:active,suspended,cancelled',
+        ]);
+
+        $contactService->update(['status' => $request->status]);
+
+        // If cancelled, also cancel pending invoices for this service
+        if ($request->status === 'cancelled') {
+            $contactService->invoices()->where('status', 'pending')->update(['status' => 'cancelled']);
+        }
+
+        return redirect()->back()->with('success', 'Service status updated.');
     }
 
     public function notes(Contact $contact)
@@ -278,4 +299,14 @@ class ContactController extends Controller
         $contact->delete();
         return redirect()->route($request->input('redirect_to', 'prospects.index'))->with('success', 'Contact deleted successfully.');
     }
+
+
+
+    public function updateServiceDescription(Request $request, ContactService $contactService)
+    {
+        $request->validate(['description' => 'nullable|string|max:255']);
+        $contactService->update(['description' => $request->description]);
+        return redirect()->back()->with('success', 'Description updated.');
+    }
+
 }

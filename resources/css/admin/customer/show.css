@@ -1,0 +1,47 @@
+/* ═══════════════════════════════════════
+   CUSTOMER SHOW — BEM
+   ═══════════════════════════════════════ */
+
+/* ── Section title ── */
+.section-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-align: left;
+}
+
+.section-title i {
+    color: var(--primary-color);
+}
+
+.section-title--table {
+    padding: 1rem 1rem 0;
+    margin-bottom: 1rem;
+}
+
+/* ── Form container spacing ── */
+.form-container--spaced {
+    margin-bottom: 1.5rem;
+}
+
+/* ── Form input readonly ── */
+.form-input--readonly {
+    background: var(--bg-body);
+    cursor: default;
+    color: var(--text-secondary);
+}
+
+/* ── Badge small ── */
+.badge--sm {
+    font-size: 0.65rem;
+    margin-right: 2px;
+}
+
+/* ── Text muted ── */
+.text-muted {
+    color: var(--text-secondary);
+}

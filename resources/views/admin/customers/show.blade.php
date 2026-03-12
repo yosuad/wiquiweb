@@ -15,97 +15,8 @@
         </div>
     </div>
 
-    {{-- Contracted services --}}
-    <div class="table-container" style="margin-bottom: 1.5rem;">
-        <h3 style="font-size: 1rem; font-weight: 700; color: var(--text-primary); margin-bottom: 1rem; padding: 1rem 1rem 0;">
-            <i class="fas fa-box-open" style="color: var(--primary-color);"></i> Contracted services
-        </h3>
-        <table class="data-table">
-            <thead>
-                <tr>
-                    <th>Service</th>
-                    <th>Cycle</th>
-                    <th>Price</th>
-                    <th>Started</th>
-                    <th>Status</th>
-                    <th>Invoices</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse($contact->services as $cs)
-                    <tr>
-                        <td class="font-medium">{{ $cs->service->name ?? '—' }}</td>
-                        <td>
-                            @php
-                                $cycleLabel = match($cs->billing_cycle) {
-                                    'monthly'  => 'Mensual',
-                                    'annual'   => 'Anual',
-                                    'one_time' => 'Pago único',
-                                    default    => $cs->billing_cycle
-                                };
-                            @endphp
-
-                            {{ $cycleLabel }}
-
-                            @if($cs->billing_cycle === 'monthly')
-                                @php
-                                    $latestInvoice = $cs->invoices->sortByDesc('created_at')->first();
-                                    $mes = $latestInvoice
-                                        ? \Carbon\Carbon::parse($latestInvoice->created_at)->locale('es')->translatedFormat('F Y')
-                                        : \Carbon\Carbon::now()->locale('es')->translatedFormat('F Y');
-                                @endphp
-                                — {{ ucfirst($mes) }}
-                            @elseif($cs->billing_cycle === 'annual')
-                                @php
-                                    $anio = $cs->started_at
-                                        ? \Carbon\Carbon::parse($cs->started_at)->format('Y')
-                                        : \Carbon\Carbon::now()->format('Y');
-                                @endphp
-                                — {{ $anio }}
-                            @endif
-                        </td>
-                        <td>$ {{ number_format($cs->price, 2) }} {{ $cs->currency }}</td>
-                        <td>{{ $cs->started_at ? \Carbon\Carbon::parse($cs->started_at)->format('Y-m-d') : '—' }}</td>
-                        <td>
-                            <span class="badge {{ match($cs->status) {
-                                'active'    => 'badge-closed',
-                                'suspended' => 'badge-follow',
-                                'cancelled' => 'badge-lost',
-                                default     => 'badge-new'
-                            } }}">
-                                {{ ucfirst($cs->status) }}
-                            </span>
-                        </td>
-                        <td>
-                            @forelse($cs->invoices as $invoice)
-                                <span class="badge {{ match($invoice->status) {
-                                    'pending'   => 'badge-new',
-                                    'paid'      => 'badge-follow',
-                                    'approved'  => 'badge-closed',
-                                    'cancelled' => 'badge-lost',
-                                    default     => 'badge-new'
-                                } }}" style="font-size:0.65rem; margin-right: 2px;">
-                                    {{ ucfirst($invoice->status) }} — ${{ number_format($invoice->amount, 2) }}
-                                </span>
-                            @empty
-                                <span style="color: var(--text-secondary);">—</span>
-                            @endforelse
-                        </td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="6" class="text-center">No services contracted.</td>
-                    </tr>
-                @endforelse
-            </tbody>
-        </table>
-    </div>
-
     {{-- Add new service --}}
-    <div class="form-container">
-        <h3 style="font-size: 1rem; font-weight: 700; color: var(--text-primary); margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border);">
-            <i class="fas fa-plus-circle" style="color: var(--primary-color);"></i> Add service
-        </h3>
+    <div class="form-container form-container--spaced">
 
         <form method="POST" action="{{ route('prospects.invoice.generate', $contact->id) }}">
             @csrf
@@ -152,7 +63,7 @@
 
                 <div class="form-group">
                     <label for="billing_cycle">Ciclo <span class="required">*</span></label>
-                    <select id="billing_cycle" name="billing_cycle" class="form-input" onchange="calcularPrecio()">
+                    <select id="billing_cycle" name="billing_cycle" class="form-input" onchange="calcularPrecio(); togglePeriod();">
                         <option value="">— Select —</option>
                         <option value="monthly"  {{ old('billing_cycle') == 'monthly'  ? 'selected' : '' }}>Pago mensual</option>
                         <option value="annual"   {{ old('billing_cycle') == 'annual'   ? 'selected' : '' }}>Pago anual</option>
@@ -162,10 +73,35 @@
                 </div>
             </div>
 
+            {{-- Mes de facturación (solo monthly) --}}
+            <div class="form-row" id="period-row" style="display: none;">
+                <div class="form-group">
+                    <label for="billing_month">Mes de facturación <span class="required">*</span></label>
+                    <input type="month" id="billing_month" name="billing_month"
+                           disabled
+                           value="{{ old('billing_month', now()->format('Y-m')) }}"
+                           class="form-input @error('billing_month') is-invalid @enderror">
+                    @error('billing_month') <span class="form-error">{{ $message }}</span> @enderror
+                </div>
+                <div class="form-group"></div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <input type="text" id="description" name="description"
+                           value="{{ old('description') }}"
+                           class="form-input"
+                           placeholder="Ej: Hosting página web, Hosting landing redes...">
+                    @error('description') <span class="form-error">{{ $message }}</span> @enderror
+                </div>
+                <div class="form-group"></div>
+            </div>
+
             <div class="form-row">
                 <div class="form-group">
                     <label>Suggested price</label>
-                    <div id="precio-sugerido" class="form-input" style="background: var(--bg-body); cursor:default; color: var(--text-secondary);">
+                    <div id="precio-sugerido" class="form-input form-input--readonly">
                         — Select service, region, type and cycle —
                     </div>
                     <input type="hidden" id="service_price_id" name="service_price_id">
@@ -190,11 +126,153 @@
         </form>
     </div>
 
+    {{-- Contracted services --}}
+    <div class="table-container">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Service</th>
+                    <th>Description</th>
+                    <th>Cycle</th>
+                    <th>Price</th>
+                    <th>Started</th>
+                    <th>Status</th>
+                    <th>Invoices</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse($contact->services as $cs)
+                    <tr x-data="{ editing: false, description: '{{ addslashes($cs->description ?? '') }}' }">
+                        <td class="font-medium">{{ $cs->service->name ?? '—' }}</td>
+
+                        {{-- Description — inline edit --}}
+                        <td>
+                            <span x-show="!editing">{{ $cs->description ?? '—' }}</span>
+                            <form x-show="editing" method="POST"
+                                  action="{{ route('customers.service.description', $cs->id) }}"
+                                  style="display: flex; gap: 0.4rem; align-items: center;">
+                                @csrf
+                                @method('PATCH')
+                                <input type="text" name="description" x-model="description"
+                                       class="form-input"
+                                       style="font-size: 0.8rem; padding: 0.3rem 0.5rem;">
+                                <button type="submit" class="btn-action btn-notes" title="Save">
+                                    <i class="fas fa-save"></i>
+                                </button>
+                                <button type="button" class="btn-action btn-delete" title="Cancel" @click="editing = false">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </form>
+                        </td>
+
+                        <td>
+                            @if($cs->billing_cycle === 'monthly')
+                                @php
+                                    $latestInvoice = $cs->invoices->sortByDesc('created_at')->first();
+                                    $mes = $latestInvoice?->period_start
+                                        ? \Carbon\Carbon::parse($latestInvoice->period_start)->locale('es')->translatedFormat('F Y')
+                                        : \Carbon\Carbon::now()->locale('es')->translatedFormat('F Y');
+                                @endphp
+                                Mes de {{ ucfirst($mes) }}
+                            @elseif($cs->billing_cycle === 'annual')
+                                Anual — {{ $cs->started_at ? \Carbon\Carbon::parse($cs->started_at)->format('Y') : \Carbon\Carbon::now()->format('Y') }}
+                            @else
+                                Pago único
+                            @endif
+                        </td>
+                        <td>$ {{ number_format($cs->price, 2) }} {{ $cs->currency }}</td>
+                        <td>{{ $cs->started_at ? \Carbon\Carbon::parse($cs->started_at)->format('Y-m-d') : '—' }}</td>
+                        <td>
+                            <span class="badge {{ match($cs->status) {
+                                'active'    => 'badge-closed',
+                                'suspended' => 'badge-follow',
+                                'cancelled' => 'badge-lost',
+                                default     => 'badge-new'
+                            } }}">
+                                {{ ucfirst($cs->status) }}
+                            </span>
+                        </td>
+                        <td>
+                            @forelse($cs->invoices as $invoice)
+                                <span class="badge {{ match($invoice->status) {
+                                    'pending'   => 'badge-new',
+                                    'paid'      => 'badge-follow',
+                                    'approved'  => 'badge-closed',
+                                    'courtesy'  => 'badge-follow',
+                                    'cancelled' => 'badge-lost',
+                                    default     => 'badge-new'
+                                } }}">
+                                    {{ ucfirst($invoice->status) }} — ${{ number_format($invoice->amount, 2) }}
+                                </span>
+                            @empty
+                                <span class="text-muted">—</span>
+                            @endforelse
+                        </td>
+                        <td class="td-actions">
+
+                            {{-- Edit description --}}
+                            <button class="btn-action btn-edit" title="Edit description" @click="editing = !editing">
+                                <i class="fas fa-pen"></i>
+                            </button>
+
+                            @if($cs->status === 'active')
+                                <form method="POST" action="{{ route('customers.service.status', $cs->id) }}">
+                                    @csrf @method('PATCH')
+                                    <input type="hidden" name="status" value="suspended">
+                                    <button class="btn-action btn-follow" title="Suspend service">
+                                        <i class="fas fa-pause"></i>
+                                    </button>
+                                </form>
+                                <form method="POST" action="{{ route('customers.service.status', $cs->id) }}">
+                                    @csrf @method('PATCH')
+                                    <input type="hidden" name="status" value="cancelled">
+                                    <button class="btn-action btn-delete" title="Cancel service"
+                                        onclick="return confirm('Are you sure you want to cancel this service?')">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </form>
+                            @elseif($cs->status === 'suspended')
+                                <form method="POST" action="{{ route('customers.service.status', $cs->id) }}">
+                                    @csrf @method('PATCH')
+                                    <input type="hidden" name="status" value="active">
+                                    <button class="btn-action btn-notes" title="Reactivate service">
+                                        <i class="fas fa-play"></i>
+                                    </button>
+                                </form>
+                                <form method="POST" action="{{ route('customers.service.status', $cs->id) }}">
+                                    @csrf @method('PATCH')
+                                    <input type="hidden" name="status" value="cancelled">
+                                    <button class="btn-action btn-delete" title="Cancel service"
+                                        onclick="return confirm('Are you sure you want to cancel this service?')">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </form>
+                            @elseif($cs->status === 'cancelled')
+                                <form method="POST" action="{{ route('customers.service.status', $cs->id) }}">
+                                    @csrf @method('PATCH')
+                                    <input type="hidden" name="status" value="active">
+                                    <button class="btn-action btn-notes" title="Reactivate service">
+                                        <i class="fas fa-redo"></i>
+                                    </button>
+                                </form>
+                            @endif
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="8" class="text-center">No services contracted.</td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
+
 @endsection
 
 @push('scripts')
 <script>
-    const precios = @json(
+    window.preciosData = @json(
         \App\Models\ServicePrice::all()->mapWithKeys(fn($p) => [
             $p->service_id . '_' . $p->region . '_' . $p->client_type . '_' . $p->billing_cycle => [
                 'price' => $p->price,
@@ -202,31 +280,5 @@
             ]
         ])
     );
-
-    function calcularPrecio() {
-        const serviceId    = document.getElementById('service_id').value;
-        const region       = document.getElementById('region').value;
-        const clientType   = document.getElementById('client_type').value;
-        const billingCycle = document.getElementById('billing_cycle').value;
-
-        const key   = `${serviceId}_${region}_${clientType}_${billingCycle}`;
-        const entry = precios[key];
-
-        const sugerido       = document.getElementById('precio-sugerido');
-        const amount         = document.getElementById('amount');
-        const servicePriceId = document.getElementById('service_price_id');
-
-        if (entry) {
-            sugerido.textContent = `$ ${parseFloat(entry.price).toFixed(2)} USD`;
-            amount.value         = parseFloat(entry.price).toFixed(2);
-            servicePriceId.value = entry.id;
-        } else {
-            sugerido.textContent = '— No price configured —';
-            amount.value         = '';
-            servicePriceId.value = '';
-        }
-    }
-
-    document.addEventListener('DOMContentLoaded', calcularPrecio);
 </script>
 @endpush

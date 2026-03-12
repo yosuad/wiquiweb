@@ -6,16 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class ContactService extends Model
 {
+    
     protected $fillable = [
-        'contact_id',
-        'service_id',
-        'service_price_id',
-        'price',
-        'currency',
-        'billing_cycle',
-        'status',
-        'started_at',
-        'ends_at',
+    'contact_id',
+    'service_id',
+    'description',
+    'service_price_id',
+    'price',
+    'currency',
+    'billing_cycle',
+    'status',
+    'started_at',
+    'ends_at',
     ];
 
     protected function casts(): array

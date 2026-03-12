@@ -80,7 +80,7 @@
             {{-- Period (monthly only) --}}
             @if($invoice->contactService->billing_cycle === 'monthly' && $invoice->period_start && $invoice->period_end)
                 <div class="invoice__period">
-                    📅 Período:
+                    <i class="fas fa-calendar-alt"></i> Período:
                     {{ \Carbon\Carbon::parse($invoice->period_start)->translatedFormat('d \d\e F \d\e Y') }}
                     al
                     {{ \Carbon\Carbon::parse($invoice->period_end)->translatedFormat('d \d\e F \d\e Y') }}
@@ -91,6 +91,7 @@
             <table class="invoice__table">
                 <thead>
                     <tr>
+                        <th>Servicio</th>
                         <th>Descripción</th>
                         <th>Ciclo</th>
                         <th>Región</th>
@@ -100,10 +101,11 @@
                 <tbody>
                     <tr>
                         <td class="font-semibold">{{ $invoice->contactService->service->name ?? '—' }}</td>
+                        <td>{{ $invoice->contactService->description ?? '—' }}</td>
                         <td>
                             @php $cycle = $invoice->contactService->billing_cycle ?? ''; @endphp
                             @if($cycle === 'monthly')
-                                Mensual — {{ ucfirst($invoice->created_at->locale('es')->translatedFormat('F Y')) }}
+                                Mes de {{ ucfirst($invoice->period_start ? \Carbon\Carbon::parse($invoice->period_start)->locale('es')->translatedFormat('F Y') : $invoice->created_at->locale('es')->translatedFormat('F Y')) }}
                             @elseif($cycle === 'annual')
                                 Anual — {{ $invoice->created_at->format('Y') }}
                             @elseif($cycle === 'one_time')

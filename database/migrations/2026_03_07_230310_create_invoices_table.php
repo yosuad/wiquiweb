@@ -26,7 +26,7 @@ return new class extends Migration
                   ->constrained('users')
                   ->cascadeOnDelete();
 
-            $table->enum('status', ['pending', 'paid', 'approved', 'cancelled'])
+            $table->enum('status', ['pending', 'paid', 'approved', 'courtesy', 'cancelled'])
                   ->default('pending');
 
             $table->timestamp('paid_at')->nullable();

@@ -63,14 +63,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // Customers
     Route::get('/customers', [ContactController::class, 'customers'])->name('customers');
+    Route::patch('/customers/service/{contactService}/status', [ContactController::class, 'updateServiceStatus'])->name('customers.service.status');
     Route::get('/customers/{contact}', [ContactController::class, 'show'])->name('customers.show');
     Route::get('/customers/{contact}/edit', [ContactController::class, 'customerEdit'])->name('customers.edit');
     Route::put('/customers/{contact}', [ContactController::class, 'customerUpdate'])->name('customers.update');
     Route::delete('/customers/{contact}', [ContactController::class, 'destroy'])->name('customers.destroy');
+    Route::patch('/customers/service/{contactService}/description', [ContactController::class, 'updateServiceDescription'])->name('customers.service.description');
 
     // Billing
     Route::get('/billing', [BillingController::class, 'index'])->name('billing');
-    Route::get('/billing/{invoice}', [BillingController::class, 'show'])->name('billing.show');
+    Route::get('/billing/{contact}/invoices', [BillingController::class, 'show'])->name('billing.show');
     Route::put('/billing/{invoice}', [BillingController::class, 'update'])->name('billing.update');
     Route::delete('/billing/{invoice}', [BillingController::class, 'destroy'])->name('billing.destroy');
     Route::get('/billing/{invoice}/invoice', [BillingController::class, 'invoice'])->name('billing.invoice');
