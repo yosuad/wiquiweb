@@ -90,13 +90,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/services/{service}/prices/{price}/edit', [ServiceController::class, 'editPrice'])->name('services.prices.edit');
     Route::put('/services/{service}/prices/{price}', [ServiceController::class, 'updatePrice'])->name('services.prices.update');
 
-      // Support
+    // Support
     Route::get('/support', [SupportController::class, 'index'])->name('support');
     Route::get('/support/create', [SupportController::class, 'create'])->name('support.create');
     Route::post('/support', [SupportController::class, 'store'])->name('support.store');
     Route::get('/support/{ticket}', [SupportController::class, 'show'])->name('support.show');
     Route::put('/support/{ticket}', [SupportController::class, 'update'])->name('support.update');
     Route::delete('/support/{ticket}', [SupportController::class, 'destroy'])->name('support.destroy');
+    Route::post('/support/{ticket}/notes', [SupportController::class, 'storeNote'])->name('support.notes.store');
+    Route::delete('/support/{ticket}/notes/{note}', [SupportController::class, 'destroyNote'])->name('support.notes.destroy');
 
     // Admin
     Route::get('/admin', [AdminController::class, 'index'])->name('admin');

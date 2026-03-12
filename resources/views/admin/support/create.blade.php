@@ -89,3 +89,15 @@
     </div>
 
 @endsection
+
+@push('scripts')
+<link rel="stylesheet" href="{{ asset('css/tom-select.default.min.css') }}">
+<script src="{{ asset('js/tom-select.complete.min.js') }}"></script>
+<script>
+    new TomSelect('#contact_id', {
+        searchField: ['text'],
+        maxOptions: 500,
+        plugins: ['dropdown_input'],
+    });
+</script>
+@endpush

@@ -24,21 +24,23 @@ class SupportTicket extends Model
         ];
     }
 
-    // Client this ticket belongs to
     public function contact()
     {
         return $this->belongsTo(Contact::class);
     }
 
-    // Agent who created the ticket
     public function creator()
     {
         return $this->belongsTo(User::class, 'created_by');
     }
 
-    // Agent assigned to the ticket
     public function agent()
     {
         return $this->belongsTo(User::class, 'assigned_to');
+    }
+
+    public function notes()
+    {
+        return $this->hasMany(SupportTicketNote::class, 'ticket_id')->orderBy('created_at', 'asc');
     }
 }

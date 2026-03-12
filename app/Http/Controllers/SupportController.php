@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\SupportTicket;
+use App\Models\SupportTicketNote;
 use App\Models\Contact;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -38,7 +39,7 @@ class SupportController extends Controller
     // ========= Show ticket =========
     public function show(SupportTicket $ticket)
     {
-        $ticket->load(['contact', 'agent', 'creator']);
+        $ticket->load(['contact', 'agent', 'creator', 'notes.creator']);
         $agents = User::role(['administrator', 'agent', 'sales-agent'])->get();
         return view('admin.support.show', compact('ticket', 'agents'));
     }
@@ -101,5 +102,28 @@ class SupportController extends Controller
     {
         $ticket->delete();
         return redirect()->route('support')->with('success', 'Ticket deleted successfully.');
+    }
+
+    // ========= Store note =========
+    public function storeNote(Request $request, SupportTicket $ticket)
+    {
+        $request->validate([
+            'note' => 'required|string|max:2000',
+        ]);
+
+        SupportTicketNote::create([
+            'ticket_id'  => $ticket->id,
+            'created_by' => auth()->id(),
+            'note'       => $request->note,
+        ]);
+
+        return redirect()->route('support.show', $ticket->id)->with('success', 'Note added.');
+    }
+
+    // ========= Delete note =========
+    public function destroyNote(SupportTicket $ticket, SupportTicketNote $note)
+    {
+        $note->delete();
+        return redirect()->route('support.show', $ticket->id)->with('success', 'Note deleted.');
     }
 }
