@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Factura #{{ str_pad($invoice->id, 4, "0", STR_PAD_LEFT) }}')
+@section('title', 'Factura #' . str_pad($invoice->id, 4, '0', STR_PAD_LEFT))
 
 @php $pageTitle = 'Factura'; @endphp
 
@@ -10,7 +10,7 @@
         <div class="dashboard__title-row">
             <p class="dashboard__page-desc">Factura #{{ str_pad($invoice->id, 4, '0', STR_PAD_LEFT) }} — {{ $invoice->contactService->contact->first_name }} {{ $invoice->contactService->contact->last_name }}</p>
             <div style="display:flex; gap: 0.75rem;">
-                <a href="{{ route('billing.show', $invoice->id) }}" class="btn-secondary">
+                <a href="{{ route('billing.show', $invoice->contactService->contact_id) }}" class="btn-secondary">
                     <i class="fas fa-arrow-left"></i> Volver
                 </a>
                 <button class="btn-primary" onclick="window.print()">

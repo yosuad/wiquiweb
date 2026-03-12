@@ -8,7 +8,8 @@
 
     <div class="dashboard__title-section">
         <div class="dashboard__title-row">
-            <p class="dashboard__page-desc">{{ $contact->first_name }} {{ $contact->last_name }}{{ $contact->company_name ? ' — ' . $contact->company_name : '' }}</p>
+            <p class="dashboard__page-desc">{{ $contact->first_name }}
+                {{ $contact->last_name }}{{ $contact->company_name ? ' — ' . $contact->company_name : '' }}</p>
             <a href="{{ route('billing') }}" class="btn-secondary">
                 <i class="fas fa-arrow-left"></i> Back to billing
             </a>
@@ -38,8 +39,9 @@
                         <td>{{ $item->contactService->description ?? '—' }}</td>
                         <td>
                             @php $cycle = $item->contactService->billing_cycle ?? ''; @endphp
-                            @if($cycle === 'monthly')
-                                Mes de {{ ucfirst($item->period_start ? \Carbon\Carbon::parse($item->period_start)->locale('es')->translatedFormat('F Y') : $item->created_at->locale('es')->translatedFormat('F Y')) }}
+                            @if ($cycle === 'monthly')
+                                Mes de
+                                {{ ucfirst($item->period_start ? \Carbon\Carbon::parse($item->period_start)->locale('es')->translatedFormat('F Y') : $item->created_at->locale('es')->translatedFormat('F Y')) }}
                             @elseif($cycle === 'annual')
                                 Anual — {{ $item->created_at->format('Y') }}
                             @elseif($cycle === 'one_time')
@@ -51,22 +53,22 @@
                         <td>$ {{ number_format($item->amount, 2) }}</td>
                         <td>
                             {{-- Payment link inline form --}}
-                            @if($item->status === 'pending')
-                                <form method="POST" action="{{ route('billing.update', $item->id) }}" style="display:flex; gap: 0.5rem; align-items: center;">
+                            @if ($item->status === 'pending')
+                                <form method="POST" action="{{ route('billing.update', $item->id) }}"
+                                    style="display:flex; gap: 0.5rem; align-items: center;">
                                     @csrf
                                     @method('PUT')
                                     <input type="hidden" name="status" value="{{ $item->status }}">
-                                    <input type="url" name="payment_link"
-                                           value="{{ $item->payment_link ?? '' }}"
-                                           class="form-input"
-                                           placeholder="https://..."
-                                           style="font-size: 0.75rem; padding: 0.3rem 0.5rem;">
+                                    <input type="url" name="payment_link" value="{{ $item->payment_link ?? '' }}"
+                                        class="form-input" placeholder="https://..."
+                                        style="font-size: 0.75rem; padding: 0.3rem 0.5rem;">
                                     <button type="submit" class="btn-action btn-notes" title="Save link">
                                         <i class="fas fa-save"></i>
                                     </button>
                                 </form>
                             @elseif($item->payment_link)
-                                <a href="{{ $item->payment_link }}" target="_blank" class="text-muted" style="font-size: 0.75rem;">
+                                <a href="{{ $item->payment_link }}" target="_blank" class="text-muted"
+                                    style="font-size: 0.75rem;">
                                     <i class="fas fa-link"></i> Link
                                 </a>
                             @else
@@ -74,28 +76,29 @@
                             @endif
                         </td>
                         <td>
-                            <span class="badge {{ match($item->status) {
-                                'pending'   => 'badge-new',
-                                'paid'      => 'badge-contact',
-                                'approved'  => 'badge-closed',
-                                'courtesy'  => 'badge-follow',
-                                'cancelled' => 'badge-lost',
-                                default     => 'badge-new'
-                            } }}">
-                                {{ match($item->status) {
-                                    'pending'  => 'Pending',
-                                    'paid'     => 'Paid',
+                            <span
+                                class="badge {{ match ($item->status) {
+                                    'pending' => 'badge-new',
+                                    'paid' => 'badge-contact',
+                                    'approved' => 'badge-closed',
+                                    'courtesy' => 'badge-follow',
+                                    'cancelled' => 'badge-lost',
+                                    default => 'badge-new',
+                                } }}">
+                                {{ match ($item->status) {
+                                    'pending' => 'Pending',
+                                    'paid' => 'Paid',
                                     'approved' => 'Approved',
                                     'courtesy' => 'Courtesy',
-                                    'cancelled'=> 'Cancelled',
-                                    default    => ucfirst($item->status)
+                                    'cancelled' => 'Cancelled',
+                                    default => ucfirst($item->status),
                                 } }}
                             </span>
                         </td>
                         <td>{{ $item->created_at->format('Y-m-d') }}</td>
                         <td class="td-actions">
                             {{-- Status action buttons --}}
-                            @if($item->status === 'pending')
+                            @if ($item->status === 'pending')
                                 {{-- Mark as paid --}}
                                 <form method="POST" action="{{ route('billing.update', $item->id) }}">
                                     @csrf @method('PUT')
@@ -147,7 +150,8 @@
                             @endif
 
                             {{-- View invoice --}}
-                            <a href="{{ route('billing.invoice', $item->id) }}" target="_blank" class="btn-action btn-notes" title="View invoice">
+                            <a href="{{ route('billing.invoice', $item->id) }}" class="btn-action btn-notes"
+                                title="View invoice">
                                 <i class="fas fa-eye"></i>
                             </a>
 

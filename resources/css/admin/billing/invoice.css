@@ -99,9 +99,10 @@
     letter-spacing: 0.5px;
 }
 
-.invoice__status--pending   { background: var(--bg-body);   color: var(--pending); }
+.invoice__status--pending   { background: var(--bg-body);       color: var(--pending); }
 .invoice__status--paid      { background: var(--bg-secondary);  color: var(--secondary-color); }
 .invoice__status--approved  { background: var(--bg-body);       color: var(--paid); }
+.invoice__status--courtesy  { background: var(--bg-secondary);  color: var(--secondary-color); }
 .invoice__status--cancelled { background: var(--bg-danger);     color: var(--danger); }
 
 /* ── Body ── */
@@ -265,27 +266,53 @@
     color: var(--text-secondary);
 }
 
-/* ── Print ── */
+/* ═══════════════════════════════════════
+   PRINT
+   ═══════════════════════════════════════ */
 @media print {
-    body { background: #fff; padding: 0; }
-    .invoice-print-bar { display: none; }
-    .invoice { box-shadow: none; border-radius: 0; border: none; }
-}
+    
+    * {
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
 
-@media print {
+    /* Ocultar todo el chrome del admin */
     .sidebar,
-    .topbar,
-    .dashboard__title-section {
+    .dashboard__title-section,
+    nav,
+    header {
         display: none !important;
     }
 
-    .main-content {
+    /* El wrapper quita el margen del sidebar */
+    .dashboard__wrapper {
         margin-left: 0 !important;
         padding: 0 !important;
     }
 
-    .invoice {
-        box-shadow: none;
-        border: none;
+    /* El contenido sin padding */
+    .dashboard__content {
+        padding: 0 !important;
+        margin: 0 !important;
     }
+
+    /* La factura ocupa todo */
+    .invoice {
+        max-width: 100%;
+        box-shadow: none !important;
+        border: none !important;
+        border-radius: 0 !important;
+    }
+
+    body {
+        background: #fff !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    @media print {
+    @page {
+        margin: 10mm;
+    }
+}
 }

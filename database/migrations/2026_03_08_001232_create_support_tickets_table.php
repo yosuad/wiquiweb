@@ -11,9 +11,14 @@ return new class extends Migration
         Schema::create('support_tickets', function (Blueprint $table) {
             $table->id();
 
-            // Contracted service this ticket belongs to
-            $table->foreignId('contact_service_id')
-                  ->constrained('contact_services')
+            // Client this ticket belongs to
+            $table->foreignId('contact_id')
+                  ->constrained('contacts')
+                  ->cascadeOnDelete();
+
+            // Agent who created the ticket
+            $table->foreignId('created_by')
+                  ->constrained('users')
                   ->cascadeOnDelete();
 
             // Support agent assigned
