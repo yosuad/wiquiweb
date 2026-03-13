@@ -47,6 +47,7 @@
                     <th>Amount</th>
                     <th>Status</th>
                     <th>Date</th>
+                    <th class="text-center">Msg</th>
                     <th class="text-center">Actions</th>
                 </tr>
             </thead>
@@ -88,6 +89,23 @@
                             @endif
                         </td>
                         <td>{{ $lastInvoice ? $lastInvoice->created_at->format('Y-m-d') : '—' }}</td>
+                        <td class="text-center">
+                            @if($contact->message_sent === 'n8n')
+                                {{-- n8n lo envió — solo visual, no se toca --}}
+                                <i class="fas fa-check" style="color: var(--paid);" title="Enviado por n8n"></i>
+                            @else
+                                {{-- manual o no — botón toggle --}}
+                                <form method="POST" action="{{ route('contacts.message.toggle', $contact->id) }}">
+                                    @csrf
+                                    @method('PATCH')
+                                    <button type="submit" class="btn-action" title="{{ $contact->message_sent === 'manual' ? 'Quitar marca' : 'Marcar como enviado' }}"
+                                        style="background: none; border: none; cursor: pointer;
+                                               color: {{ $contact->message_sent === 'manual' ? 'var(--primary-color)' : 'var(--text-secondary)' }};">
+                                        <i class="fas fa-check"></i>
+                                    </button>
+                                </form>
+                            @endif
+                        </td>
                         <td class="td-actions">
                             <a href="{{ route('billing.show', $contact->id) }}" class="btn-action btn-notes" title="View invoices">
                                 <i class="fas fa-eye"></i>
@@ -96,7 +114,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="6" class="text-center">No clients with invoices found.</td>
+                        <td colspan="7" class="text-center">No clients with invoices found.</td>
                     </tr>
                 @endforelse
             </tbody>

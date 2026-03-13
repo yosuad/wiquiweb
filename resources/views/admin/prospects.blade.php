@@ -26,6 +26,7 @@
                     <th>Status</th>
                     <th>Assigned to</th>
                     <th>Date</th>
+                    <th class="text-center">Msg</th>
                     <th class="text-center">Notes</th>
                     <th class="text-center">Actions</th>
                 </tr>
@@ -51,7 +52,6 @@
                         <td>
                             @if($prospect->client_type)
                                 <span class="badge badge-contact" style="font-size:0.65rem;">{{ ucfirst($prospect->client_type) }}</span>
-                               
                             @endif
                             @if($prospect->service_interest)
                                 <span class="badge badge-new" style="font-size:0.65rem;">{{ $prospect->service_interest }}</span>
@@ -67,6 +67,24 @@
                         </td>
                         <td>{{ $prospect->agent->name ?? '—' }}</td>
                         <td>{{ $prospect->created_at->format('Y-m-d') }}</td>
+                        <td class="text-center">
+                            @if($prospect->message_sent === 'n8n')
+                                {{-- n8n lo envió — solo visual, no se toca --}}
+                                <i class="fas fa-check" style="color: var(--paid);" title="Enviado por n8n"></i>
+                            @else
+                                {{-- manual o no — botón toggle --}}
+                                <form method="POST" action="{{ route('contacts.message.toggle', $prospect->id) }}">
+                                    @csrf
+                                    @method('PATCH')
+                                    <button type="submit" class="btn-action"
+                                        title="{{ $prospect->message_sent === 'manual' ? 'Quitar marca' : 'Marcar como enviado' }}"
+                                        style="background: none; border: none; cursor: pointer;
+                                               color: {{ $prospect->message_sent === 'manual' ? '#189dbb' : 'var(--text-secondary)' }};">
+                                        <i class="fas fa-check"></i>
+                                    </button>
+                                </form>
+                            @endif
+                        </td>
                         <td class="text-center">
                             <a href="{{ route('prospects.notes.index', $prospect->id) }}" class="btn-action btn-notes" title="View notes">
                                 <i class="fas fa-clipboard-list"></i>
@@ -87,7 +105,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="9" class="text-center">No prospects registered.</td>
+                        <td colspan="10" class="text-center">No prospects registered.</td>
                     </tr>
                 @endforelse
             </tbody>

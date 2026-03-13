@@ -25,13 +25,11 @@ Route::get('/privacy_policy', function () {
     return view('pages.privacyPolicy');
 })->middleware('guest')->name('privacy');
 
-Route::fallback(function () {
-    return view('pages.404');
-});
-
 Route::get('/form', function () {
     return view('leads.form');
 })->middleware('guest')->name('form');
+
+Route::post('/form', [ContactController::class, 'leadStore'])->name('leads.store');
 
 /*
 |--------------------------------------------------------------------------
@@ -39,7 +37,7 @@ Route::get('/form', function () {
 |--------------------------------------------------------------------------
 */
 
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth', 'verified', 'approved'])->group(function () {
 
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -69,6 +67,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::put('/customers/{contact}', [ContactController::class, 'customerUpdate'])->name('customers.update');
     Route::delete('/customers/{contact}', [ContactController::class, 'destroy'])->name('customers.destroy');
     Route::patch('/customers/service/{contactService}/description', [ContactController::class, 'updateServiceDescription'])->name('customers.service.description');
+    Route::patch('/customers/{contact}/message-sent', [ContactController::class, 'toggleMessageSent'])->name('contacts.message.toggle');
 
     // Billing
     Route::get('/billing', [BillingController::class, 'index'])->name('billing');
@@ -105,6 +104,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/admin', [AdminController::class, 'store'])->name('admin.store');
     Route::put('/admin/{user}', [AdminController::class, 'update'])->name('admin.update');
     Route::delete('/admin/{user}', [AdminController::class, 'destroy'])->name('admin.destroy');
+    Route::post('/admin/{user}/convert-prospect', [AdminController::class, 'convertToProspect'])->name('admin.convert.prospect');
 
     // Profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -119,3 +119,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 |--------------------------------------------------------------------------
 */
 require __DIR__.'/auth.php';
+
+Route::fallback(function () {
+    return view('pages.404');
+});

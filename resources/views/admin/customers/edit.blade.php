@@ -107,7 +107,46 @@
                 </div>
             </div>
 
-            {{-- Row 4: Assigned to and Status --}}
+            {{-- Row 4: Document type and Document number --}}
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="document_type">Document type</label>
+                    <select id="document_type" name="document_type" class="form-input">
+                        <option value="" disabled selected>— Select —</option>
+                        <option value="national_id"  {{ old('document_type', $contact->document_type) == 'national_id'  ? 'selected' : '' }}>CC — Cédula de ciudadanía</option>
+                        <option value="tax_id"       {{ old('document_type', $contact->document_type) == 'tax_id'       ? 'selected' : '' }}>NIT — Número de identificación tributaria</option>
+                        <option value="rut"          {{ old('document_type', $contact->document_type) == 'rut'          ? 'selected' : '' }}>RUT — Registro único tributario</option>
+                        <option value="foreign_id"   {{ old('document_type', $contact->document_type) == 'foreign_id'   ? 'selected' : '' }}>CE — Cédula de extranjería</option>
+                        <option value="passport"     {{ old('document_type', $contact->document_type) == 'passport'     ? 'selected' : '' }}>Passport</option>
+                        <option value="ein"          {{ old('document_type', $contact->document_type) == 'ein'          ? 'selected' : '' }}>EIN — Employer Identification Number (USA)</option>
+                    </select>
+                    @error('document_type') <span class="form-error">{{ $message }}</span> @enderror
+                </div>
+
+                <div class="form-group">
+                    <label for="document_number">Document number</label>
+                    <input type="text" id="document_number" name="document_number"
+                           value="{{ old('document_number', $contact->document_number) }}"
+                           class="form-input @error('document_number') is-invalid @enderror"
+                           placeholder="Ej: 1234567890">
+                    @error('document_number') <span class="form-error">{{ $message }}</span> @enderror
+                </div>
+            </div>
+
+            {{-- Row 5: Address --}}
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <input type="text" id="address" name="address"
+                           value="{{ old('address', $contact->address) }}"
+                           class="form-input @error('address') is-invalid @enderror"
+                           placeholder="Ej: Calle 123 #45-67, Medellín">
+                    @error('address') <span class="form-error">{{ $message }}</span> @enderror
+                </div>
+                <div class="form-group"></div>
+            </div>
+
+            {{-- Row 6: Assigned to and Status --}}
             <div class="form-row">
                 <div class="form-group">
                     <label for="assigned_to">Assigned to</label>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Contact;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 
@@ -14,9 +15,11 @@ class AdminController extends Controller
         $admins = User::role(['administrator', 'agent', 'sales-agent', 'billing-agent', 'support'])
             ->get();
 
+        $pending = User::whereDoesntHave('roles')->where('status', 'pending')->get();
+
         $roles = Role::all();
 
-        return view('admin.admin', compact('admins', 'roles'));
+        return view('admin.admin', compact('admins', 'pending', 'roles'));
     }
 
     // ========= Create internal user =========
@@ -50,13 +53,36 @@ class AdminController extends Controller
         ]);
 
         $user->update([
-            'name'  => $request->name,
-            'email' => $request->email,
+            'name'   => $request->name,
+            'email'  => $request->email,
+            'status' => 'approved',
         ]);
 
         $user->syncRoles($request->role);
 
         return redirect()->route('admin')->with('success', 'User updated successfully.');
+    }
+
+    // ========= Convert pending user to prospect =========
+    public function convertToProspect(User $user)
+    {
+        // Separar nombre en first_name y last_name
+        $parts     = explode(' ', trim($user->name), 2);
+        $firstName = $parts[0];
+        $lastName  = $parts[1] ?? null;
+
+        Contact::create([
+            'first_name' => $firstName,
+            'last_name'  => $lastName,
+            'email'      => $user->email,
+            'password'   => $user->password,
+            'status'     => 'prospect',
+            'pipeline_stage' => 'new',
+        ]);
+
+        $user->delete();
+
+        return redirect()->route('admin')->with('success', 'Usuario convertido a prospecto correctamente.');
     }
 
     // ========= Delete internal user =========

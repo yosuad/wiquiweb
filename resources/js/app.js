@@ -18,6 +18,9 @@ import '../css/admin/tables.css';
 import '../css/admin/create.css';
 import '../css/admin/billing/invoice.css';
 import '../css/admin/customer/show.css';
+import '../css/admin/admin.css';
+
+
 
 import '../css/components/navbar.css';
 import '../css/components/footer.css';

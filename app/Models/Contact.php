@@ -10,26 +10,27 @@ class Contact extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    protected $fillable = [
-        'first_name',
-        'last_name',
-        'email',
-        'password',
-        'whatsapp',
-        'phone',
-        'company_name',
-        'address',
-        'document_type',
-        'document_number',
-        'region',
-        'client_type',
-        'origin',
-        'service_interest',
-        'assigned_to',
-        'status',
-        'pipeline_stage',
-        'is_active',
-        'privacy_accepted_at',
+   protected $fillable = [
+    'first_name',
+    'last_name',
+    'email',
+    'password',
+    'whatsapp',
+    'phone',
+    'company_name',
+    'address',
+    'document_type',
+    'document_number',
+    'region',
+    'client_type',
+    'origin',
+    'service_interest',
+    'assigned_to',
+    'status',
+    'pipeline_stage',
+    'is_active',
+    'message_sent',       // ← agregar esto
+    'privacy_accepted_at',
     ];
 
     protected $hidden = [

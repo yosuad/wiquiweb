@@ -26,7 +26,14 @@ return new class extends Migration
 
             // Billing
             $table->string('address')->nullable();
-            $table->enum('document_type', ['national_id', 'tax_id', 'passport'])->nullable();
+            $table->enum('document_type', [
+                'national_id',  // CC  — Cédula de ciudadanía
+                'tax_id',       // NIT — Número de identificación tributaria
+                'rut',          // RUT — Registro único tributario
+                'foreign_id',   // CE  — Cédula de extranjería
+                'passport',     //       Passport
+                'ein',          // EIN — Employer Identification Number (USA)
+            ])->nullable();
             $table->string('document_number', 30)->nullable();
 
             // Segmentation
@@ -59,6 +66,12 @@ return new class extends Migration
                   ->default('new');
 
             $table->boolean('is_active')->default(true);
+
+            // Messaging
+            // no     = no se ha enviado nada
+            // n8n    = n8n envió el mensaje automáticamente
+            // manual = marcado manualmente desde la plataforma (n8n lo ignora)
+            $table->enum('message_sent', ['no', 'n8n', 'manual'])->default('no');
 
             // GDPR / Ley 1581 compliance
             $table->timestamp('privacy_accepted_at')->nullable();

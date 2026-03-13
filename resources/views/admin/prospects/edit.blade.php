@@ -27,9 +27,8 @@
                 <div class="form-group">
                     <label for="first_name">First name <span class="required">*</span></label>
                     <input type="text" id="first_name" name="first_name"
-                           value="{{ old('first_name', $contact->first_name) }}"
-                           class="form-input @error('first_name') is-invalid @enderror"
-                           placeholder="First name">
+                        value="{{ old('first_name', $contact->first_name) }}"
+                        class="form-input @error('first_name') is-invalid @enderror" placeholder="First name">
                     @error('first_name')
                         <span class="form-error">{{ $message }}</span>
                     @enderror
@@ -38,9 +37,7 @@
                 <div class="form-group">
                     <label for="last_name">Last name</label>
                     <input type="text" id="last_name" name="last_name"
-                           value="{{ old('last_name', $contact->last_name) }}"
-                           class="form-input"
-                           placeholder="Last name">
+                        value="{{ old('last_name', $contact->last_name) }}" class="form-input" placeholder="Last name">
                 </div>
             </div>
 
@@ -48,20 +45,16 @@
             <div class="form-row">
                 <div class="form-group">
                     <label for="whatsapp">WhatsApp</label>
-                    <input type="tel" id="whatsapp" name="whatsapp"
-                           value="{{ old('whatsapp', $contact->whatsapp) }}"
-                           class="form-input" placeholder="+57 320 413 25 00"
-                           inputmode="tel" pattern="[\+\d\s\-\(\)]{7,20}"
-                           title="Solo números, +, espacios, guiones y paréntesis">
+                    <input type="tel" id="whatsapp" name="whatsapp" value="{{ old('whatsapp', $contact->whatsapp) }}"
+                        class="form-input" placeholder="+57 320 413 25 00" inputmode="tel" pattern="[\+\d\s\-\(\)]{7,20}"
+                        title="Solo números, +, espacios, guiones y paréntesis">
                 </div>
 
                 <div class="form-group">
                     <label for="phone">Phone</label>
-                    <input type="tel" id="phone" name="phone"
-                           value="{{ old('phone', $contact->phone) }}"
-                           class="form-input" placeholder="+57 300 758 35 00"
-                           inputmode="tel" pattern="[\+\d\s\-\(\)]{7,20}"
-                           title="Solo números, +, espacios, guiones y paréntesis">
+                    <input type="tel" id="phone" name="phone" value="{{ old('phone', $contact->phone) }}"
+                        class="form-input" placeholder="+57 300 758 35 00" inputmode="tel" pattern="[\+\d\s\-\(\)]{7,20}"
+                        title="Solo números, +, espacios, guiones y paréntesis">
                 </div>
             </div>
 
@@ -69,10 +62,8 @@
             <div class="form-row">
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" id="email" name="email"
-                           value="{{ old('email', $contact->email) }}"
-                           class="form-input @error('email') is-invalid @enderror"
-                           placeholder="email@example.com">
+                    <input type="email" id="email" name="email" value="{{ old('email', $contact->email) }}"
+                        class="form-input @error('email') is-invalid @enderror" placeholder="email@example.com">
                     @error('email')
                         <span class="form-error">{{ $message }}</span>
                     @enderror
@@ -81,9 +72,8 @@
                 <div class="form-group">
                     <label for="company_name">Company</label>
                     <input type="text" id="company_name" name="company_name"
-                           value="{{ old('company_name', $contact->company_name) }}"
-                           class="form-input"
-                           placeholder="Company name (optional)">
+                        value="{{ old('company_name', $contact->company_name) }}" class="form-input"
+                        placeholder="Company name (optional)">
                 </div>
             </div>
 
@@ -93,7 +83,7 @@
                     <label for="assigned_to">Assigned to</label>
                     <select id="assigned_to" name="assigned_to" class="form-input">
                         <option value="">— Select —</option>
-                        @foreach($agents as $agent)
+                        @foreach ($agents as $agent)
                             <option value="{{ $agent->id }}"
                                 {{ (int) old('assigned_to', $contact->assigned_to) === $agent->id ? 'selected' : '' }}>
                                 {{ $agent->name }}
@@ -107,9 +97,11 @@
                     <select id="origin" name="origin" class="form-input">
                         <option value="">— Select —</option>
                         <option value="facebook"  {{ old('origin', $contact->origin) == 'facebook'  ? 'selected' : '' }}>Facebook</option>
-                        <option value="instagram" {{ old('origin') == 'instagram' ? 'selected' : '' }}>Instagram</option>
-                        <option value="referido"  {{ old('origin') == 'referido'  ? 'selected' : '' }}>Referido</option>
-                        <option value="agente"    {{ old('origin') == 'agente'    ? 'selected' : '' }}>Agente</option>
+                        <option value="instagram" {{ old('origin', $contact->origin) == 'instagram' ? 'selected' : '' }}>Instagram</option>
+                        <option value="referido"  {{ old('origin', $contact->origin) == 'referido'  ? 'selected' : '' }}>Referido</option>
+                        <option value="agente"    {{ old('origin', $contact->origin) == 'agente'    ? 'selected' : '' }}>Agente</option>
+                        <option value="meta"      {{ old('origin', $contact->origin) == 'meta'      ? 'selected' : '' }}>Meta</option>
+                        <option value="web"       {{ old('origin', $contact->origin) == 'web'       ? 'selected' : '' }}>Web</option>
                     </select>
                 </div>
             </div>
@@ -148,12 +140,9 @@
                 <div class="form-group">
                     <label for="status">Status</label>
                     <select id="status" name="status" class="form-input">
-                        @foreach(['prospect', 'customer', 'lost'] as $status)
-                            <option value="{{ $status }}"
-                                {{ old('status', $contact->status) == $status ? 'selected' : '' }}>
-                                {{ ucfirst($status) }}
-                            </option>
-                        @endforeach
+                        <option value="prospect" {{ old('status', $contact->status) == 'prospect' ? 'selected' : '' }}>Prospect</option>
+                        <option value="customer" {{ old('status', $contact->status) == 'customer' || $contact->pipeline_stage == 'closing' ? 'selected' : '' }}>Customer</option>
+                        <option value="lost"     {{ old('status', $contact->status) == 'lost'     ? 'selected' : '' }}>Lost</option>
                     </select>
                 </div>
             </div>
@@ -176,11 +165,11 @@
         <div class="dash-activity">
             @forelse($logs as $log)
                 <div class="dash-activity__item">
-                    @if($log->type === 'status_change')
+                    @if ($log->type === 'status_change')
                         <div class="dash-activity__dot dash-activity__dot--amber"></div>
                         <div class="dash-activity__text">
                             <strong>{{ $log->author->name ?? '—' }}</strong>
-                            @if($log->from === null)
+                            @if ($log->from === null)
                                 registered contact as
                                 <span class="badge badge-new" style="font-size:0.7rem;">{{ ucfirst($log->to) }}</span>
                             @else
@@ -195,7 +184,7 @@
                         <div class="dash-activity__dot dash-activity__dot--blue"></div>
                         <div class="dash-activity__text">
                             <strong>{{ $log->author->name ?? '—' }}</strong>
-                            @if($log->from === null)
+                            @if ($log->from === null)
                                 assigned to <em>{{ $log->to }}</em>
                             @else
                                 reassigned from <em>{{ $log->from }}</em> to <em>{{ $log->to }}</em>
@@ -213,11 +202,11 @@
 @endsection
 
 @push('scripts')
-<script>
-    ['whatsapp', 'phone'].forEach(id => {
-        document.getElementById(id).addEventListener('input', function () {
-            this.value = this.value.replace(/[^\d\+\s\-\(\)]/g, '');
+    <script>
+        ['whatsapp', 'phone'].forEach(id => {
+            document.getElementById(id).addEventListener('input', function() {
+                this.value = this.value.replace(/[^\d\+\s\-\(\)]/g, '');
+            });
         });
-    });
-</script>
+    </script>
 @endpush

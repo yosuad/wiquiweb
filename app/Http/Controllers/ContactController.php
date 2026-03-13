@@ -60,14 +60,17 @@ class ContactController extends Controller
     public function customerUpdate(Request $request, Contact $contact)
     {
         $request->validate([
-            'first_name'   => 'required|string|max:255',
-            'last_name'    => 'nullable|string|max:255',
-            'email'        => 'nullable|email|unique:contacts,email,' . $contact->id,
-            'phone'        => 'nullable|string|max:20',
-            'whatsapp'     => 'nullable|string|max:20',
-            'company_name' => 'nullable|string|max:255',
-            'assigned_to'  => 'nullable|exists:users,id',
-            'status'       => 'nullable|in:customer,lost',
+            'first_name'      => 'required|string|max:255',
+            'last_name'       => 'nullable|string|max:255',
+            'email'           => 'nullable|email|unique:contacts,email,' . $contact->id,
+            'phone'           => 'nullable|string|max:20',
+            'whatsapp'        => 'nullable|string|max:20',
+            'company_name'    => 'nullable|string|max:255',
+            'document_type'   => 'nullable|in:national_id,tax_id,rut,foreign_id,passport,ein',
+            'document_number' => 'nullable|string|max:30',
+            'address'         => 'nullable|string|max:255',
+            'assigned_to'     => 'nullable|exists:users,id',
+            'status'          => 'nullable|in:customer,lost',
         ]);
 
         if ($request->assigned_to && $request->assigned_to != $contact->assigned_to) {
@@ -84,14 +87,17 @@ class ContactController extends Controller
         }
 
         $contact->update([
-            'first_name'   => $request->first_name,
-            'last_name'    => $request->last_name,
-            'email'        => $request->email,
-            'phone'        => $request->phone,
-            'whatsapp'     => $request->whatsapp,
-            'company_name' => $request->company_name,
-            'assigned_to'  => $request->assigned_to,
-            'status'       => $request->status,
+            'first_name'      => $request->first_name,
+            'last_name'       => $request->last_name,
+            'email'           => $request->email,
+            'phone'           => $request->phone,
+            'whatsapp'        => $request->whatsapp,
+            'company_name'    => $request->company_name,
+            'document_type'   => $request->document_type,
+            'document_number' => $request->document_number,
+            'address'         => $request->address,
+            'assigned_to'     => $request->assigned_to,
+            'status'          => $request->status,
         ]);
 
         return $request->status === 'lost'
@@ -144,6 +150,31 @@ class ContactController extends Controller
         }
 
         return redirect()->route('prospects.index')->with('success', 'Prospect created successfully.');
+    }
+
+    // ========= Lead store (formulario público) =========
+    public function leadStore(Request $request)
+    {
+        $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name'  => 'nullable|string|max:255',
+            'whatsapp'   => 'required|string|max:20',
+            'email'      => 'nullable|email|unique:contacts,email',
+        ]);
+
+        Contact::create([
+            'first_name'       => $request->first_name,
+            'last_name'        => $request->last_name,
+            'whatsapp'         => $request->whatsapp,
+            'email'            => $request->email,
+            'origin'           => 'meta',
+            'service_interest' => 'pagina_web',
+            'status'           => 'prospect',
+            'pipeline_stage'   => 'new',
+            'password'         => bcrypt('password'),
+        ]);
+
+        return redirect()->route('form')->with('success', '¡Gracias! Nos pondremos en contacto contigo pronto.');
     }
 
     public function edit(Contact $contact)
@@ -218,12 +249,25 @@ class ContactController extends Controller
     public function generateInvoice(Request $request, Contact $contact)
     {
         $request->validate([
+            'document_type'    => 'required|in:national_id,tax_id,rut,foreign_id,passport,ein',
+            'document_number'  => 'required|string|max:30',
+            'address'          => 'required|string|max:255',
+            'region'           => 'required|in:colombia,international',
+            'client_type'      => 'required|in:persona_natural,empresa,emprendimiento,artista,organizacion_social',
             'service_id'       => 'required|exists:services,id',
             'service_price_id' => 'required|exists:service_prices,id',
             'billing_cycle'    => 'required|in:monthly,annual,one_time',
             'amount'           => 'required|numeric|min:0',
             'billing_month'    => 'required_if:billing_cycle,monthly|nullable|date_format:Y-m',
             'description'      => 'nullable|string|max:255',
+        ]);
+
+        $contact->update([
+            'document_type'    => $request->document_type,
+            'document_number'  => $request->document_number,
+            'address'          => $request->address,
+            'region'           => $request->region,
+            'client_type'      => $request->client_type,
         ]);
 
         $servicePrice = ServicePrice::findOrFail($request->service_price_id);
@@ -234,21 +278,17 @@ class ContactController extends Controller
                         ->where('status', 'active')
                         ->first();
 
-        if ($existing) {
-            $contactService = $existing;
-        } else {
-            $contactService = ContactService::create([
-                'contact_id'       => $contact->id,
-                'service_id'       => $request->service_id,
-                'description'      => $request->description,
-                'service_price_id' => $request->service_price_id,
-                'price'            => $servicePrice->price,
-                'currency'         => $servicePrice->currency,
-                'billing_cycle'    => $request->billing_cycle,
-                'status'           => 'active',
-                'started_at'       => now(),
-            ]);
-        }
+        $contactService = $existing ?? ContactService::create([
+            'contact_id'       => $contact->id,
+            'service_id'       => $request->service_id,
+            'description'      => $request->description,
+            'service_price_id' => $request->service_price_id,
+            'price'            => $servicePrice->price,
+            'currency'         => $servicePrice->currency,
+            'billing_cycle'    => $request->billing_cycle,
+            'status'           => 'active',
+            'started_at'       => now(),
+        ]);
 
         $periodStart = null;
         $periodEnd   = null;
@@ -281,7 +321,6 @@ class ContactController extends Controller
 
         $contactService->update(['status' => $request->status]);
 
-        // If cancelled, also cancel pending invoices for this service
         if ($request->status === 'cancelled') {
             $contactService->invoices()->where('status', 'pending')->update(['status' => 'cancelled']);
         }
@@ -300,8 +339,6 @@ class ContactController extends Controller
         return redirect()->route($request->input('redirect_to', 'prospects.index'))->with('success', 'Contact deleted successfully.');
     }
 
-
-
     public function updateServiceDescription(Request $request, ContactService $contactService)
     {
         $request->validate(['description' => 'nullable|string|max:255']);
@@ -309,4 +346,13 @@ class ContactController extends Controller
         return redirect()->back()->with('success', 'Description updated.');
     }
 
+    // ========= Toggle message_sent (no <-> manual) =========
+    public function toggleMessageSent(Contact $contact)
+    {
+        $contact->update([
+            'message_sent' => $contact->message_sent === 'manual' ? 'no' : 'manual',
+        ]);
+
+        return back();
+    }
 }

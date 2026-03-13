@@ -43,7 +43,6 @@
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    overflow: hidden;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
@@ -55,6 +54,7 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
+    border-radius: var(--radius) var(--radius) 0 0;
 }
 
 .invoice__brand-name {
@@ -258,6 +258,7 @@
 .invoice__footer {
     background: var(--bg-body);
     border-top: 1px solid var(--border);
+    border-radius: 0 0 var(--radius) var(--radius);
     padding: 1.25rem 2.5rem;
     display: flex;
     justify-content: space-between;
@@ -270,30 +271,51 @@
    PRINT
    ═══════════════════════════════════════ */
 @media print {
-    
+
+    @page {
+        margin: 10mm;
+    }
+
+    @page {
+        margin: 10mm;
+        size: A4;
+    }
+
     * {
-            -webkit-print-color-adjust: exact !important;
-            print-color-adjust: exact !important;
-        }
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
 
     /* Ocultar todo el chrome del admin */
     .sidebar,
     .dashboard__title-section,
+    .dashboard__wrapper > *:not(.dashboard__content),
     nav,
-    header {
+    header,
+    footer {
         display: none !important;
+    }
+
+    html, body {
+        height: auto !important;
+        min-height: unset !important;
+        background: #fff !important;
+        padding: 0 !important;
+        margin: 0 !important;
     }
 
     /* El wrapper quita el margen del sidebar */
     .dashboard__wrapper {
         margin-left: 0 !important;
         padding: 0 !important;
+        min-height: unset !important;
     }
 
     /* El contenido sin padding */
     .dashboard__content {
         padding: 0 !important;
         margin: 0 !important;
+        min-height: unset !important;
     }
 
     /* La factura ocupa todo */
@@ -302,17 +324,6 @@
         box-shadow: none !important;
         border: none !important;
         border-radius: 0 !important;
+        page-break-after: avoid;
     }
-
-    body {
-        background: #fff !important;
-        padding: 0 !important;
-        margin: 0 !important;
-    }
-
-    @media print {
-    @page {
-        margin: 10mm;
-    }
-}
 }

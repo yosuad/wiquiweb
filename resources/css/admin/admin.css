@@ -1,0 +1,38 @@
+/* Agregar en :root */
+
+
+/* ---- Modal Overlay ---- */
+
+.modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: var(--dark-color);
+    z-index: 999;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-box {
+    width: 100%;
+    max-width: 480px;
+    margin: 0;
+}
+
+.modal-title {
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+
+/* ---- Table Section Header (pending users) ---- */
+
+.table-section-header {
+    padding: 0.75rem 1rem;
+    background: var(--bg-pending);
+    border-bottom: 1px solid var(--border);
+    font-size: 0.85rem;
+    color: var(--pending);
+}

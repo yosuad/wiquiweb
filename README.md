@@ -143,6 +143,7 @@ Seguimiento de facturas. Los recordatorios los genera n8n automáticamente.
 | `pending` | Factura generada, cliente no ha pagado |
 | `paid` | Cliente pagó — pendiente validación del admin |
 | `approved` | Admin validó el pago — contacto pasa a cliente |
+| `courtesy` | Servicio cortesía — sin cobro |
 | `cancelled` | Factura anulada |
 
 ### Servicios (`/services`)
@@ -165,11 +166,12 @@ Usuarios internos del sistema (agentes, admins, soporte).
 |-------|------|-------------|
 | id | BIGINT | PK |
 | name | VARCHAR | Nombre |
+| last_name | VARCHAR | Apellido (nullable) |
 | email | VARCHAR | Email único |
 | password | VARCHAR | Contraseña |
 | status | ENUM | `pending` / `approved` / `rejected` |
-| whatsapp | VARCHAR | WhatsApp |
-| phone | VARCHAR | Teléfono |
+| whatsapp | VARCHAR | WhatsApp (nullable) |
+| phone | VARCHAR | Teléfono (nullable) |
 
 > Todo usuario nuevo queda en `pending` hasta ser aprobado manualmente.
 
@@ -179,8 +181,8 @@ Catálogo de servicios ofrecidos.
 | Campo | Tipo | Descripción |
 |-------|------|-------------|
 | id | BIGINT | PK |
-| name | VARCHAR | Nombre del servicio |
-| slug | VARCHAR | Identificador único |
+| name | VARCHAR(150) | Nombre del servicio |
+| slug | VARCHAR(150) | Identificador único |
 | description | TEXT | Descripción opcional |
 
 ### `service_prices`
@@ -192,10 +194,13 @@ Precios por servicio, región, tipo de cliente y ciclo.
 | service_id | BIGINT | FK → services.id |
 | region | ENUM | `colombia` / `international` |
 | client_type | ENUM | `persona_natural` / `empresa` / `emprendimiento` / `artista` / `organizacion_social` |
+| type | ENUM | `recurring` / `one_time` / `mixed` |
 | billing_cycle | ENUM | `monthly` / `annual` / `one_time` |
-| plan | VARCHAR | Nombre del plan (opcional) |
-| price | DECIMAL | Precio en USD |
-| currency | CHAR(3) | `USD` |
+| plan | VARCHAR(150) | Nombre del plan (nullable) |
+| price | DECIMAL(10,2) | Precio |
+| currency | CHAR(3) | `USD` por defecto |
+
+> Unique constraint sobre `(service_id, region, client_type, billing_cycle, plan)` para evitar precios duplicados.
 
 ### `contacts`
 Prospectos y clientes del CRM.
@@ -204,18 +209,23 @@ Prospectos y clientes del CRM.
 |-------|------|-------------|
 | id | BIGINT | PK |
 | first_name | VARCHAR | Nombre |
-| last_name | VARCHAR | Apellido |
-| email | VARCHAR | Email único |
-| whatsapp | VARCHAR | WhatsApp |
-| phone | VARCHAR | Teléfono |
-| company_name | VARCHAR | Empresa |
-| region | ENUM | `colombia` / `international` |
-| client_type | ENUM | `persona_natural` / `empresa` / `emprendimiento` / `artista` / `organizacion_social` |
-| origin | ENUM | `facebook` / `instagram` / `referido` / `web` / `agente` / `meta` |
-| service_interest | VARCHAR | Servicio de interés |
-| assigned_to | BIGINT | FK → users.id |
+| last_name | VARCHAR | Apellido (nullable) |
+| email | VARCHAR | Email único (nullable) |
+| whatsapp | VARCHAR | WhatsApp (nullable) |
+| phone | VARCHAR | Teléfono (nullable) |
+| company_name | VARCHAR | Empresa (nullable) |
+| address | VARCHAR | Dirección de facturación (nullable) |
+| document_type | ENUM | `national_id` / `tax_id` / `passport` (nullable) |
+| document_number | VARCHAR(30) | Número de documento (nullable) |
+| region | ENUM | `colombia` / `international` (nullable) |
+| client_type | ENUM | `persona_natural` / `empresa` / `emprendimiento` / `artista` / `organizacion_social` (nullable) |
+| origin | ENUM | `facebook` / `instagram` / `referido` / `web` / `agente` / `meta` (nullable) |
+| service_interest | VARCHAR | Servicio de interés (nullable) |
+| assigned_to | BIGINT | FK → users.id (nullable) |
 | status | ENUM | `prospect` / `customer` / `lost` |
 | pipeline_stage | ENUM | `new` / `closing` / `pending_payment` |
+| is_active | BOOLEAN | Activo por defecto |
+| privacy_accepted_at | TIMESTAMP | Aceptación GDPR / Ley 1581 (nullable) |
 
 ### `contact_services`
 Servicios contratados por cada cliente.
@@ -225,11 +235,16 @@ Servicios contratados por cada cliente.
 | id | BIGINT | PK |
 | contact_id | BIGINT | FK → contacts.id |
 | service_id | BIGINT | FK → services.id |
+| description | VARCHAR | Descripción opcional — diferencia instancias del mismo servicio (ej: dominio cliente.com) (nullable) |
 | service_price_id | BIGINT | FK → service_prices.id |
-| price | DECIMAL | Precio congelado al momento del contrato |
+| price | DECIMAL(10,2) | Precio congelado al momento del contrato |
+| currency | CHAR(3) | `USD` por defecto |
 | billing_cycle | ENUM | `monthly` / `annual` / `one_time` |
 | status | ENUM | `active` / `suspended` / `cancelled` |
-| started_at | DATE | Fecha de inicio |
+| started_at | DATE | Fecha de inicio (nullable) |
+| ends_at | DATE | Fecha de fin (nullable) |
+
+> La combinación `(contact_id, service_id, description)` se usa como clave lógica para identificar instancias únicas del mismo servicio. Esto permite que un cliente tenga, por ejemplo, dos hostings con dominios distintos como servicios separados.
 
 ### `invoices`
 Facturas generadas para cada servicio contratado.
@@ -238,11 +253,14 @@ Facturas generadas para cada servicio contratado.
 |-------|------|-------------|
 | id | BIGINT | PK |
 | contact_service_id | BIGINT | FK → contact_services.id |
-| amount | DECIMAL | Monto congelado al momento de facturar |
-| status | ENUM | `pending` / `paid` / `approved` / `cancelled` |
+| amount | DECIMAL(10,2) | Monto congelado al momento de facturar |
+| period_start | DATE | Inicio del período facturado (nullable) |
+| period_end | DATE | Fin del período facturado (nullable) |
+| payment_link | VARCHAR | Enlace de pago (nullable) |
+| status | ENUM | `pending` / `paid` / `approved` / `courtesy` / `cancelled` |
 | created_by | BIGINT | FK → users.id |
-| paid_at | TIMESTAMP | Fecha de pago |
-| approved_at | TIMESTAMP | Fecha de aprobación |
+| paid_at | TIMESTAMP | Fecha de pago (nullable) |
+| approved_at | TIMESTAMP | Fecha de aprobación (nullable) |
 
 > El campo `amount` preserva el precio original aunque el catálogo cambie — garantía de integridad contable.
 
@@ -257,29 +275,54 @@ Recordatorios automáticos generados por n8n.
 | sent_at | TIMESTAMP | Fecha y hora de envío |
 | status | ENUM | `sent` / `failed` |
 
+> Unique constraint sobre `(invoice_id, reminder_number)` para evitar recordatorios duplicados.
+
 ### `contact_notes`
 Notas internas de seguimiento por contacto.
+
+| Campo | Tipo | Descripción |
+|-------|------|-------------|
+| id | BIGINT | PK |
+| contact_id | BIGINT | FK → contacts.id |
+| created_by | BIGINT | FK → users.id |
+| note | TEXT | Contenido de la nota |
 
 ### `contact_logs`
 Historial de cambios de estado y asignaciones por contacto.
 
 | Campo | Tipo | Descripción |
 |-------|------|-------------|
-| type | VARCHAR | `status_change` / `assignment_change` |
-| from | VARCHAR | Valor anterior |
-| to | VARCHAR | Valor nuevo |
+| id | BIGINT | PK |
+| contact_id | BIGINT | FK → contacts.id |
 | created_by | BIGINT | FK → users.id |
+| type | VARCHAR | `status_change` / `assignment_change` |
+| from | VARCHAR | Valor anterior (nullable) |
+| to | VARCHAR | Valor nuevo (nullable) |
 
 ### `support_tickets`
-Tickets de soporte asociados a servicios contratados.
+Tickets de soporte asociados a clientes.
 
 | Campo | Tipo | Descripción |
 |-------|------|-------------|
-| contact_service_id | BIGINT | FK → contact_services.id |
-| assigned_to | BIGINT | FK → users.id |
-| subject | VARCHAR | Asunto |
+| id | BIGINT | PK |
+| contact_id | BIGINT | FK → contacts.id |
+| created_by | BIGINT | FK → users.id |
+| assigned_to | BIGINT | FK → users.id (nullable) |
+| subject | VARCHAR | Asunto del ticket |
+| description | TEXT | Descripción del problema (nullable) |
 | status | ENUM | `open` / `in_progress` / `resolved` / `closed` |
 | priority | ENUM | `low` / `medium` / `high` |
+| resolved_at | TIMESTAMP | Fecha de resolución (nullable) |
+
+### `support_ticket_notes`
+Notas internas de seguimiento por ticket.
+
+| Campo | Tipo | Descripción |
+|-------|------|-------------|
+| id | BIGINT | PK |
+| ticket_id | BIGINT | FK → support_tickets.id |
+| created_by | BIGINT | FK → users.id |
+| note | TEXT | Contenido de la nota |
 
 ---
 
@@ -287,14 +330,18 @@ Tickets de soporte asociados a servicios contratados.
 
 ```
 users (agentes/admins)
-  ↓ assigned_to
+  ↓ assigned_to / created_by
 contacts (prospectos/clientes)
   ↓
 contact_services ← services → service_prices
   ↓
 invoices → invoice_reminders (n8n)
+
+contacts
   ↓
-support_tickets
+contact_notes
+contact_logs
+support_tickets → support_ticket_notes
 ```
 
 ---
@@ -309,6 +356,7 @@ support_tickets
 - [x] Vistas: prospects, customers, billing, services
 - [x] Historial de cambios por contacto (contact_logs)
 - [x] Integración lista para n8n (invoice_reminders)
+- [x] Tickets de soporte (support_tickets + support_ticket_notes)
 - [ ] customers/show — detalle de cliente con servicios
 - [ ] SupportController y vistas de tickets
 - [ ] Notificaciones automáticas con n8n

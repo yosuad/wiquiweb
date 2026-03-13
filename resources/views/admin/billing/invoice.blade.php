@@ -62,15 +62,47 @@
                 </div>
                 <div class="invoice__party invoice__party--right">
                     <span class="invoice__party-label">Facturado a</span>
+
+                    {{-- Nombre principal: empresa si existe, si no nombre completo --}}
                     <p class="invoice__party-name">
                         {{ $invoice->contactService->contact->company_name ?? $invoice->contactService->contact->first_name . ' ' . $invoice->contactService->contact->last_name }}
                     </p>
-                    <span class="invoice__party-info">{{ $invoice->contactService->contact->first_name }} {{ $invoice->contactService->contact->last_name }}</span>
-                    @if($invoice->contactService->contact->email)
-                        <span class="invoice__party-info">{{ $invoice->contactService->contact->email }}</span>
+
+                    {{-- Si hay empresa, mostrar nombre del contacto debajo --}}
+                    @if($invoice->contactService->contact->company_name)
+                        <span class="invoice__party-info">{{ $invoice->contactService->contact->first_name }} {{ $invoice->contactService->contact->last_name }}</span>
                     @endif
-                    @if($invoice->contactService->contact->whatsapp)
-                        <span class="invoice__party-info">{{ $invoice->contactService->contact->whatsapp }}</span>
+
+                    {{-- Tipo y número de documento --}}
+                    @php
+                        $contact = $invoice->contactService->contact;
+                        $docLabel = match($contact->document_type) {
+                            'national_id' => 'CC',
+                            'tax_id'      => 'NIT',
+                            'rut'         => 'RUT',
+                            'foreign_id'  => 'CE',
+                            'passport'    => 'Passport',
+                            'ein'         => 'EIN',
+                            default       => null,
+                        };
+                    @endphp
+                    @if($docLabel && $contact->document_number)
+                        <span class="invoice__party-info">{{ $docLabel }}: {{ $contact->document_number }}</span>
+                    @endif
+
+                    {{-- Dirección --}}
+                    @if($contact->address)
+                        <span class="invoice__party-info">{{ $contact->address }}</span>
+                    @endif
+
+                    {{-- Email --}}
+                    @if($contact->email)
+                        <span class="invoice__party-info">{{ $contact->email }}</span>
+                    @endif
+
+                    {{-- WhatsApp --}}
+                    @if($contact->whatsapp)
+                        <span class="invoice__party-info">{{ $contact->whatsapp }}</span>
                     @endif
                 </div>
             </div>
@@ -153,7 +185,7 @@
         {{-- Footer --}}
         <div class="invoice__footer">
             <span>wiquiweb.com</span>
-            <span>Factura #{{ str_pad($invoice->id, 4, '0', STR_PAD_LEFT) }} — {{ $invoice->created_at->format('d/m/Y') }}</span>
+            <span>Factura #{{ str_pad($invoice->id, 4, '0', STR_PAD_LEFT) }}</span>
             <span>facturacion@wiquiweb.com</span>
         </div>
 

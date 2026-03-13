@@ -15,6 +15,57 @@
         </div>
     </div>
 
+    {{-- Pending users (no role assigned) --}}
+    @if($pending->count())
+        <div class="table-container">
+            <div class="table-section-header">
+                <strong>⚠ Users without role ({{ $pending->count() }})</strong>
+            </div>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($pending as $user)
+                        <tr>
+                            <td class="font-medium">{{ $user->name }}</td>
+                            <td class="td-email">{{ $user->email }}</td>
+                            <td><span class="badge badge-lost">Sin rol</span></td>
+                            <td><span class="badge badge-lost">Pending</span></td>
+                            <td class="td-actions">
+                                <button class="btn-action btn-edit" title="Assign role"
+                                    onclick="openEditModal({{ $user->id }}, '{{ $user->name }}', '{{ $user->email }}', '')">
+                                    <i class="fas fa-pen"></i>
+                                </button>
+                                <form method="POST" action="{{ route('admin.convert.prospect', $user->id) }}">
+                                    @csrf
+                                    <button class="btn-action btn-notes" title="Convertir a prospecto"
+                                        onclick="return confirm('¿Convertir a prospecto? El usuario será eliminado del panel.')">
+                                        <i class="fas fa-user-tag"></i>
+                                    </button>
+                                </form>
+                                <form method="POST" action="{{ route('admin.destroy', $user->id) }}">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn-action btn-delete" title="Delete">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    @endif
+
+    {{-- Active users with roles --}}
     <div class="table-container">
         <table class="data-table">
             <thead>
@@ -65,9 +116,9 @@
     </div>
 
     {{-- Create modal --}}
-    <div id="modal-create" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:999; align-items:center; justify-content:center;">
-        <div class="form-container" style="width:100%; max-width:480px; margin:0;">
-            <h3 style="margin-bottom:1rem;">Add user</h3>
+    <div id="modal-create" class="modal-overlay">
+        <div class="form-container modal-box">
+            <h3 class="modal-title">Add user</h3>
             <form method="POST" action="{{ route('admin.store') }}">
                 @csrf
                 <div class="form-group">
@@ -96,9 +147,9 @@
     </div>
 
     {{-- Edit modal --}}
-    <div id="modal-edit" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:999; align-items:center; justify-content:center;">
-        <div class="form-container" style="width:100%; max-width:480px; margin:0;">
-            <h3 style="margin-bottom:1rem;">Edit user</h3>
+    <div id="modal-edit" class="modal-overlay">
+        <div class="form-container modal-box">
+            <h3 class="modal-title">Edit user</h3>
             <form method="POST" id="form-edit" action="">
                 @csrf
                 @method('PUT')
