@@ -10,6 +10,12 @@ Alpine.start();
 /* ========= Estilos globales ========= */
 import '../css/app.css';
 
+/* ========= navegacion ========= */
+import '../css/components/navbar.css';
+
+/* ========= page ========= */
+import '../css/pages/start.css';
+
 /* ========= Componentes ========= */
 import '../css/components/navigation.css';
 import '../css/components/sidebar.css';
@@ -22,7 +28,7 @@ import '../css/admin/admin.css';
 
 
 
-import '../css/components/navbar.css';
+
 import '../css/components/footer.css';
 
 /* ========= Customer show — precios y período ========= */

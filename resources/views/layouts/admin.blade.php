@@ -22,13 +22,13 @@
     </div>
 
     {{-- SIDEBAR --}}
-    @include('layouts.sidebar')
+    @include('components.sidebar')
 
     {{-- WRAPPER: header + contenido --}}
     <div class="dashboard__wrapper">
 
         {{-- HEADER --}}
-        @include('layouts.navigation')
+        @include('components.navigation')
 
         {{-- CONTENIDO --}}
         <main class="dashboard__content">

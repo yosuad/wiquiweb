@@ -102,7 +102,8 @@
 
 .page-form .contact-header__subtitle {
     color: rgba(255, 255, 255, 0.5);
-    font-size: 0.9rem;
+    font-size: 1.2rem;
+    padding-bottom: 1.2rem;
 }
 
 /* ── Card ── */
