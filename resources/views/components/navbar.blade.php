@@ -40,12 +40,12 @@
                                     consultoría
                                 </a>
                             </li>
-                            <li class="navbar__submenu-item">
-                                <a href="404.html" class="navbar__submenu-link">
-                                    <x-icon-bowl />
-                                    diseño páginas web
-                                </a>
-                            </li>
+                          <li class="navbar__submenu-item">
+    <a href="{{ route('services.web-design') }}" class="navbar__submenu-link">
+        <x-icon-bowl />
+        diseño páginas web
+    </a>
+</li>
                         </ul>
                     </li>
                     <li class="navbar__item">

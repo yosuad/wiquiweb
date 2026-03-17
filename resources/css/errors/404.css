@@ -1,0 +1,115 @@
+/**************************************/
+/*           ERROR 404                */
+/**************************************/
+
+.error404 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 70vh;
+  text-align: center;
+}
+
+.error404__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.error404__title {
+  font-size: 120px;
+  font-weight: 700;
+  margin: 0;
+  color: var(--text-primary);
+}
+
+.error404__subtitle {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+  color: var(--text-primary);
+}
+
+.error404__text {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.error404__actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+/* ===== Botón — persiana desde los lados ===== */
+.error404__btn {
+  padding: 0.8rem 2rem;
+  font-size: 0.85rem;
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.error404__btn--primary {
+  background: var(--primary-color);
+  color: var(--white-color);
+  border: 1px solid var(--primary-color);
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  transition: color 0.5s ease, border-color 0.5s ease;
+}
+
+.error404__btn--primary::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  right: 50%;
+  bottom: 0;
+  background: var(--dark-color);
+  opacity: 0;
+  z-index: -1;
+  transition: left 0.5s ease, right 0.5s ease, opacity 0.5s ease;
+}
+
+.error404__btn--primary:hover::before {
+  left: 0;
+  right: 0;
+  opacity: 0.18;
+}
+
+.error404__btn--primary:hover {
+  color: var(--white-color);
+  border-color: var(--primary-color);
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .error404 {
+    padding: 0 1.5rem;
+  }
+
+  .error404__title {
+    font-size: 80px;
+  }
+
+  .error404__subtitle {
+    font-size: 1.5rem;
+  }
+
+  .error404__actions {
+    flex-direction: column;
+    align-items: center;
+  }
+}

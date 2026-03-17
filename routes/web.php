@@ -17,17 +17,26 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 
+// ===== Páginas públicas =====
 Route::get('/', function () {
     return view('pages.start');
 })->middleware('guest')->name('home');
 
+// ===== Servicios diseño paginas web =====
+Route::get('/servicios/diseno-web', function () {
+    return view('pages.services.web-design');
+})->name('services.web-design');
+
+// ===== Legal =====
 Route::get('/privacy_policy', function () {
     return view('pages.privacyPolicy');
 })->middleware('guest')->name('privacy');
 
+// ===== Leads =====
 Route::get('/form', function () {
     return view('leads.form');
 })->middleware('guest')->name('form');
+
 
 Route::post('/form', [ContactController::class, 'leadStore'])->name('leads.store');
 
@@ -120,6 +129,3 @@ Route::middleware(['auth', 'verified', 'approved'])->group(function () {
 */
 require __DIR__.'/auth.php';
 
-Route::fallback(function () {
-    return view('pages.404');
-});

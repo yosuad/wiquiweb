@@ -1,7 +1,6 @@
-@extends('components.app')
+@extends('layouts.app')
 @section('title', '404 - Página no encontrada')
-@vite('resources/css/pages/404.css')
-@section('title', 'Inicio')
+@vite('resources/css/errors/404.css')
 
 @section('content')  
     <main class="error404">
@@ -14,14 +13,10 @@
                 Lo sentimos, la página que estás buscando no existe o fue movida.
             </p>
             <div class="error404__actions">
-                <a href="{{ url('/') }}"
-                   class="error404__btn error404__btn--primary">
+                <a href="{{ url('/') }}" class="error404__btn error404__btn--primary">
                     Volver al inicio
                 </a>
             </div>
         </div>
     </main>
 @endsection
-
-
-

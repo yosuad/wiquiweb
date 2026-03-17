@@ -16,22 +16,22 @@
                     </a>
                 </li>
                 <li class="home-banner__menu-item">
-                    <a href="https://instagram.com" target="_blank" class="home-banner__menu-link" aria-label="Instagram">
+                    <a href="https://www.instagram.com/wiquiweb" target="_blank" class="home-banner__menu-link" aria-label="Instagram">
                         <i class="home-banner__menu-icon fa-brands fa-instagram" aria-hidden="true"></i>
                     </a>
                 </li>
                 <li class="home-banner__menu-item">
-                    <a href="https://tiktok.com" target="_blank" class="home-banner__menu-link" aria-label="TikTok">
+                    <a href="https://www.tiktok.com/@wiquiweb" target="_blank" class="home-banner__menu-link" aria-label="TikTok">
                         <i class="home-banner__menu-icon fa-brands fa-tiktok" aria-hidden="true"></i>
                     </a>
                 </li>
                 <li class="home-banner__menu-item">
-                    <a href="https://linkedin.com" target="_blank" class="home-banner__menu-link" aria-label="LinkedIn">
+                    <a href="https://co.linkedin.com/company/wiqui-web" target="_blank" class="home-banner__menu-link" aria-label="LinkedIn">
                         <i class="home-banner__menu-icon fa-brands fa-linkedin-in" aria-hidden="true"></i>
                     </a>
                 </li>
                 <li class="home-banner__menu-item">
-                    <a href="https://youtube.com" target="_blank" class="home-banner__menu-link" aria-label="YouTube">
+                    <a href="https://www.youtube.com/@wiquiweb" target="_blank" class="home-banner__menu-link" aria-label="YouTube">
                         <i class="home-banner__menu-icon fa-brands fa-youtube" aria-hidden="true"></i>
                     </a>
                 </li>
@@ -50,7 +50,7 @@
                 desde el primer clic
             </p>
             <div class="home-banner__actions">
-                <a href="#" class="home-banner__btn home-banner__btn--primary wow fadeInLeft">Quiero mi web</a>
+                <a href="{{ route('services.web-design') }}" class="home-banner__btn home-banner__btn--primary wow fadeInLeft">Quiero mi web</a>
                 <a href="#" class="home-banner__btn home-banner__btn--secondary wow fadeInRight">Hablar con un
                     asesor</a>
             </div>
