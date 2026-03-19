@@ -48,12 +48,12 @@
                             {{-- View detail --}}
                             <a href="{{ route('customers.show', $customer->id) }}" class="btn-action btn-notes"
                                 title="View detail">
-                                <i class="fas fa-eye"></i>
+                                <i data-lucide="eye"></i>
                             </a>
                             {{-- Edit customer --}}
                             <a href="{{ route('customers.edit', $customer->id) }}" class="btn-action btn-edit"
                                 title="Edit">
-                                <i class="fas fa-pen"></i>
+                                <i data-lucide="pencil"></i>
                             </a>
                             {{-- Mark as lost --}}
                             <form method="POST" action="{{ route('prospects.update', $customer->id) }}">
@@ -65,7 +65,7 @@
                                 <input type="hidden" name="redirect_to" value="customers">
                                 <button class="btn-action btn-delete" title="Mark as lost"
                                     onclick="return confirm('Mark {{ $customer->first_name }} as lost?')">
-                                    <i class="fas fa-user-xmark"></i>
+                                    <i data-lucide="user-x"></i>
                                 </button>
                             </form>
                         </td>

@@ -17,7 +17,8 @@ class DatabaseSeeder extends Seeder
     {
          // Llamar al UserSeeder para roles y admin
         $this->call(\Database\Seeders\UserSeeder::class);
-        // $this->call(\Database\Seeders\ProspectSeeder::class);
+        $this->call(\Database\Seeders\PermissionSeeder::class);
+        //$this->call(\Database\Seeders\ProspectSeeder::class);
         // $this->call(\Database\Seeders\ServiceSeeder::class);
     }
 }

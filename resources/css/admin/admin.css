@@ -1,4 +1,5 @@
 /* Agregar en :root */
+/* --overlay: rgba(0, 0, 0, 0.5); */
 
 
 /* ---- Modal Overlay ---- */
@@ -7,7 +8,7 @@
     display: none;
     position: fixed;
     inset: 0;
-    background: var(--dark-color);
+    background: var(--overlay);
     z-index: 999;
     align-items: center;
     justify-content: center;
@@ -35,4 +36,17 @@
     border-bottom: 1px solid var(--border);
     font-size: 0.85rem;
     color: var(--pending);
+}
+
+/* ---- Permissions matrix ---- */
+
+.permissions-table th:first-child,
+.permissions-table td:first-child {
+    width: 52%;
+}
+
+.permissions-table th:not(:first-child),
+.permissions-table td:not(:first-child) {
+    text-align: center;
+    width: 12%;
 }

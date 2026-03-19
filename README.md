@@ -43,8 +43,35 @@ Manejo de roles y permisos del equipo interno.
 
 ---
 
-## 🔄 Flujo de Ventas
+## 🎨 Íconos — Lucide Icons
 
+El sitio público utiliza **Lucide Icons** como librería de íconos de interfaz. Se carga vía CDN en `layouts/app.blade.php` antes del `</body>`.
+```html
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script>lucide.createIcons();</script>
+```
+
+**Uso en blade:**
+```html
+<i data-lucide="globe"></i>
+<i data-lucide="mail"></i>
+<i data-lucide="arrow-right"></i>
+```
+
+Lucide convierte automáticamente los atributos `data-lucide` en SVGs inline al cargar la página.
+
+> **Nota:** FontAwesome **no se usa en el sitio público**. Solo se carga vía CDN en `layouts/admin.blade.php` para los íconos del panel CRM (`fas`, `fa-brands`).
+
+| Layout | Librería de íconos |
+|--------|-------------------|
+| `layouts/app.blade.php` | Lucide Icons (CDN) |
+| `layouts/admin.blade.php` | FontAwesome 6 (CDN) |
+
+**Íconos de redes sociales** — como Lucide no incluye íconos de marcas (Facebook, Instagram, etc.), se usan **SVGs inline** directamente en el blade. Los paths SVG se toman de FontAwesome y se incluyen sin dependencia externa.
+
+---
+
+## 🔄 Flujo de Ventas
 ```
 Prospecto nuevo (pipeline_stage: new)
         ↓
@@ -327,7 +354,6 @@ Notas internas de seguimiento por ticket.
 ---
 
 ## 🔄 Flujo de Relaciones
-
 ```
 users (agentes/admins)
   ↓ assigned_to / created_by
@@ -350,6 +376,8 @@ support_tickets → support_ticket_notes
 
 - [x] Autenticación con Laravel Breeze
 - [x] Roles con Spatie Laravel Permission
+- [x] Íconos de interfaz con Lucide Icons (sitio público)
+- [x] Íconos del panel CRM con FontAwesome 6 (admin)
 - [x] Migraciones y modelos
 - [x] Pipeline de prospectos (new → closing → pending_payment)
 - [x] Flujo de facturación (pending → paid → approved)

@@ -20,39 +20,49 @@
                                 || request()->routeIs('customers.show');
             @endphp
 
-            <a href="{{ route('prospects.lost') }}"
-                class="sidebar__link {{ request()->routeIs('prospects.lost') || $editingLost || (request()->routeIs('prospects.notes.*') && request()->get('from') === 'lost') ? 'sidebar__link--active' : '' }}">
-                Prospectos perdidos
-            </a>
+            @can('view prospects')
+                <a href="{{ route('prospects.lost') }}"
+                    class="sidebar__link {{ request()->routeIs('prospects.lost') || $editingLost || (request()->routeIs('prospects.notes.*') && request()->get('from') === 'lost') ? 'sidebar__link--active' : '' }}">
+                    Prospectos perdidos
+                </a>
 
-            <a href="{{ route('prospects.index') }}"
-                class="sidebar__link {{ request()->routeIs('prospects.index') || request()->routeIs('prospects.create') || request()->routeIs('prospects.close') || (request()->routeIs('prospects.edit') && !$editingLost && !$editingCustomer) || (request()->routeIs('prospects.notes.*') && request()->get('from') !== 'lost') ? 'sidebar__link--active' : '' }}">
-                Prospectos
-            </a>
+                <a href="{{ route('prospects.index') }}"
+                    class="sidebar__link {{ request()->routeIs('prospects.index') || request()->routeIs('prospects.create') || request()->routeIs('prospects.close') || (request()->routeIs('prospects.edit') && !$editingLost && !$editingCustomer) || (request()->routeIs('prospects.notes.*') && request()->get('from') !== 'lost') ? 'sidebar__link--active' : '' }}">
+                    Prospectos
+                </a>
+            @endcan
 
-            <a href="{{ route('customers') }}"
-                class="sidebar__link {{ request()->routeIs('customers') || $editingCustomer ? 'sidebar__link--active' : '' }}">
-                Clientes
-            </a>
+            @can('view customers')
+                <a href="{{ route('customers') }}"
+                    class="sidebar__link {{ request()->routeIs('customers') || $editingCustomer ? 'sidebar__link--active' : '' }}">
+                    Clientes
+                </a>
+            @endcan
 
-            <a href="{{ route('billing') }}"
-                class="sidebar__link {{ request()->routeIs('billing') || request()->routeIs('billing.*') ? 'sidebar__link--active' : '' }}">
-                Facturación
-            </a>
+            @can('view billing')
+                <a href="{{ route('billing') }}"
+                    class="sidebar__link {{ request()->routeIs('billing') || request()->routeIs('billing.*') ? 'sidebar__link--active' : '' }}">
+                    Facturación
+                </a>
+            @endcan
 
-            <a href="{{ route('support') }}"
-                class="sidebar__link {{ request()->routeIs('support') || request()->routeIs('support.*') ? 'sidebar__link--active' : '' }}">
-                Soporte
-            </a>
+            @can('view support')
+                <a href="{{ route('support') }}"
+                    class="sidebar__link {{ request()->routeIs('support') || request()->routeIs('support.*') ? 'sidebar__link--active' : '' }}">
+                    Soporte
+                </a>
+            @endcan
 
-            <a href="{{ route('services.index') }}"
-                class="sidebar__link {{ request()->routeIs('services.*') ? 'sidebar__link--active' : '' }}">
-                Servicios
-            </a>
+            @role('administrator')
+                <a href="{{ route('services.index') }}"
+                    class="sidebar__link {{ request()->routeIs('services.*') ? 'sidebar__link--active' : '' }}">
+                    Servicios
+                </a>
 
-            <a href="{{ route('admin') }}"
-                class="sidebar__link {{ request()->routeIs('admin') ? 'sidebar__link--active' : '' }}">
-                Administración
-            </a>
+                <a href="{{ route('admin') }}"
+                    class="sidebar__link {{ request()->routeIs('admin') ? 'sidebar__link--active' : '' }}">
+                    Administración
+                </a>
+            @endrole
         </nav>
     </aside>

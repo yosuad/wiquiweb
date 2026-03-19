@@ -1,9 +1,14 @@
-/* 1️⃣ IMPORTA TAILWIND PRIMERO */
+/* =============================================
+   1. TAILWIND
+   ============================================= */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* ========= RAJDHANI LOCAL ========= */
+
+/* =============================================
+   2. FUENTES — RAJDHANI LOCAL
+   ============================================= */
 
 @font-face {
     font-family: 'Rajdhani';
@@ -46,231 +51,201 @@
 }
 
 
-/* ========= SCAN SOURCES ========= */
+/* =============================================
+   3. SCAN SOURCES (Laravel / Blade)
+   ============================================= */
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 @source '../**/*.blade.php';
 @source '../**/*.js';
 
-/* ========= THEME ========= */
+
+/* =============================================
+   4. THEME — fuente global Tailwind
+   ============================================= */
 @theme {
     --font-sans: 'Rajdhani', ui-sans-serif, system-ui, sans-serif,
         'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 }
 
 
+/* =============================================
+   5. VARIABLES — PÁGINA PÚBLICA (LANDING)
+      Prefijo --color-page-*
+      Archivo: start.css y todas las secciones públicas
+   ============================================= */
+:root {
 
-/******************************************/
-/*         GLOBAL BASE STYLES            */
-/****************************************/
+    /* ── Color principal ── */
+    --color-page-primary:             #189dbb;
+    --color-page-primary-bg:          rgba(24, 157, 187, 0.10);
 
+    /* ── Color secundario ── */
+    --color-page-secondary:           #1ABC9C;
+    --color-page-secondary-bg:        rgba(26, 188, 156, 0.12);
+
+    /* ── Color oscuro
+         Usado en: sección "¿Por qué elegirnos?", badges de pasos,
+         hover de botones. Se mantiene en negro puro para que el
+         botón de WhatsApp (naranja sobre negro) contraste bien. ── */
+    --color-page-dark:                #000000;
+
+    /* ── Acento naranja
+         Disponible para: botón WhatsApp, badges de portafolio,
+         detalles de énfasis. Úsalo con moderación (máx. 3 puntos). ── */
+    --color-page-accent:              #FB8500;
+    --color-page-accent-bg:           rgba(251, 133, 0, 0.10);
+
+    /* ── Fondos ── */
+    --color-page-white:               #ffffff;
+    --color-page-bg:                  #f5f6fa;
+    --color-page-bg-card:             #ffffff;
+    --color-page-bg-secondary:        var(--color-page-secondary-bg);
+
+    /* ── Texto ── */
+    --color-page-text-primary:        #1a1a2e;
+    --color-page-text-secondary:      #6b7280;
+
+    /* ── Bordes ── */
+    --color-page-border:              #e5e7eb;
+
+    /* ── Tipografía ── */
+    --color-page-text-xxl:            4rem;
+    --color-page-text-xl:             2.5rem;
+    --color-page-text-xl-weight:      700;
+    --color-page-text-base:           1.2rem;
+    --color-page-text-base-weight:    600;
+    --color-page-text-sm:             0.95rem;
+    --color-page-text-sm-weight:      400;
+
+    /* ── Radio ── */
+    --color-page-radius:              0.75rem;
+}
+
+
+/* =============================================
+   6. VARIABLES — DASHBOARD ADMINISTRATIVO
+      Prefijos: --primary-color / --dash-* / --bg-* / etc.
+      Archivos: todas las vistas del panel interno
+   ============================================= */
+:root {
+
+    /* ── Marca ── */
+    --primary-color:            #189dbb;   /* Azul teal — color dominante */
+    --secondary-color:          #1ABC9C;   /* Mint — activos, ingresos, éxito */
+    --purple-color:             #7c3aed;   /* Morado — gráficas, roles, categorías */
+
+    /* ── Paleta extendida del dashboard ── */
+    --dash-sky:                 #8ECAE6;   /* Sky blue — fondos informativos suaves */
+    --dash-blue-green:          #219EBC;   /* Blue green — variante media del primario */
+    --dash-prussian:            #023047;   /* Prussian blue — sidebar, headers oscuros */
+    --dash-mint:                #1ABC9C;   /* Mint — alias semántico de secondary */
+    --dash-orange:              #FB8500;   /* UT Orange — advertencias cálidas, pendientes */
+
+    /* ── Neutros ── */
+    --dark-color:               #000000;
+    --grey-color:               #828588;
+    --white-color:              #ffffff;
+
+    /* ── Fondos ── */
+    --bg-body:                  #f5f6fa;
+    --bg-card:                  #ffffff;
+
+    /* ── Fondos semitransparentes (chips, badges, tags) ── */
+    --bg-primary:               rgba(24,  157, 187, 0.12);
+    --bg-secondary:             rgba(26,  188, 156, 0.12);
+    --bg-purple:                rgba(124,  58, 237, 0.12);
+    --bg-sky:                   rgba(142, 202, 230, 0.15);
+    --bg-prussian:              rgba(  2,  48,  71, 0.10);
+    --bg-orange:                rgba(251, 133,   0, 0.12);
+
+    /* ── Estados / semántica ── */
+    --paid:                     #10b981;
+    --pending:                  #f59e0b;
+    --danger:                   #ef4444;
+
+    --bg-paid:                  rgba( 16, 185, 129, 0.12);
+    --bg-pending:               rgba(245, 158,  11, 0.12);
+    --bg-danger:                rgba(239,  68,  68, 0.12);
+
+    /* ── Badge de texto ── */
+    --orange:                   #c2410c;
+
+    /* ── Bordes y texto ── */
+    --border:                   #e5e7eb;
+    --text-primary:             #1a1a2e;
+    --text-secondary:           #6b7280;
+
+    /* ── Radio ── */
+    --radius:                   0.75rem;
+}
+
+
+/* =============================================
+   7. BASE GLOBAL
+   ============================================= */
 
 body {
     font-family: 'Rajdhani', sans-serif !important;
 }
 
-
-:root {
-    /* Brand */
-    --primary-color: #189dbb;
-    --secondary-color: #1ABC9C;
-    --purple-color: #7c3aed;
-
-    /* Neutrals */
-    --dark-color: #000;
-    --grey-color: #828588;
-    --white-color: #ffffff;
-
-    /* Backgrounds */
-    --bg-body: #f5f6fa;
-    --bg-card: #ffffff;
-
-    /* Borders & Text */
-    --border: #e5e7eb;
-    --text-primary: #1a1a2e;
-    --text-secondary: #6b7280;
-
-    /* Status */
-    --paid: #10b981;
-    --pending: #f59e0b;
-    --danger: #ef4444;
-
-    /* Status backgrounds */
-  --bg-primary:  rgba(24, 157, 187, 0.12);
-  --bg-secondary: rgba(26, 188, 156, 0.12);
-  --bg-purple:   rgba(124, 58, 237, 0.12);
-  --bg-paid:     rgba(16, 185, 129, 0.12);
-  --bg-pending:  rgba(245, 158, 11, 0.12);
-  --bg-danger:   rgba(239, 68, 68, 0.12);
-  --bg-orange:   #ffedd5;   /* ← nuevo */
-
-  /* Badge colors */
-  --orange:      #c2410c;   /* ← nuevo */
-
-    /* Global */
-    --radius: 0.75rem;
-
-  --text-size-base: 1.2rem;
-  --text-weight-base: 400;
-}
-
-
-
 html {
     font-size: 62.5%;
     box-sizing: border-box;
 }
+
 *, *:before, *:after {
     box-sizing: inherit;
 }
 
 html,
 body {
-    margin: 0; /* Elimina márgenes predeterminados */
-    padding: 0; /* Elimina relleno predeterminado */   
-    width: 100%; /* Garantiza que ocupe toda la pantalla */
+    margin: 0;
+    padding: 0;
+    width: 100%;
     height: 100%;
-    font-size: 16px; /* 1rem = 10px */    
+    font-size: 16px;
 }
 
 .contenedor {
     max-width: 90rem;
-    margin: 0 auto ;
+    margin: 0 auto;
 }
 
-/* tipografias*/
-h1{
-    font-size: 3.8rem;
-}
-h2{
-    font-size: 2.8rem
-}
-h3{
-    font-size: 1.8rem
-}
-h1,h2,h3 {
+h1 { font-size: 3.8rem; }
+h2 { font-size: 2.8rem; }
+h3 { font-size: 1.8rem; }
+
+h1, h2, h3 {
     text-align: center;
 }
 
 
-/******************************************/
-/*         PRELOADER DESIGN              */
-/****************************************/
-
+/* =============================================
+   8. PRELOADER
+   ============================================= */
 
 .preloader {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: fixed;
-  background: #8ecae6;
-  width: 100%;
-  height: 100%;
-  z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    background: #8ecae6;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
 }
 
 .loader {
-  width: 48px;
-  height: 48px;
-  display: inline-block;
-  position: relative;
+    width: 48px;
+    height: 48px;
+    display: inline-block;
+    position: relative;
 }
 
 .logo_login {
-    width: 250px;        /* ancho del logo */
-    height: auto;        /* mantiene la proporción */
+    width: 250px;
+    height: auto;
     display: block;
-    margin: 0 auto 1rem; /* centrado horizontal con margen inferior */
+    margin: 0 auto 1rem;
 }
-
-
-
-
-
-
-/* =========================
-   PAGE PRIVACY POLICY
-   ========================= */
-
-
-.beam-container {
-    max-width: 1200px;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-}
-
-/* Textos */
-.beam-text-4xl {
-    font-size: 2.25rem;
-    line-height: 2.5rem;
-}
-.beam-text-2xl {
-    font-size: 1.5rem;
-    line-height: 2rem;
-}
-.beam-text-lg {
-    font-size: 1.125rem;
-    line-height: 1.75rem;
-}
-.beam-text-sm {
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-}
-
-/* Fuentes */
-.beam-font-bold {
-    font-weight: 700;
-}
-.beam-font-semibold {
-    font-weight: 600;
-}
-
-/* Márgenes */
-.beam-mb-4 { margin-bottom: 1rem; }
-.beam-mb-6 { margin-bottom: 1.5rem; }
-
-/* Centrados */
-.beam-text-center { text-align: center; }
-
-/* Colores de texto */
-.beam-text-gray-500 { color: #6b7280; }
-.beam-text-blue-600 { color: #2563eb; }
-
-/* Enlaces */
-.beam-underline { text-decoration: underline; }
-
-/* Listas */
-.beam-list-disc { list-style-type: disc; }
-.beam-ml-6 { margin-left: 1.5rem; }
-
-/* Contenedor máximo */
-.beam-max-w-5xl { max-width: 80rem; } /* aprox 1280px */
-
-/* Espaciado horizontal y vertical */
-.beam-px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
-.beam-py-8 { padding-top: 2rem; padding-bottom: 2rem; }
-.beam-mx-auto { margin-left: auto; margin-right: auto; }
-
-
-/* =========================
-   PAGE PRIVACY POLICY
-   ========================= */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -153,6 +153,12 @@
     display: inline;
 }
 
+.text-center form {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .btn-action {
     background: none;
     border: none;
@@ -165,6 +171,16 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
+}
+
+/* ---- Lucide icon size inside buttons ---- */
+.btn-action svg,
+.btn-primary svg {
+    width: 14px;
+    height: 14px;
+    stroke-width: 2;
+    flex-shrink: 0;
+    display: block;
 }
 
 .btn-edit:hover   { background: var(--bg-primary); color: var(--primary-color); }
@@ -215,5 +231,3 @@
         min-width: 900px;
     }
 }
-
-

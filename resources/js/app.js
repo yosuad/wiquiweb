@@ -1,6 +1,3 @@
-/* ========= FONT AWESOME ========= */
-import '@fortawesome/fontawesome-free/js/all.js';
-
 /* ========= Carga AlpineJS y lo inicializa ========= */
 import Alpine from 'alpinejs';
 

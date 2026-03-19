@@ -13,10 +13,24 @@ use Illuminate\Http\Request;
 
 class ContactController extends Controller
 {
+    // ========= Helper: filtrar por rol =========
+    private function scopeByRole($query)
+    {
+        $user = auth()->user();
+
+        // Administrator ve todo
+        if ($user->hasRole('administrator')) {
+            return $query;
+        }
+
+        // El resto solo ve sus asignados
+        return $query->where('assigned_to', $user->id);
+    }
+
     // ========= List prospects =========
     public function index()
     {
-        $prospects = Contact::where(function($q) {
+        $query = Contact::where(function($q) {
                 $q->where('status', 'prospect')
                 ->orWhere(function($q2) {
                     $q2->where('status', 'customer')
@@ -25,26 +39,34 @@ class ContactController extends Controller
             })
             ->with(['agent', 'services.invoices'])
             ->orderByRaw("FIELD(pipeline_stage, 'pending_payment', 'closing', 'new')")
-            ->latest()
-            ->paginate(15);
+            ->latest();
+
+        $prospects = $this->scopeByRole($query)->paginate(15);
 
         return view('admin.prospects', compact('prospects'));
     }
 
     public function lost()
     {
-        $prospects = Contact::where('status', 'lost')->with('agent')->latest()->paginate(15);
+        $query = Contact::where('status', 'lost')->with('agent')->latest();
+        $prospects = $this->scopeByRole($query)->paginate(15);
         return view('admin.prospects.lost', compact('prospects'));
     }
 
     public function customers()
     {
-        $customers = Contact::where('status', 'customer')->with(['agent', 'services.service'])->latest()->paginate(15);
+        $query = Contact::where('status', 'customer')->with(['agent', 'services.service'])->latest();
+        $customers = $this->scopeByRole($query)->paginate(15);
         return view('admin.customers', compact('customers'));
     }
 
     public function show(Contact $contact)
     {
+        // Verificar que el agente tenga acceso a este contacto
+        if (!auth()->user()->hasRole('administrator') && $contact->assigned_to !== auth()->id()) {
+            abort(403);
+        }
+
         $contact->load(['agent', 'services.service', 'services.invoices']);
         $services = Service::all();
         return view('admin.customers.show', compact('contact', 'services'));
@@ -52,6 +74,10 @@ class ContactController extends Controller
 
     public function customerEdit(Contact $contact)
     {
+        if (!auth()->user()->hasRole('administrator') && $contact->assigned_to !== auth()->id()) {
+            abort(403);
+        }
+
         $agents = User::role(['administrator', 'agent', 'sales-agent'])->get();
         $logs   = ContactLog::where('contact_id', $contact->id)->with('author')->latest()->get();
         return view('admin.customers.edit', compact('contact', 'agents', 'logs'));
@@ -59,6 +85,10 @@ class ContactController extends Controller
 
     public function customerUpdate(Request $request, Contact $contact)
     {
+        if (!auth()->user()->hasRole('administrator') && $contact->assigned_to !== auth()->id()) {
+            abort(403);
+        }
+
         $request->validate([
             'first_name'      => 'required|string|max:255',
             'last_name'       => 'nullable|string|max:255',
@@ -179,6 +209,10 @@ class ContactController extends Controller
 
     public function edit(Contact $contact)
     {
+        if (!auth()->user()->hasRole('administrator') && $contact->assigned_to !== auth()->id()) {
+            abort(403);
+        }
+
         $agents = User::role(['administrator', 'agent', 'sales-agent'])->get();
         $from   = request()->get('from');
         $redirectTo = match($from) {
@@ -191,6 +225,10 @@ class ContactController extends Controller
 
     public function update(Request $request, Contact $contact)
     {
+        if (!auth()->user()->hasRole('administrator') && $contact->assigned_to !== auth()->id()) {
+            abort(403);
+        }
+
         $request->validate([
             'first_name'       => 'required|string|max:255',
             'last_name'        => 'nullable|string|max:255',

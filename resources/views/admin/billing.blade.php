@@ -25,11 +25,11 @@
                 </div>
                 <div class="form-group" style="justify-content: flex-end; align-items: flex-end; display: flex;">
                     <button type="submit" class="btn-primary">
-                        <i class="fas fa-search"></i> Search
+                        <i data-lucide="search"></i> Search
                     </button>
                     @if($search)
                         <a href="{{ route('billing') }}" class="btn-secondary" style="margin-left: 0.5rem;">
-                            <i class="fas fa-times"></i> Clear
+                            <i data-lucide="x"></i> Clear
                         </a>
                     @endif
                 </div>
@@ -92,7 +92,7 @@
                         <td class="text-center">
                             @if($contact->message_sent === 'n8n')
                                 {{-- n8n lo envió — solo visual, no se toca --}}
-                                <i class="fas fa-check" style="color: var(--paid);" title="Enviado por n8n"></i>
+                                <i data-lucide="check" style="color: var(--paid);" title="Enviado por n8n"></i>
                             @else
                                 {{-- manual o no — botón toggle --}}
                                 <form method="POST" action="{{ route('contacts.message.toggle', $contact->id) }}">
@@ -101,14 +101,14 @@
                                     <button type="submit" class="btn-action" title="{{ $contact->message_sent === 'manual' ? 'Quitar marca' : 'Marcar como enviado' }}"
                                         style="background: none; border: none; cursor: pointer;
                                                color: {{ $contact->message_sent === 'manual' ? 'var(--primary-color)' : 'var(--text-secondary)' }};">
-                                        <i class="fas fa-check"></i>
+                                        <i data-lucide="check"></i>
                                     </button>
                                 </form>
                             @endif
                         </td>
                         <td class="td-actions">
                             <a href="{{ route('billing.show', $contact->id) }}" class="btn-action btn-notes" title="View invoices">
-                                <i class="fas fa-eye"></i>
+                                <i data-lucide="eye"></i>
                             </a>
                         </td>
                     </tr>

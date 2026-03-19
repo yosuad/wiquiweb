@@ -1,0 +1,73 @@
+
+
+/* =========================
+   PAGE PRIVACY POLICY
+   ========================= */
+
+
+.beam-container {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+/* Textos */
+.beam-text-4xl {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+}
+.beam-text-2xl {
+    font-size: 1.5rem;
+    line-height: 2rem;
+}
+.beam-text-lg {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+}
+.beam-text-sm {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+}
+
+/* Fuentes */
+.beam-font-bold {
+    font-weight: 700;
+}
+.beam-font-semibold {
+    font-weight: 600;
+}
+
+/* Márgenes */
+.beam-mb-4 { margin-bottom: 1rem; }
+.beam-mb-6 { margin-bottom: 1.5rem; }
+
+/* Centrados */
+.beam-text-center { text-align: center; }
+
+/* Colores de texto */
+.beam-text-gray-500 { color: #6b7280; }
+.beam-text-blue-600 { color: #2563eb; }
+
+/* Enlaces */
+.beam-underline { text-decoration: underline; }
+
+/* Listas */
+.beam-list-disc { list-style-type: disc; }
+.beam-ml-6 { margin-left: 1.5rem; }
+
+/* Contenedor máximo */
+.beam-max-w-5xl { max-width: 80rem; } /* aprox 1280px */
+
+/* Espaciado horizontal y vertical */
+.beam-px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+.beam-py-8 { padding-top: 2rem; padding-bottom: 2rem; }
+.beam-mx-auto { margin-left: auto; margin-right: auto; }
+
+
+/* =========================
+   PAGE PRIVACY POLICY
+   ========================= */

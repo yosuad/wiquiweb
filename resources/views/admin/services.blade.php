@@ -10,7 +10,7 @@
         <div class="dashboard__title-row">
             <p class="dashboard__page-desc">Gestión de servicios y precios</p>
             <a href="{{ route('services.create') }}" class="btn-primary">
-                <i class="fas fa-plus"></i> Agregar servicio
+                <i data-lucide="plus"></i> Agregar servicio
             </a>
         </div>
     </div>
@@ -33,16 +33,16 @@
                         <td>{{ $service->description ?? '—' }}</td>
                         <td class="td-actions">
                             <a href="{{ route('services.prices', $service->id) }}" class="btn-action btn-notes" title="Ver precios">
-                                <i class="fas fa-tags"></i>
+                                <i data-lucide="tag"></i>
                             </a>
                             <a href="{{ route('services.edit', $service->id) }}" class="btn-action btn-edit" title="Editar">
-                                <i class="fas fa-pen"></i>
+                                <i data-lucide="pencil"></i>
                             </a>
                             <form method="POST" action="{{ route('services.destroy', $service->id) }}">
                                 @csrf
                                 @method('DELETE')
                                 <button class="btn-action btn-delete" title="Eliminar">
-                                    <i class="fas fa-trash"></i>
+                                    <i data-lucide="trash-2"></i>
                                 </button>
                             </form>
                         </td>

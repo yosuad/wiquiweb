@@ -49,18 +49,19 @@
                             </a>
                         </td>
                         <td class="td-actions">
-                            <a href="{{ route('prospects.edit', $prospect->id) }}" class="btn-action btn-edit"
-                                title="Edit">
+                            <a href="{{ route('prospects.edit', $prospect->id) }}" class="btn-action btn-edit" title="Edit">
                                 <i class="fas fa-pen"></i>
                             </a>
-                            <form method="POST" action="{{ route('prospects.destroy', $prospect->id) }}">
-                                @csrf
-                                @method('DELETE')
-                                <input type="hidden" name="redirect_to" value="prospects.lost">
-                                <button class="btn-action btn-delete" title="Delete">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </form>
+                            @can('delete prospects')
+                                <form method="POST" action="{{ route('prospects.destroy', $prospect->id) }}">
+                                    @csrf
+                                    @method('DELETE')
+                                    <input type="hidden" name="redirect_to" value="prospects.lost">
+                                    <button class="btn-action btn-delete" title="Delete">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
+                            @endcan
                         </td>
                     </tr>
                 @empty

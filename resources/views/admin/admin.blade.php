@@ -10,7 +10,7 @@
         <div class="dashboard__title-row">
             <p class="dashboard__page-desc">Users with panel access</p>
             <button class="btn-primary" onclick="document.getElementById('modal-create').style.display='flex'">
-                <i class="fas fa-plus"></i> Add user
+                <i data-lucide="plus"></i> Add user
             </button>
         </div>
     </div>
@@ -41,20 +41,20 @@
                             <td class="td-actions">
                                 <button class="btn-action btn-edit" title="Assign role"
                                     onclick="openEditModal({{ $user->id }}, '{{ $user->name }}', '{{ $user->email }}', '')">
-                                    <i class="fas fa-pen"></i>
+                                    <i data-lucide="pencil"></i>
                                 </button>
                                 <form method="POST" action="{{ route('admin.convert.prospect', $user->id) }}">
                                     @csrf
                                     <button class="btn-action btn-notes" title="Convertir a prospecto"
                                         onclick="return confirm('¿Convertir a prospecto? El usuario será eliminado del panel.')">
-                                        <i class="fas fa-user-tag"></i>
+                                        <i data-lucide="user-check"></i>
                                     </button>
                                 </form>
                                 <form method="POST" action="{{ route('admin.destroy', $user->id) }}">
                                     @csrf
                                     @method('DELETE')
                                     <button class="btn-action btn-delete" title="Delete">
-                                        <i class="fas fa-trash"></i>
+                                        <i data-lucide="trash-2"></i>
                                     </button>
                                 </form>
                             </td>
@@ -95,13 +95,13 @@
                         <td class="td-actions">
                             <button class="btn-action btn-edit" title="Edit"
                                 onclick="openEditModal({{ $admin->id }}, '{{ $admin->name }}', '{{ $admin->email }}', '{{ $admin->roles->first()?->name }}')">
-                                <i class="fas fa-pen"></i>
+                                <i data-lucide="pencil"></i>
                             </button>
                             <form method="POST" action="{{ route('admin.destroy', $admin->id) }}">
                                 @csrf
                                 @method('DELETE')
                                 <button class="btn-action btn-delete" title="Delete">
-                                    <i class="fas fa-trash"></i>
+                                    <i data-lucide="trash-2"></i>
                                 </button>
                             </form>
                         </td>
@@ -113,6 +113,48 @@
                 @endforelse
             </tbody>
         </table>
+    </div>
+
+    {{-- Permissions matrix --}}
+    <div class="table-container" style="margin-top: 1.5rem;">
+        <div class="table-section-header">
+            <strong>Role Permissions</strong>
+        </div>
+        <form method="POST" action="{{ route('admin.permissions.update') }}">
+            @csrf
+            @method('PUT')
+            <table class="data-table permissions-table">
+                <thead>
+                    <tr>
+                        <th>Permission</th>
+                        @foreach($roles->where('name', '!=', 'administrator') as $role)
+                            <th class="text-center">{{ $role->name }}</th>
+                        @endforeach
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($permissions as $permission)
+                        <tr>
+                            <td class="font-medium">{{ $permission->name }}</td>
+                            @foreach($roles->where('name', '!=', 'administrator') as $role)
+                                <td class="text-center">
+                                    <input type="checkbox"
+                                        name="permissions[{{ $role->id }}][]"
+                                        value="{{ $permission->id }}"
+                                        class="check-msg"
+                                        {{ $role->hasPermissionTo($permission->name) ? 'checked' : '' }}>
+                                </td>
+                            @endforeach
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            <div class="form-actions" style="padding: 1rem;">
+                <button type="submit" class="btn-primary">
+                    <i data-lucide="save"></i> Save permissions
+                </button>
+            </div>
+        </form>
     </div>
 
     {{-- Create modal --}}
@@ -130,6 +172,10 @@
                     <input type="email" name="email" class="form-input" placeholder="email@example.com" required>
                 </div>
                 <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" name="password" class="form-input" placeholder="Minimum 8 characters" required minlength="8">
+                </div>
+                <div class="form-group">
                     <label>Role</label>
                     <select name="role" class="form-input" required>
                         <option value="">— Select —</option>
@@ -140,7 +186,7 @@
                 </div>
                 <div class="form-actions">
                     <button type="button" class="btn-secondary" onclick="document.getElementById('modal-create').style.display='none'">Cancel</button>
-                    <button type="submit" class="btn-primary"><i class="fas fa-save"></i> Save</button>
+                    <button type="submit" class="btn-primary"><i data-lucide="save"></i> Save</button>
                 </div>
             </form>
         </div>
@@ -162,6 +208,10 @@
                     <input type="email" name="email" id="edit-email" class="form-input" required>
                 </div>
                 <div class="form-group">
+                    <label>New password <span style="font-weight:400; color: var(--text-secondary);">(leave blank to keep current)</span></label>
+                    <input type="password" name="password" id="edit-password" class="form-input" placeholder="New password" minlength="8">
+                </div>
+                <div class="form-group">
                     <label>Role</label>
                     <select name="role" id="edit-role" class="form-input" required>
                         <option value="">— Select —</option>
@@ -172,7 +222,7 @@
                 </div>
                 <div class="form-actions">
                     <button type="button" class="btn-secondary" onclick="document.getElementById('modal-edit').style.display='none'">Cancel</button>
-                    <button type="submit" class="btn-primary"><i class="fas fa-save"></i> Update</button>
+                    <button type="submit" class="btn-primary"><i data-lucide="save"></i> Update</button>
                 </div>
             </form>
         </div>
@@ -180,10 +230,11 @@
 
     <script>
         function openEditModal(id, name, email, role) {
-            document.getElementById('edit-name').value  = name;
-            document.getElementById('edit-email').value = email;
-            document.getElementById('edit-role').value  = role;
-            document.getElementById('form-edit').action = '/admin/' + id;
+            document.getElementById('edit-name').value     = name;
+            document.getElementById('edit-email').value    = email;
+            document.getElementById('edit-role').value     = role;
+            document.getElementById('edit-password').value = '';
+            document.getElementById('form-edit').action    = '/admin/' + id;
             document.getElementById('modal-edit').style.display = 'flex';
         }
     </script>

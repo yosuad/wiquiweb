@@ -9,9 +9,11 @@
     <div class="dashboard__title-section">
         <div class="dashboard__title-row">
             <p class="dashboard__page-desc">Leads and conversion tracking</p>
-            <a href="{{ route('prospects.create') }}" class="btn-primary">
-                <i class="fas fa-plus"></i> Add lead
-            </a>
+            @can('create prospects')
+                <a href="{{ route('prospects.create') }}" class="btn-primary">
+                    <i data-lucide="plus"></i> Add lead
+                </a>
+            @endcan
         </div>
     </div>
 
@@ -61,18 +63,14 @@
                             @endif
                         </td>
                         <td>
-                            <span class="badge {{ $badgeClass }}">
-                                {{ $badgeText }}
-                            </span>
+                            <span class="badge {{ $badgeClass }}">{{ $badgeText }}</span>
                         </td>
                         <td>{{ $prospect->agent->name ?? '—' }}</td>
                         <td>{{ $prospect->created_at->format('Y-m-d') }}</td>
                         <td class="text-center">
                             @if($prospect->message_sent === 'n8n')
-                                {{-- n8n lo envió — solo visual, no se toca --}}
-                                <i class="fas fa-check" style="color: var(--paid);" title="Enviado por n8n"></i>
+                                <i data-lucide="check" style="color: var(--paid);" title="Enviado por n8n"></i>
                             @else
-                                {{-- manual o no — botón toggle --}}
                                 <form method="POST" action="{{ route('contacts.message.toggle', $prospect->id) }}">
                                     @csrf
                                     @method('PATCH')
@@ -80,27 +78,29 @@
                                         title="{{ $prospect->message_sent === 'manual' ? 'Quitar marca' : 'Marcar como enviado' }}"
                                         style="background: none; border: none; cursor: pointer;
                                                color: {{ $prospect->message_sent === 'manual' ? '#189dbb' : 'var(--text-secondary)' }};">
-                                        <i class="fas fa-check"></i>
+                                        <i data-lucide="check"></i>
                                     </button>
                                 </form>
                             @endif
                         </td>
                         <td class="text-center">
                             <a href="{{ route('prospects.notes.index', $prospect->id) }}" class="btn-action btn-notes" title="View notes">
-                                <i class="fas fa-clipboard-list"></i>
+                                <i data-lucide="clipboard-list"></i>
                             </a>
                         </td>
                         <td class="td-actions">
                             <a href="{{ route('prospects.edit', $prospect->id) }}" class="btn-action btn-edit" title="Edit">
-                                <i class="fas fa-pen"></i>
+                                <i data-lucide="pencil"></i>
                             </a>
-                            <form method="POST" action="{{ route('prospects.destroy', $prospect->id) }}">
-                                @csrf
-                                @method('DELETE')
-                                <button class="btn-action btn-delete" title="Delete">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </form>
+                            @can('delete prospects')
+                                <form method="POST" action="{{ route('prospects.destroy', $prospect->id) }}">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn-action btn-delete" title="Delete">
+                                        <i data-lucide="trash-2"></i>
+                                    </button>
+                                </form>
+                            @endcan
                         </td>
                     </tr>
                 @empty

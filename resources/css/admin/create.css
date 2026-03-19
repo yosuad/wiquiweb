@@ -3,18 +3,16 @@
    ═══════════════════════════════════════ */
 
 /* ---- Form Container ---- */
-
 .form-container {
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 2rem;   
+    padding: 2rem;
     margin: 0 auto;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 /* ---- Form Group ---- */
-
 .form-group {
     display: flex;
     flex-direction: column;
@@ -35,7 +33,6 @@
 }
 
 /* ---- Inputs ---- */
-
 .form-input {
     padding: 0.6rem 0.875rem;
     border: 1px solid var(--border);
@@ -61,7 +58,6 @@ select.form-input {
 }
 
 /* ---- Validation ---- */
-
 .required {
     color: var(--danger);
 }
@@ -72,7 +68,6 @@ select.form-input {
 }
 
 /* ---- Actions ---- */
-
 .form-actions {
     display: flex;
     align-items: center;
@@ -80,28 +75,7 @@ select.form-input {
     margin-top: 1.5rem;
 }
 
-/* ---- Buttons ---- */
-
-.btn-primary {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    padding: 0.5rem 1.25rem;
-    background: var(--primary-color);
-    color: var(--white-color);
-    border: none;
-    border-radius: var(--radius);
-    font-size: 0.875rem;
-    font-weight: 600;
-    text-decoration: none;
-    cursor: pointer;
-    transition: opacity 0.2s;
-}
-
-.btn-primary:hover {
-    opacity: 0.9;
-}
-
+/* ---- btn-secondary (btn-primary ya está en tables.css) ---- */
 .btn-secondary {
     display: inline-flex;
     align-items: center;
@@ -124,7 +98,6 @@ select.form-input {
 }
 
 /* ---- Responsive ---- */
-
 @media (max-width: 640px) {
     .form-container {
         padding: 1.25rem;

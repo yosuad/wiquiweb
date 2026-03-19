@@ -16,6 +16,7 @@ class SupportController extends Controller
         $search   = $request->input('search');
         $status   = $request->input('status');
         $priority = $request->input('priority');
+        $user     = auth()->user();
 
         $tickets = SupportTicket::with(['contact', 'agent', 'creator'])
             ->when($search, function($q) use ($search) {
@@ -28,6 +29,10 @@ class SupportController extends Controller
             })
             ->when($status, fn($q) => $q->where('status', $status))
             ->when($priority, fn($q) => $q->where('priority', $priority))
+            // support solo ve sus tickets asignados
+            ->when(!$user->hasRole('administrator'), function($q) use ($user) {
+                $q->where('assigned_to', $user->id);
+            })
             ->orderByRaw("FIELD(status, 'open', 'in_progress', 'resolved', 'closed')")
             ->orderByRaw("FIELD(priority, 'high', 'medium', 'low')")
             ->latest()
@@ -39,8 +44,13 @@ class SupportController extends Controller
     // ========= Show ticket =========
     public function show(SupportTicket $ticket)
     {
+        // Verificar acceso
+        if (!auth()->user()->hasRole('administrator') && $ticket->assigned_to !== auth()->id()) {
+            abort(403);
+        }
+
         $ticket->load(['contact', 'agent', 'creator', 'notes.creator']);
-        $agents = User::role(['administrator', 'agent', 'sales-agent'])->get();
+        $agents = User::role(['administrator', 'agent', 'sales-agent', 'support'])->get();
         return view('admin.support.show', compact('ticket', 'agents'));
     }
 
@@ -48,7 +58,7 @@ class SupportController extends Controller
     public function create()
     {
         $contacts = Contact::where('status', 'customer')->orderBy('first_name')->get();
-        $agents   = User::role(['administrator', 'agent', 'sales-agent'])->get();
+        $agents   = User::role(['administrator', 'agent', 'sales-agent', 'support'])->get();
         return view('admin.support.create', compact('contacts', 'agents'));
     }
 
@@ -79,6 +89,10 @@ class SupportController extends Controller
     // ========= Update ticket =========
     public function update(Request $request, SupportTicket $ticket)
     {
+        if (!auth()->user()->hasRole('administrator') && $ticket->assigned_to !== auth()->id()) {
+            abort(403);
+        }
+
         $request->validate([
             'status'      => 'required|in:open,in_progress,resolved,closed',
             'priority'    => 'required|in:low,medium,high',
@@ -100,6 +114,10 @@ class SupportController extends Controller
     // ========= Delete ticket =========
     public function destroy(SupportTicket $ticket)
     {
+        if (!auth()->user()->hasRole('administrator') && $ticket->assigned_to !== auth()->id()) {
+            abort(403);
+        }
+
         $ticket->delete();
         return redirect()->route('support')->with('success', 'Ticket deleted successfully.');
     }
@@ -107,6 +125,10 @@ class SupportController extends Controller
     // ========= Store note =========
     public function storeNote(Request $request, SupportTicket $ticket)
     {
+        if (!auth()->user()->hasRole('administrator') && $ticket->assigned_to !== auth()->id()) {
+            abort(403);
+        }
+
         $request->validate([
             'note' => 'required|string|max:2000',
         ]);
@@ -123,6 +145,10 @@ class SupportController extends Controller
     // ========= Delete note =========
     public function destroyNote(SupportTicket $ticket, SupportTicketNote $note)
     {
+        if (!auth()->user()->hasRole('administrator') && $ticket->assigned_to !== auth()->id()) {
+            abort(403);
+        }
+
         $note->delete();
         return redirect()->route('support.show', $ticket->id)->with('success', 'Note deleted.');
     }

@@ -10,7 +10,7 @@
         <div class="dashboard__title-row">
             <p class="dashboard__page-desc">Support tickets</p>
             <a href="{{ route('support.create') }}" class="btn-primary">
-                <i class="fas fa-plus"></i> New ticket
+                <i data-lucide="plus"></i> New ticket
             </a>
         </div>
     </div>
@@ -47,11 +47,11 @@
                 </div>
                 <div class="form-group" style="justify-content: flex-end; align-items: flex-end; display: flex; gap: 0.5rem;">
                     <button type="submit" class="btn-primary">
-                        <i class="fas fa-search"></i> Filter
+                        <i data-lucide="search"></i> Filter
                     </button>
                     @if($search || $status || $priority)
                         <a href="{{ route('support') }}" class="btn-secondary">
-                            <i class="fas fa-times"></i> Clear
+                            <i data-lucide="x"></i> Clear
                         </a>
                     @endif
                 </div>
@@ -113,13 +113,13 @@
                         <td>{{ $ticket->created_at->format('Y-m-d') }}</td>
                         <td class="td-actions">
                             <a href="{{ route('support.show', $ticket->id) }}" class="btn-action btn-notes" title="View ticket">
-                                <i class="fas fa-eye"></i>
+                                <i data-lucide="eye"></i>
                             </a>
                             <form method="POST" action="{{ route('support.destroy', $ticket->id) }}">
                                 @csrf @method('DELETE')
                                 <button class="btn-action btn-delete" title="Delete"
                                     onclick="return confirm('Delete this ticket?')">
-                                    <i class="fas fa-trash"></i>
+                                    <i data-lucide="trash-2"></i>
                                 </button>
                             </form>
                         </td>
