@@ -103,7 +103,6 @@
 /* ---- Cell Modifiers ---- */
 
 .text-center   { text-align: center; }
-.font-medium   { font-weight: 500; }
 .font-semibold { font-weight: 600; }
 
 .td-email {
@@ -111,7 +110,6 @@
     font-size: 0.85rem;
 }
 
-.td-paid    { color: var(--paid); font-weight: 500; }
 .td-pending { color: var(--pending); font-weight: 500; }
 
 
@@ -157,6 +155,8 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    width: 100%;
+    max-width: 32px;
 }
 
 .btn-action {
@@ -220,7 +220,13 @@
 }
 
 
-/* ---- Responsive ---- */
+/* ---- Columna MSG — ancho fijo para evitar desplazamiento en pantallas grandes ---- */
+.col-msg {
+    width: 60px;
+    min-width: 60px;
+    max-width: 60px;
+    text-align: center;
+}
 
 @media (max-width: 1024px) {
     .table-container {
@@ -231,3 +237,10 @@
         min-width: 900px;
     }
 }
+
+
+/* Quitar padding a las últimas 3 columnas */
+.data-table td:nth-last-child(-n+3) {
+    text-align: justify;
+}
+

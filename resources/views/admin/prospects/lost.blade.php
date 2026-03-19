@@ -10,7 +10,7 @@
         <div class="dashboard__title-row">
             <p class="dashboard__page-desc">Leads that did not convert</p>
             <a href="{{ route('prospects.index') }}" class="btn-secondary">
-                <i class="fas fa-arrow-left"></i> View active
+                <i data-lucide="arrow-left"></i> View active
             </a>
         </div>
     </div>
@@ -45,12 +45,12 @@
                         <td class="text-center">
                             <a href="{{ route('prospects.notes.index', $prospect->id) }}?from=lost"
                                 class="btn-action btn-notes" title="View notes">
-                                <i class="fas fa-clipboard-list"></i>
+                                <i data-lucide="clipboard-list"></i>
                             </a>
                         </td>
                         <td class="td-actions">
                             <a href="{{ route('prospects.edit', $prospect->id) }}" class="btn-action btn-edit" title="Edit">
-                                <i class="fas fa-pen"></i>
+                                <i data-lucide="pencil"></i>
                             </a>
                             @can('delete prospects')
                                 <form method="POST" action="{{ route('prospects.destroy', $prospect->id) }}">
@@ -58,7 +58,7 @@
                                     @method('DELETE')
                                     <input type="hidden" name="redirect_to" value="prospects.lost">
                                     <button class="btn-action btn-delete" title="Delete">
-                                        <i class="fas fa-trash"></i>
+                                        <i data-lucide="trash-2"></i>
                                     </button>
                                 </form>
                             @endcan

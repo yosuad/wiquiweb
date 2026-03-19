@@ -347,7 +347,12 @@ class ContactController extends Controller
 
         $contact->update(['pipeline_stage' => 'pending_payment']);
 
-        return redirect()->route('billing')->with('success', 'Invoice generated successfully.');
+        // Redirigir según permisos — agentes no tienen view billing
+        if (auth()->user()->can('view billing')) {
+            return redirect()->route('billing')->with('success', 'Invoice generated successfully.');
+        }
+
+        return redirect()->route('customers.show', $contact->id)->with('success', 'Invoice generated successfully.');
     }
 
     // ========= Update contact service status =========

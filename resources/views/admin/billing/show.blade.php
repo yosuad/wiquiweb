@@ -11,7 +11,7 @@
             <p class="dashboard__page-desc">{{ $contact->first_name }}
                 {{ $contact->last_name }}{{ $contact->company_name ? ' — ' . $contact->company_name : '' }}</p>
             <a href="{{ route('billing') }}" class="btn-secondary">
-                <i class="fas fa-arrow-left"></i> Back to billing
+                <i data-lucide="arrow-left"></i> Back to billing
             </a>
         </div>
     </div>
@@ -52,7 +52,6 @@
                         </td>
                         <td>$ {{ number_format($item->amount, 2) }}</td>
                         <td>
-                            {{-- Payment link inline form --}}
                             @if ($item->status === 'pending')
                                 <form method="POST" action="{{ route('billing.update', $item->id) }}"
                                     style="display:flex; gap: 0.5rem; align-items: center;">
@@ -63,41 +62,39 @@
                                         class="form-input" placeholder="https://..."
                                         style="font-size: 0.75rem; padding: 0.3rem 0.5rem;">
                                     <button type="submit" class="btn-action btn-notes" title="Save link">
-                                        <i class="fas fa-save"></i>
+                                        <i data-lucide="save"></i>
                                     </button>
                                 </form>
                             @elseif($item->payment_link)
                                 <a href="{{ $item->payment_link }}" target="_blank" class="text-muted"
                                     style="font-size: 0.75rem;">
-                                    <i class="fas fa-link"></i> Link
+                                    <i data-lucide="link"></i> Link
                                 </a>
                             @else
                                 <span class="text-muted">—</span>
                             @endif
                         </td>
                         <td>
-                            <span
-                                class="badge {{ match ($item->status) {
-                                    'pending' => 'badge-new',
-                                    'paid' => 'badge-contact',
-                                    'approved' => 'badge-closed',
-                                    'courtesy' => 'badge-follow',
-                                    'cancelled' => 'badge-lost',
-                                    default => 'badge-new',
-                                } }}">
+                            <span class="badge {{ match ($item->status) {
+                                'pending'   => 'badge-new',
+                                'paid'      => 'badge-contact',
+                                'approved'  => 'badge-closed',
+                                'courtesy'  => 'badge-follow',
+                                'cancelled' => 'badge-lost',
+                                default     => 'badge-new',
+                            } }}">
                                 {{ match ($item->status) {
-                                    'pending' => 'Pending',
-                                    'paid' => 'Paid',
-                                    'approved' => 'Approved',
-                                    'courtesy' => 'Courtesy',
+                                    'pending'   => 'Pending',
+                                    'paid'      => 'Paid',
+                                    'approved'  => 'Approved',
+                                    'courtesy'  => 'Courtesy',
                                     'cancelled' => 'Cancelled',
-                                    default => ucfirst($item->status),
+                                    default     => ucfirst($item->status),
                                 } }}
                             </span>
                         </td>
                         <td>{{ $item->created_at->format('Y-m-d') }}</td>
                         <td class="td-actions">
-                            {{-- Status action buttons --}}
                             @if ($item->status === 'pending')
                                 {{-- Mark as paid --}}
                                 <form method="POST" action="{{ route('billing.update', $item->id) }}">
@@ -105,7 +102,7 @@
                                     <input type="hidden" name="status" value="paid">
                                     <input type="hidden" name="payment_link" value="{{ $item->payment_link }}">
                                     <button class="btn-action btn-notes" title="Mark as paid">
-                                        <i class="fas fa-dollar-sign"></i>
+                                        <i data-lucide="dollar-sign"></i>
                                     </button>
                                 </form>
                                 {{-- Mark as courtesy --}}
@@ -114,7 +111,7 @@
                                     <input type="hidden" name="status" value="courtesy">
                                     <input type="hidden" name="payment_link" value="{{ $item->payment_link }}">
                                     <button class="btn-action btn-follow" title="Mark as courtesy">
-                                        <i class="fas fa-gift"></i>
+                                        <i data-lucide="gift"></i>
                                     </button>
                                 </form>
                                 {{-- Cancel --}}
@@ -124,7 +121,7 @@
                                     <input type="hidden" name="payment_link" value="{{ $item->payment_link }}">
                                     <button class="btn-action btn-delete" title="Cancel invoice"
                                         onclick="return confirm('Cancel this invoice?')">
-                                        <i class="fas fa-times"></i>
+                                        <i data-lucide="x"></i>
                                     </button>
                                 </form>
                             @elseif($item->status === 'paid')
@@ -134,7 +131,7 @@
                                     <input type="hidden" name="status" value="approved">
                                     <input type="hidden" name="payment_link" value="{{ $item->payment_link }}">
                                     <button class="btn-action btn-closed" title="Approve invoice">
-                                        <i class="fas fa-check-double"></i>
+                                        <i data-lucide="check-check"></i>
                                     </button>
                                 </form>
                                 {{-- Cancel --}}
@@ -144,7 +141,7 @@
                                     <input type="hidden" name="payment_link" value="{{ $item->payment_link }}">
                                     <button class="btn-action btn-delete" title="Cancel invoice"
                                         onclick="return confirm('Cancel this invoice?')">
-                                        <i class="fas fa-times"></i>
+                                        <i data-lucide="x"></i>
                                     </button>
                                 </form>
                             @endif
@@ -152,7 +149,7 @@
                             {{-- View invoice --}}
                             <a href="{{ route('billing.invoice', $item->id) }}" class="btn-action btn-notes"
                                 title="View invoice">
-                                <i class="fas fa-eye"></i>
+                                <i data-lucide="eye"></i>
                             </a>
 
                             {{-- Delete --}}
@@ -160,7 +157,7 @@
                                 @csrf @method('DELETE')
                                 <button class="btn-action btn-delete" title="Delete"
                                     onclick="return confirm('Delete this invoice?')">
-                                    <i class="fas fa-trash"></i>
+                                    <i data-lucide="trash-2"></i>
                                 </button>
                             </form>
                         </td>

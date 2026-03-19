@@ -92,6 +92,8 @@ Route::middleware(['auth', 'verified', 'approved'])->group(function () {
         Route::patch('/customers/service/{contactService}/status', [ContactController::class, 'updateServiceStatus'])->name('customers.service.status');
         Route::patch('/customers/service/{contactService}/description', [ContactController::class, 'updateServiceDescription'])->name('customers.service.description');
         Route::patch('/customers/{contact}/message-sent', [ContactController::class, 'toggleMessageSent'])->name('contacts.message.toggle');
+        // billing.update aquí para que agentes puedan actualizar facturas desde customers.show
+        Route::put('/billing/{invoice}', [BillingController::class, 'update'])->name('billing.update');
     });
 
     Route::middleware('permission:delete customers')->group(function () {
@@ -107,7 +109,6 @@ Route::middleware(['auth', 'verified', 'approved'])->group(function () {
     });
 
     Route::middleware('permission:edit billing')->group(function () {
-        Route::put('/billing/{invoice}', [BillingController::class, 'update'])->name('billing.update');
         Route::delete('/billing/{invoice}', [BillingController::class, 'destroy'])->name('billing.destroy');
     });
 
@@ -128,13 +129,14 @@ Route::middleware(['auth', 'verified', 'approved'])->group(function () {
 
     // ── Support ── (permission: view support)
     // administrator, support
+    // IMPORTANTE: /support/create debe ir antes de /support/{ticket}
     Route::middleware('permission:view support')->group(function () {
         Route::get('/support', [SupportController::class, 'index'])->name('support');
+        Route::get('/support/create', [SupportController::class, 'create'])->name('support.create');
         Route::get('/support/{ticket}', [SupportController::class, 'show'])->name('support.show');
     });
 
     Route::middleware('permission:edit support')->group(function () {
-        Route::get('/support/create', [SupportController::class, 'create'])->name('support.create');
         Route::post('/support', [SupportController::class, 'store'])->name('support.store');
         Route::put('/support/{ticket}', [SupportController::class, 'update'])->name('support.update');
         Route::delete('/support/{ticket}', [SupportController::class, 'destroy'])->name('support.destroy');

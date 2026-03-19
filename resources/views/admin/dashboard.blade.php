@@ -8,7 +8,7 @@
 
     <div class="dashboard-home">
 
-        {{-- Prospects: visible si tiene permiso --}}
+        {{-- Prospects --}}
         @can('view prospects')
             <div class="dash-card dash-card--prospectos">
                 <div class="dash-card__icon dash-card__icon--prospects">
@@ -22,7 +22,7 @@
             </div>
         @endcan
 
-        {{-- New customers: visible si tiene permiso --}}
+        {{-- New customers --}}
         @can('view customers')
             <div class="dash-card dash-card--clientes">
                 <div class="dash-card__icon dash-card__icon--customers">
@@ -38,7 +38,7 @@
             </div>
         @endcan
 
-        {{-- Billing: solo quien tiene permiso --}}
+        {{-- Billing --}}
         @can('view billing')
             <div class="dash-card dash-card--facturacion">
                 <div class="dash-card__icon dash-card__icon--billing">
@@ -82,7 +82,7 @@
             </div>
         @endrole
 
-        {{-- Support: solo quien tiene permiso --}}
+        {{-- Support --}}
         @can('view support')
             <div class="dash-card dash-card--soporte">
                 <div class="dash-card__icon dash-card__icon--support">
@@ -96,18 +96,39 @@
             </div>
         @endcan
 
-        {{-- Recent activity: visible si tiene prospectos --}}
+        {{-- Recent Activity --}}
         @can('view prospects')
             <div class="dash-section dash-section--actividad">
                 <h3 class="dash-section__title">Recent Activity</h3>
                 <div class="dash-activity">
-                    @forelse($recentProspects as $prospect)
+                    @forelse($recentActivity as $log)
                         <div class="dash-activity__item">
-                            <div class="dash-activity__dot dash-activity__dot--green"></div>
-                            <div class="dash-activity__text">
-                                <strong>{{ $prospect->first_name }} {{ $prospect->last_name }}</strong> registered as a prospect
-                                <span class="dash-activity__time">{{ $prospect->created_at->diffForHumans() }}</span>
-                            </div>
+                            @if($log->type === 'status_change')
+                                <div class="dash-activity__dot dash-activity__dot--amber"></div>
+                                <div class="dash-activity__text">
+                                    <strong>{{ $log->author->name ?? '—' }}</strong>
+                                    @if($log->from === null)
+                                        registered
+                                        <strong>{{ $log->contact->first_name ?? '' }} {{ $log->contact->last_name ?? '' }}</strong>
+                                        as <span class="badge badge-new" style="font-size:0.7rem;">{{ ucfirst($log->to) }}</span>
+                                    @else
+                                        changed
+                                        <strong>{{ $log->contact->first_name ?? '' }} {{ $log->contact->last_name ?? '' }}</strong>
+                                        from <span class="badge {{ $log->from === 'prospect' ? 'badge-new' : ($log->from === 'customer' ? 'badge-closed' : 'badge-lost') }}" style="font-size:0.7rem;">{{ ucfirst($log->from) }}</span>
+                                        to <span class="badge {{ $log->to === 'prospect' ? 'badge-new' : ($log->to === 'customer' ? 'badge-closed' : 'badge-lost') }}" style="font-size:0.7rem;">{{ ucfirst($log->to) }}</span>
+                                    @endif
+                                    <span class="dash-activity__time">{{ $log->created_at->diffForHumans() }}</span>
+                                </div>
+                            @elseif($log->type === 'assignment_change')
+                                <div class="dash-activity__dot dash-activity__dot--blue"></div>
+                                <div class="dash-activity__text">
+                                    <strong>{{ $log->author->name ?? '—' }}</strong>
+                                    assigned
+                                    <strong>{{ $log->contact->first_name ?? '' }} {{ $log->contact->last_name ?? '' }}</strong>
+                                    to <em>{{ $log->to }}</em>
+                                    <span class="dash-activity__time">{{ $log->created_at->diffForHumans() }}</span>
+                                </div>
+                            @endif
                         </div>
                     @empty
                         <p class="dash-empty">No recent activity.</p>
@@ -116,7 +137,26 @@
             </div>
         @endcan
 
-        {{-- Pending payments: solo quien tiene billing --}}
+        {{-- My Conversions — solo agentes (no administrator) --}}
+        @if(!$isAdmin && $myConversions->isNotEmpty())
+            <div class="dash-section dash-section--conversiones">
+                <h3 class="dash-section__title">My Conversions</h3>
+                <div class="dash-activity">
+                    @foreach($myConversions as $customer)
+                        <div class="dash-activity__item">
+                            <div class="dash-activity__dot dash-activity__dot--green"></div>
+                            <div class="dash-activity__text">
+                                <strong>{{ $customer->company_name ?? $customer->first_name . ' ' . $customer->last_name }}</strong>
+                                <span class="badge badge-closed" style="font-size:0.7rem;">Customer</span>
+                                <span class="dash-activity__time">{{ $customer->updated_at->diffForHumans() }}</span>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        @endif
+
+        {{-- Pending payments --}}
         @can('view billing')
             <div class="dash-section dash-section--pagos">
                 <h3 class="dash-section__title">Pending Payments</h3>
@@ -144,8 +184,8 @@
             </div>
         @endcan
 
-        {{-- Sales goal: solo administrator y sales-agent --}}
-        @role('administrator|sales-agent|agent')
+        {{-- Sales goal: solo administrator --}}
+        @role('administrator')
             <div class="dash-section dash-section--meta">
                 <h3 class="dash-section__title">Sales Goal — {{ now()->format('F Y') }}</h3>
 
@@ -162,7 +202,7 @@
 
                 <div class="dash-progress">
                     <div class="dash-progress__labels">
-                        <span>Customers {{ $newCustomersThisMonth }} / {{ $metaClientes }}</span>
+                        <span>New customers {{ $newCustomersThisMonth }} / {{ $metaClientes }}</span>
                         <span>{{ $customersPercent }}%</span>
                     </div>
                     <div class="dash-progress__bar">
@@ -170,6 +210,18 @@
                              style="width: {{ $customersPercent }}%"></div>
                     </div>
                 </div>
+
+                <div class="dash-progress">
+                    <div class="dash-progress__labels">
+                        <span>Monthly services {{ $mensualidadesActivas }} / {{ $metaMensualidades }}</span>
+                        <span>{{ $mensualidadesPercent }}%</span>
+                    </div>
+                    <div class="dash-progress__bar">
+                        <div class="dash-progress__fill {{ $mensualidadesPercent >= 100 ? 'dash-progress__fill--success' : '' }}"
+                             style="width: {{ $mensualidadesPercent }}%"></div>
+                    </div>
+                </div>
+
             </div>
         @endrole
 

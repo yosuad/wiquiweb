@@ -25,7 +25,6 @@ class BillingController extends Controller
                       ->orWhere('company_name', 'like', "%$search%");
                 });
             })
-            // billing-agent solo ve sus clientes asignados
             ->when(!$user->hasRole('administrator'), function($q) use ($user) {
                 $q->where('assigned_to', $user->id);
             })
@@ -38,7 +37,6 @@ class BillingController extends Controller
     // ========= Invoice detail =========
     public function show(Contact $contact)
     {
-        // Verificar acceso
         if (!auth()->user()->hasRole('administrator') && $contact->assigned_to !== auth()->id()) {
             abort(403);
         }
@@ -54,7 +52,6 @@ class BillingController extends Controller
     // ========= Update invoice status =========
     public function update(Request $request, Invoice $invoice)
     {
-        // Verificar acceso al contacto de la factura
         $contact = $invoice->contactService->contact;
         if (!auth()->user()->hasRole('administrator') && $contact->assigned_to !== auth()->id()) {
             abort(403);
@@ -85,7 +82,13 @@ class BillingController extends Controller
             ]);
         }
 
-        return redirect()->route('billing.show', $invoice->contactService->contact_id)
+        // Redirigir según permisos — agentes no tienen view billing
+        if (auth()->user()->can('view billing')) {
+            return redirect()->route('billing.show', $contact->id)
+                ->with('success', 'Invoice updated successfully.');
+        }
+
+        return redirect()->route('customers.show', $contact->id)
             ->with('success', 'Invoice updated successfully.');
     }
 
@@ -100,7 +103,6 @@ class BillingController extends Controller
     // ========= Print / Download invoice =========
     public function invoice(Invoice $invoice)
     {
-        // Verificar acceso
         $contact = $invoice->contactService->contact;
         if (!auth()->user()->hasRole('administrator') && $contact->assigned_to !== auth()->id()) {
             abort(403);
