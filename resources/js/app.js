@@ -4,6 +4,17 @@ import Alpine from 'alpinejs';
 window.Alpine = Alpine;
 Alpine.start();
 
+/* ========= SweetAlert2 ========= */
+import Swal from 'sweetalert2';
+window.Swal = Swal;
+
+/* ========= SweetAlert2 — alertas desde sesión Laravel ========= */
+import './alerts.js';
+
+/* ========= Lucide icons ========= */
+import { createIcons, icons } from 'lucide';
+document.addEventListener('DOMContentLoaded', () => createIcons({ icons }));
+
 /* ========= Estilos globales ========= */
 import '../css/app.css';
 
@@ -23,10 +34,6 @@ import '../css/admin/create.css';
 import '../css/admin/billing/invoice.css';
 import '../css/admin/customer/show.css';
 import '../css/admin/admin.css';
-
-
-
-
 import '../css/components/footer.css';
 
 
@@ -89,18 +96,8 @@ document.addEventListener('DOMContentLoaded', function() {
 /*        START web-design.js         */
 /**************************************/
 
-/**
- * service-web-design.js
- * Lógica de la página: Diseño de Páginas Web
- *
- * Funcionalidades:
- *   - FAQ accordion con accesibilidad (aria-expanded / aria-hidden)
- */
-
 (function () {
   'use strict';
-
-  /* ── FAQ Accordion ── */
 
   function initFaqAccordion() {
     var triggers = document.querySelectorAll('[data-faq-trigger]');
@@ -112,14 +109,12 @@ document.addEventListener('DOMContentLoaded', function() {
         var item   = trigger.closest('.faq-item');
         var isOpen = item.classList.contains('faq-item--open');
 
-        // Cierra todos los ítems abiertos
         document.querySelectorAll('.faq-item--open').forEach(function (openItem) {
           openItem.classList.remove('faq-item--open');
           openItem.querySelector('[data-faq-trigger]').setAttribute('aria-expanded', 'false');
           openItem.querySelector('.faq-item__body').setAttribute('aria-hidden', 'true');
         });
 
-        // Si el ítem estaba cerrado, lo abre
         if (!isOpen) {
           item.classList.add('faq-item--open');
           trigger.setAttribute('aria-expanded', 'true');
@@ -128,8 +123,6 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     });
   }
-
-  /* ── Init ── */
 
   document.addEventListener('DOMContentLoaded', function () {
     initFaqAccordion();

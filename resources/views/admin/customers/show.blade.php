@@ -258,15 +258,15 @@
                                 <form method="POST" action="{{ route('customers.service.status', $cs->id) }}">
                                     @csrf @method('PATCH')
                                     <input type="hidden" name="status" value="suspended">
-                                    <button class="btn-action btn-follow" title="Suspend service">
+                                    <button type="submit" class="btn-action btn-follow" title="Suspend service">
                                         <i class="fas fa-pause"></i>
                                     </button>
                                 </form>
-                                <form method="POST" action="{{ route('customers.service.status', $cs->id) }}">
+                                <form method="POST" action="{{ route('customers.service.status', $cs->id) }}"
+                                    data-confirm="¿Cancelar el servicio {{ $cs->service->name ?? '' }}? Esta acción cancelará también las facturas pendientes.">
                                     @csrf @method('PATCH')
                                     <input type="hidden" name="status" value="cancelled">
-                                    <button class="btn-action btn-delete" title="Cancel service"
-                                        onclick="return confirm('Are you sure you want to cancel this service?')">
+                                    <button type="submit" class="btn-action btn-delete" title="Cancel service">
                                         <i class="fas fa-times"></i>
                                     </button>
                                 </form>
@@ -274,15 +274,15 @@
                                 <form method="POST" action="{{ route('customers.service.status', $cs->id) }}">
                                     @csrf @method('PATCH')
                                     <input type="hidden" name="status" value="active">
-                                    <button class="btn-action btn-notes" title="Reactivate service">
+                                    <button type="submit" class="btn-action btn-notes" title="Reactivate service">
                                         <i class="fas fa-play"></i>
                                     </button>
                                 </form>
-                                <form method="POST" action="{{ route('customers.service.status', $cs->id) }}">
+                                <form method="POST" action="{{ route('customers.service.status', $cs->id) }}"
+                                    data-confirm="¿Cancelar el servicio {{ $cs->service->name ?? '' }}? Esta acción cancelará también las facturas pendientes.">
                                     @csrf @method('PATCH')
                                     <input type="hidden" name="status" value="cancelled">
-                                    <button class="btn-action btn-delete" title="Cancel service"
-                                        onclick="return confirm('Are you sure you want to cancel this service?')">
+                                    <button type="submit" class="btn-action btn-delete" title="Cancel service">
                                         <i class="fas fa-times"></i>
                                     </button>
                                 </form>
@@ -290,7 +290,7 @@
                                 <form method="POST" action="{{ route('customers.service.status', $cs->id) }}">
                                     @csrf @method('PATCH')
                                     <input type="hidden" name="status" value="active">
-                                    <button class="btn-action btn-notes" title="Reactivate service">
+                                    <button type="submit" class="btn-action btn-notes" title="Reactivate service">
                                         <i class="fas fa-redo"></i>
                                     </button>
                                 </form>

@@ -208,8 +208,9 @@
                         <div class="start-card__icon"><i data-lucide="mail"></i></div>
                         <h3 class="start-card__title">Correos Corporativos</h3>
                     </div>
-                    <p class="start-card__text">Configuración profesional de correos empresariales con tu dominio.
-                        Seguridad, capacidad y soporte técnico incluido.</p>
+                    <p class="start-card__text">Creamos y configuramos correos empresariales con tu propio dominio,
+                        ayudándote a proyectar una imagen más profesional y confiable, y a mantenerte siempre comunicado sin
+                        problemas.</p>
                     <a href="#" class="start-card__link">
                         Leer más
                         <i class="start-card__link-icon" data-lucide="arrow-right"></i>
@@ -221,8 +222,8 @@
                         <div class="start-card__icon"><i data-lucide="monitor-smartphone"></i></div>
                         <h3 class="start-card__title">Actualizaciones Web</h3>
                     </div>
-                    <p class="start-card__text">Mantenimiento y actualización constante de tu sitio web. Contenido fresco,
-                        seguridad mejorada y rendimiento optimizado.</p>
+                    <p class="start-card__text">Mantenemos tu sitio web actualizado, seguro y optimizado, para que siempre
+                        funcione correctamente y tu contenido esté al día.</p>
                     <a href="#" class="start-card__link">
                         Leer más
                         <i class="start-card__link-icon" data-lucide="arrow-right"></i>
@@ -234,8 +235,8 @@
                         <div class="start-card__icon"><i data-lucide="megaphone"></i></div>
                         <h3 class="start-card__title">Marketing Digital</h3>
                     </div>
-                    <p class="start-card__text">Estrategias de marketing digital, gestión de redes sociales y campañas
-                        publicitarias para aumentar tu visibilidad online.</p>
+                    <p class="start-card__text">Impulsamos tu presencia online con estrategias, redes sociales y campañas
+                        publicitarias que atraen más clientes a tu negocio.</p>
                     <a href="#" class="start-card__link">
                         Leer más
                         <i class="start-card__link-icon" data-lucide="arrow-right"></i>

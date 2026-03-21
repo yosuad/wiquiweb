@@ -115,10 +115,10 @@
                             <a href="{{ route('support.show', $ticket->id) }}" class="btn-action btn-notes" title="View ticket">
                                 <i data-lucide="eye"></i>
                             </a>
-                            <form method="POST" action="{{ route('support.destroy', $ticket->id) }}">
+                            <form method="POST" action="{{ route('support.destroy', $ticket->id) }}"
+                                data-confirm="¿Eliminar el ticket #{{ $ticket->id }}? Esta acción no se puede deshacer.">
                                 @csrf @method('DELETE')
-                                <button class="btn-action btn-delete" title="Delete"
-                                    onclick="return confirm('Delete this ticket?')">
+                                <button type="submit" class="btn-action btn-delete" title="Delete">
                                     <i data-lucide="trash-2"></i>
                                 </button>
                             </form>
@@ -132,7 +132,6 @@
             </tbody>
         </table>
 
-        {{-- Pagination --}}
         @if($tickets->hasPages())
             <div style="padding: 1rem;">
                 {{ $tickets->appends(request()->query())->links() }}

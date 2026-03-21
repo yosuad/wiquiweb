@@ -45,26 +45,21 @@
                         <td>{{ $customer->agent->name ?? '—' }}</td>
                         <td>{{ $customer->created_at->format('Y-m-d') }}</td>
                         <td class="td-actions">
-                            {{-- View detail --}}
-                            <a href="{{ route('customers.show', $customer->id) }}" class="btn-action btn-notes"
-                                title="View detail">
+                            <a href="{{ route('customers.show', $customer->id) }}" class="btn-action btn-notes" title="View detail">
                                 <i data-lucide="eye"></i>
                             </a>
-                            {{-- Edit customer --}}
-                            <a href="{{ route('customers.edit', $customer->id) }}" class="btn-action btn-edit"
-                                title="Edit">
+                            <a href="{{ route('customers.edit', $customer->id) }}" class="btn-action btn-edit" title="Edit">
                                 <i data-lucide="pencil"></i>
                             </a>
-                            {{-- Mark as lost --}}
-                            <form method="POST" action="{{ route('prospects.update', $customer->id) }}">
+                            <form method="POST" action="{{ route('prospects.update', $customer->id) }}"
+                                data-confirm="¿Marcar a {{ $customer->first_name }} {{ $customer->last_name }} como perdido? Sus servicios activos serán cancelados.">
                                 @csrf
                                 @method('PUT')
                                 <input type="hidden" name="first_name" value="{{ $customer->first_name }}">
                                 <input type="hidden" name="last_name" value="{{ $customer->last_name }}">
                                 <input type="hidden" name="status" value="lost">
                                 <input type="hidden" name="redirect_to" value="customers">
-                                <button class="btn-action btn-delete" title="Mark as lost"
-                                    onclick="return confirm('Mark {{ $customer->first_name }} as lost?')">
+                                <button type="submit" class="btn-action btn-delete" title="Mark as lost">
                                     <i data-lucide="user-x"></i>
                                 </button>
                             </form>

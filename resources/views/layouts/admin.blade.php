@@ -12,7 +12,6 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script src="{{ asset('js/lottie.min.js') }}"></script>
-    <script src="{{ asset('js/lucide.min.js') }}"></script>
 
     @stack('styles')
 </head>
@@ -42,8 +41,15 @@
 
     <script src="{{ asset('js/main.js') }}"></script>
 
-    {{-- Lucide — inicializa íconos --}}
-    <script>lucide.createIcons();</script>
+    {{-- SweetAlert2 — datos de sesión para alerts.js --}}
+    <script>
+        window._alerts = {
+            success: @json(session('success')),
+            error:   @json(session('error')),
+            info:    @json(session('info')),
+            warning: @json(session('warning')),
+        };
+    </script>
 
     @stack('scripts')
 

@@ -101,7 +101,7 @@
                                     @csrf @method('PUT')
                                     <input type="hidden" name="status" value="paid">
                                     <input type="hidden" name="payment_link" value="{{ $item->payment_link }}">
-                                    <button class="btn-action btn-notes" title="Mark as paid">
+                                    <button type="submit" class="btn-action btn-notes" title="Mark as paid">
                                         <i data-lucide="dollar-sign"></i>
                                     </button>
                                 </form>
@@ -110,17 +110,17 @@
                                     @csrf @method('PUT')
                                     <input type="hidden" name="status" value="courtesy">
                                     <input type="hidden" name="payment_link" value="{{ $item->payment_link }}">
-                                    <button class="btn-action btn-follow" title="Mark as courtesy">
+                                    <button type="submit" class="btn-action btn-follow" title="Mark as courtesy">
                                         <i data-lucide="gift"></i>
                                     </button>
                                 </form>
                                 {{-- Cancel --}}
-                                <form method="POST" action="{{ route('billing.update', $item->id) }}">
+                                <form method="POST" action="{{ route('billing.update', $item->id) }}"
+                                    data-confirm="¿Cancelar la factura #{{ $item->id }}?">
                                     @csrf @method('PUT')
                                     <input type="hidden" name="status" value="cancelled">
                                     <input type="hidden" name="payment_link" value="{{ $item->payment_link }}">
-                                    <button class="btn-action btn-delete" title="Cancel invoice"
-                                        onclick="return confirm('Cancel this invoice?')">
+                                    <button type="submit" class="btn-action btn-delete" title="Cancel invoice">
                                         <i data-lucide="x"></i>
                                     </button>
                                 </form>
@@ -130,17 +130,17 @@
                                     @csrf @method('PUT')
                                     <input type="hidden" name="status" value="approved">
                                     <input type="hidden" name="payment_link" value="{{ $item->payment_link }}">
-                                    <button class="btn-action btn-closed" title="Approve invoice">
+                                    <button type="submit" class="btn-action btn-closed" title="Approve invoice">
                                         <i data-lucide="check-check"></i>
                                     </button>
                                 </form>
                                 {{-- Cancel --}}
-                                <form method="POST" action="{{ route('billing.update', $item->id) }}">
+                                <form method="POST" action="{{ route('billing.update', $item->id) }}"
+                                    data-confirm="¿Cancelar la factura #{{ $item->id }}?">
                                     @csrf @method('PUT')
                                     <input type="hidden" name="status" value="cancelled">
                                     <input type="hidden" name="payment_link" value="{{ $item->payment_link }}">
-                                    <button class="btn-action btn-delete" title="Cancel invoice"
-                                        onclick="return confirm('Cancel this invoice?')">
+                                    <button type="submit" class="btn-action btn-delete" title="Cancel invoice">
                                         <i data-lucide="x"></i>
                                     </button>
                                 </form>
@@ -153,10 +153,10 @@
                             </a>
 
                             {{-- Delete --}}
-                            <form method="POST" action="{{ route('billing.destroy', $item->id) }}">
+                            <form method="POST" action="{{ route('billing.destroy', $item->id) }}"
+                                data-confirm="¿Eliminar la factura #{{ $item->id }}? Esta acción no se puede deshacer.">
                                 @csrf @method('DELETE')
-                                <button class="btn-action btn-delete" title="Delete"
-                                    onclick="return confirm('Delete this invoice?')">
+                                <button type="submit" class="btn-action btn-delete" title="Delete">
                                     <i data-lucide="trash-2"></i>
                                 </button>
                             </form>

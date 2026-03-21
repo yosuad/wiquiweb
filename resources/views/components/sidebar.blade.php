@@ -58,11 +58,13 @@
                     class="sidebar__link {{ request()->routeIs('services.*') ? 'sidebar__link--active' : '' }}">
                     Servicios
                 </a>
+            @endrole
 
+            @can('view admin')
                 <a href="{{ route('admin') }}"
                     class="sidebar__link {{ request()->routeIs('admin') ? 'sidebar__link--active' : '' }}">
                     Administración
                 </a>
-            @endrole
+            @endcan
         </nav>
     </aside>

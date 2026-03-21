@@ -15,8 +15,8 @@
         </div>
     </div>
 
-    {{-- Pending users (no role assigned) --}}
-    @if($pending->count())
+    {{-- Pending users — solo administrator --}}
+    @if($isAdmin && $pending->count())
         <div class="table-container">
             <div class="table-section-header">
                 <strong>⚠ Users without role ({{ $pending->count() }})</strong>
@@ -40,20 +40,21 @@
                             <td><span class="badge badge-lost">Pending</span></td>
                             <td class="td-actions">
                                 <button class="btn-action btn-edit" title="Assign role"
-                                    onclick="openEditModal({{ $user->id }}, '{{ $user->name }}', '{{ $user->email }}', '')">
+                                    onclick="openEditModal({{ $user->id }}, '{{ $user->name }}', '{{ $user->email }}', '', '{{ $user->status }}')">
                                     <i data-lucide="pencil"></i>
                                 </button>
-                                <form method="POST" action="{{ route('admin.convert.prospect', $user->id) }}">
+                                <form method="POST" action="{{ route('admin.convert.prospect', $user->id) }}"
+                                    data-confirm="¿Convertir a {{ $user->name }} en prospecto? El usuario será eliminado del panel.">
                                     @csrf
-                                    <button class="btn-action btn-notes" title="Convertir a prospecto"
-                                        onclick="return confirm('¿Convertir a prospecto? El usuario será eliminado del panel.')">
+                                    <button type="submit" class="btn-action btn-notes" title="Convertir a prospecto">
                                         <i data-lucide="user-check"></i>
                                     </button>
                                 </form>
-                                <form method="POST" action="{{ route('admin.destroy', $user->id) }}">
+                                <form method="POST" action="{{ route('admin.destroy', $user->id) }}"
+                                    data-confirm="¿Eliminar a {{ $user->name }}? Esta acción no se puede deshacer.">
                                     @csrf
                                     @method('DELETE')
-                                    <button class="btn-action btn-delete" title="Delete">
+                                    <button type="submit" class="btn-action btn-delete" title="Delete">
                                         <i data-lucide="trash-2"></i>
                                     </button>
                                 </form>
@@ -65,7 +66,7 @@
         </div>
     @endif
 
-    {{-- Active users with roles --}}
+    {{-- Active users --}}
     <div class="table-container">
         <table class="data-table">
             <thead>
@@ -88,19 +89,25 @@
                             @endforeach
                         </td>
                         <td>
-                            <span class="badge {{ $admin->status === 'approved' ? 'badge-closed' : 'badge-lost' }}">
+                            <span class="badge {{ match($admin->status) {
+                                'approved' => 'badge-closed',
+                                'pending'  => 'badge-follow',
+                                'rejected' => 'badge-lost',
+                                default    => 'badge-lost'
+                            } }}">
                                 {{ ucfirst($admin->status) }}
                             </span>
                         </td>
                         <td class="td-actions">
                             <button class="btn-action btn-edit" title="Edit"
-                                onclick="openEditModal({{ $admin->id }}, '{{ $admin->name }}', '{{ $admin->email }}', '{{ $admin->roles->first()?->name }}')">
+                                onclick="openEditModal({{ $admin->id }}, '{{ $admin->name }}', '{{ $admin->email }}', '{{ $admin->roles->first()?->name }}', '{{ $admin->status }}')">
                                 <i data-lucide="pencil"></i>
                             </button>
-                            <form method="POST" action="{{ route('admin.destroy', $admin->id) }}">
+                            <form method="POST" action="{{ route('admin.destroy', $admin->id) }}"
+                                data-confirm="¿Eliminar a {{ $admin->name }}? Esta acción no se puede deshacer.">
                                 @csrf
                                 @method('DELETE')
-                                <button class="btn-action btn-delete" title="Delete">
+                                <button type="submit" class="btn-action btn-delete" title="Delete">
                                     <i data-lucide="trash-2"></i>
                                 </button>
                             </form>
@@ -115,47 +122,49 @@
         </table>
     </div>
 
-    {{-- Permissions matrix --}}
-    <div class="table-container" style="margin-top: 1.5rem;">
-        <div class="table-section-header">
-            <strong>Role Permissions</strong>
-        </div>
-        <form method="POST" action="{{ route('admin.permissions.update') }}">
-            @csrf
-            @method('PUT')
-            <table class="data-table permissions-table">
-                <thead>
-                    <tr>
-                        <th>Permission</th>
-                        @foreach($roles->where('name', '!=', 'administrator') as $role)
-                            <th class="text-center">{{ $role->name }}</th>
-                        @endforeach
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($permissions as $permission)
+    {{-- Permissions matrix — solo administrator --}}
+    @if($isAdmin)
+        <div class="table-container" style="margin-top: 1.5rem;">
+            <div class="table-section-header">
+                <strong>Role Permissions</strong>
+            </div>
+            <form method="POST" action="{{ route('admin.permissions.update') }}">
+                @csrf
+                @method('PUT')
+                <table class="data-table permissions-table">
+                    <thead>
                         <tr>
-                            <td class="font-medium">{{ $permission->name }}</td>
+                            <th>Permission</th>
                             @foreach($roles->where('name', '!=', 'administrator') as $role)
-                                <td class="text-center">
-                                    <input type="checkbox"
-                                        name="permissions[{{ $role->id }}][]"
-                                        value="{{ $permission->id }}"
-                                        class="check-msg"
-                                        {{ $role->hasPermissionTo($permission->name) ? 'checked' : '' }}>
-                                </td>
+                                <th class="text-center">{{ $role->name }}</th>
                             @endforeach
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
-            <div class="form-actions" style="padding: 1rem;">
-                <button type="submit" class="btn-primary">
-                    <i data-lucide="save"></i> Save permissions
-                </button>
-            </div>
-        </form>
-    </div>
+                    </thead>
+                    <tbody>
+                        @foreach($permissions as $permission)
+                            <tr>
+                                <td class="font-medium">{{ $permission->name }}</td>
+                                @foreach($roles->where('name', '!=', 'administrator') as $role)
+                                    <td class="text-center">
+                                        <input type="checkbox"
+                                            name="permissions[{{ $role->id }}][]"
+                                            value="{{ $permission->id }}"
+                                            class="check-msg"
+                                            {{ $role->hasPermissionTo($permission->name) ? 'checked' : '' }}>
+                                    </td>
+                                @endforeach
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                <div class="form-actions" style="padding: 1rem;">
+                    <button type="submit" class="btn-primary">
+                        <i data-lucide="save"></i> Save permissions
+                    </button>
+                </div>
+            </form>
+        </div>
+    @endif
 
     {{-- Create modal --}}
     <div id="modal-create" class="modal-overlay">
@@ -220,6 +229,14 @@
                         @endforeach
                     </select>
                 </div>
+                <div class="form-group">
+                    <label>Status</label>
+                    <select name="status" id="edit-status" class="form-input" required>
+                        <option value="approved">Approved — acceso activo</option>
+                        <option value="pending">Pending — bloqueado temporalmente</option>
+                        <option value="rejected">Rejected — bloqueado permanentemente</option>
+                    </select>
+                </div>
                 <div class="form-actions">
                     <button type="button" class="btn-secondary" onclick="document.getElementById('modal-edit').style.display='none'">Cancel</button>
                     <button type="submit" class="btn-primary"><i data-lucide="save"></i> Update</button>
@@ -229,10 +246,11 @@
     </div>
 
     <script>
-        function openEditModal(id, name, email, role) {
+        function openEditModal(id, name, email, role, status) {
             document.getElementById('edit-name').value     = name;
             document.getElementById('edit-email').value    = email;
             document.getElementById('edit-role').value     = role;
+            document.getElementById('edit-status').value   = status;
             document.getElementById('edit-password').value = '';
             document.getElementById('form-edit').action    = '/admin/' + id;
             document.getElementById('modal-edit').style.display = 'flex';

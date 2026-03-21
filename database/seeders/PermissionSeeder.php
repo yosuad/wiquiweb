@@ -45,7 +45,7 @@ class PermissionSeeder extends Seeder
         $administrator = Role::findByName('administrator');
         $administrator->syncPermissions($permissions);
 
-        // ========= Agent — solo prospectos y clientes asignados =========
+        // ========= Agent — prospectos, clientes y gestión de sales-agents =========
         $agent = Role::findByName('agent');
         $agent->syncPermissions([
             'view prospects',
@@ -53,9 +53,11 @@ class PermissionSeeder extends Seeder
             'edit prospects',
             'view customers',
             'edit customers',
+            'view admin',
+            'manage users',
         ]);
 
-        // ========= Sales Agent — igual que agent =========
+        // ========= Sales Agent — igual que agent sin admin =========
         $salesAgent = Role::findByName('sales-agent');
         $salesAgent->syncPermissions([
             'view prospects',

@@ -24,6 +24,12 @@ return new class extends Migration
             $table->enum('status', ['pending', 'approved', 'rejected'])
                   ->default('pending');
 
+            // Quién creó este usuario (para agentes que crean sales-agents)
+            $table->foreignId('created_by')
+                  ->nullable()
+                  ->constrained('users')
+                  ->nullOnDelete();
+
             // Contact info
             $table->string('whatsapp')->nullable();
             $table->string('phone')->nullable();

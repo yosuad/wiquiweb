@@ -24,7 +24,6 @@
 
     {{-- Scripts locales --}}
     <script src="{{ asset('js/lottie.min.js') }}"></script>
-    <script src="{{ asset('js/lucide.min.js') }}"></script>
 
     @stack('styles')
 </head>
@@ -49,9 +48,6 @@
 
     {{-- Scripts --}}
     <script src="{{ asset('js/main.js') }}"></script>
-
-    {{-- Lucide — inicializa íconos --}}
-    <script>lucide.createIcons();</script>
 
     @stack('scripts')
 

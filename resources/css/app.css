@@ -110,16 +110,19 @@
     --color-page-border:              #e5e7eb;
 
     /* ── Tipografía ── */
-    --color-page-text-xxl:            4rem;
-    --color-page-text-xl:             2.5rem;
-    --color-page-text-xl-weight:      700;
-    --color-page-text-base:           1.2rem;
-    --color-page-text-base-weight:    600;
-    --color-page-text-sm:             0.95rem;
-    --color-page-text-sm-weight:      400;
+    --font-size-xxl:        4rem;
+    --font-size-xl:         2.5rem;
+    --font-size-lg:         1.75rem;
+    --font-size-base:       1.2rem;
+    --font-size-sm:         0.95rem;
+    --font-size-xs:         0.8rem;
 
-    /* ── Radio ── */
-    --color-page-radius:              0.75rem;
+     /* Pesos */
+    --font-weight-bold:     700;
+    --font-weight-semibold: 600;
+    --font-weight-regular:  400;
+
+    --radius-base:          0.75rem;
 }
 
 

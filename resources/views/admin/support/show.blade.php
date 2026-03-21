@@ -69,23 +69,20 @@
                     <i class="fas fa-comments"></i> Follow-up notes
                 </p>
 
-                {{-- Notes list --}}
                 @forelse($ticket->notes as $note)
                     <div style="display: flex; gap: 0.75rem; margin-bottom: 1.25rem;">
-                        {{-- Avatar --}}
                         <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--primary-color); color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.8rem; flex-shrink: 0;">
                             {{ strtoupper(substr($note->creator->name ?? 'A', 0, 1)) }}
                         </div>
-                        {{-- Content --}}
                         <div style="flex: 1;">
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.25rem;">
                                 <span style="font-weight: 600; font-size: 0.85rem; color: var(--text-primary);">{{ $note->creator->name ?? '—' }}</span>
                                 <div style="display: flex; align-items: center; gap: 0.5rem;">
                                     <span style="font-size: 0.75rem; color: var(--text-secondary);">{{ $note->created_at->format('Y-m-d H:i') }}</span>
-                                    <form method="POST" action="{{ route('support.notes.destroy', [$ticket->id, $note->id]) }}">
+                                    <form method="POST" action="{{ route('support.notes.destroy', [$ticket->id, $note->id]) }}"
+                                        data-confirm="¿Eliminar esta nota?">
                                         @csrf @method('DELETE')
-                                        <button class="btn-action btn-delete" title="Delete note" style="padding: 0.2rem 0.4rem; font-size: 0.7rem;"
-                                            onclick="return confirm('Delete this note?')">
+                                        <button type="submit" class="btn-action btn-delete" title="Delete note" style="padding: 0.2rem 0.4rem; font-size: 0.7rem;">
                                             <i class="fas fa-times"></i>
                                         </button>
                                     </form>
@@ -172,10 +169,11 @@
             </form>
 
             {{-- Delete --}}
-            <form method="POST" action="{{ route('support.destroy', $ticket->id) }}" style="margin-top: 0.75rem;">
+            <form method="POST" action="{{ route('support.destroy', $ticket->id) }}"
+                data-confirm="¿Eliminar el ticket #{{ $ticket->id }}? Esta acción no se puede deshacer."
+                style="margin-top: 0.75rem;">
                 @csrf @method('DELETE')
-                <button class="btn-secondary" style="width: 100%; color: var(--danger); border-color: var(--danger);"
-                    onclick="return confirm('Delete this ticket?')">
+                <button type="submit" class="btn-secondary" style="width: 100%; color: var(--danger); border-color: var(--danger);">
                     <i class="fas fa-trash"></i> Delete ticket
                 </button>
             </form>

@@ -36,13 +36,23 @@ class LoginRequest extends FormRequest
             ]);
         }
 
-        // Bloquear usuarios pendientes de aprobación
-        if (Auth::user()->status !== 'approved') {
+        $status = Auth::user()->status;
+
+        if ($status === 'pending') {
             Auth::logout();
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
-                'email' => 'Tu cuenta está pendiente de aprobación. Pronto nos pondremos en contacto contigo.',
+                'email' => 'Tu cuenta está pendiente de aprobación o fue bloqueada temporalmente. Ponte en contacto con el administrador.',
+            ]);
+        }
+
+        if ($status === 'rejected') {
+            Auth::logout();
+            RateLimiter::hit($this->throttleKey());
+
+            throw ValidationException::withMessages([
+                'email' => 'Tu cuenta fue bloqueada. Si crees que es un error, ponte en contacto con el administrador.',
             ]);
         }
 

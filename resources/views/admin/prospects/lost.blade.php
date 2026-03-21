@@ -53,11 +53,12 @@
                                 <i data-lucide="pencil"></i>
                             </a>
                             @can('delete prospects')
-                                <form method="POST" action="{{ route('prospects.destroy', $prospect->id) }}">
+                                <form method="POST" action="{{ route('prospects.destroy', $prospect->id) }}"
+                                    data-confirm="¿Estás seguro de que quieres eliminar a {{ $prospect->first_name }} {{ $prospect->last_name }}?">
                                     @csrf
                                     @method('DELETE')
                                     <input type="hidden" name="redirect_to" value="prospects.lost">
-                                    <button class="btn-action btn-delete" title="Delete">
+                                    <button type="submit" class="btn-action btn-delete" title="Delete">
                                         <i data-lucide="trash-2"></i>
                                     </button>
                                 </form>
