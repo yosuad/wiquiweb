@@ -40,11 +40,16 @@
             {{-- Row 2: WhatsApp and Phone --}}
             <div class="form-row">
                 <div class="form-group">
-                    <label for="whatsapp">WhatsApp</label>
+                    <label for="whatsapp">WhatsApp <span class="required">*</span></label>
                     <input type="tel" id="whatsapp" name="whatsapp" value="{{ old('whatsapp') }}"
-                        class="form-input" placeholder="+57 320 413 25 00"
+                        class="form-input @error('whatsapp') is-invalid @enderror"
+                        placeholder="+57 320 413 25 00"
                         inputmode="tel" pattern="[\+\d\s\-\(\)]{7,20}"
-                        title="Solo números, +, espacios, guiones y paréntesis">
+                        title="Solo números, +, espacios, guiones y paréntesis"
+                        required>
+                    @error('whatsapp')
+                        <span class="form-error">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <div class="form-group">

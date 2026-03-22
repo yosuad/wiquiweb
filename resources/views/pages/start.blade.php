@@ -368,40 +368,39 @@
                 <p class="start-contact__subtitle">¿Listo para empezar?</p>
                 <h2 class="start-contact__title">Hablemos de tu <span
                         class="start-contact__title-highlight">proyecto</span></h2>
-                <p class="start-contact__description">Cuéntanos qué necesitas y te contactamos en menos de 24 horas con una
-                    propuesta personalizada.</p>
+                <p class="start-contact__description">Cuéntanos qué necesitas y te contactamos en menos de 24 horas.</p>
 
                 <ul class="start-contact__benefits">
                     <li class="start-contact__benefit">
                         <div class="start-contact__benefit-icon"><i data-lucide="clock"></i></div>
                         <div class="start-contact__benefit-body">
                             <h3 class="start-contact__benefit-title">Respuesta en menos de 24h</h3>
-                            <p class="start-contact__benefit-text">Te contactamos el mismo día hábil con una propuesta
-                                clara.</p>
+                            <p class="start-contact__benefit-text">Te contactamos el mismo día hábil para conocer mejor tu
+                                proyecto.</p>
                         </div>
                     </li>
                     <li class="start-contact__benefit">
                         <div class="start-contact__benefit-icon"><i data-lucide="shield-check"></i></div>
                         <div class="start-contact__benefit-body">
-                            <h3 class="start-contact__benefit-title">Sin compromisos</h3>
-                            <p class="start-contact__benefit-text">La asesoría inicial es completamente gratuita y sin
-                                obligación.</p>
+                            <h3 class="start-contact__benefit-title">Primera consulta sin costo</h3>
+                            <p class="start-contact__benefit-text">Conversamos sobre tu idea sin ningún compromiso de
+                                contratación.</p>
                         </div>
                     </li>
                     <li class="start-contact__benefit">
                         <div class="start-contact__benefit-icon"><i data-lucide="users"></i></div>
                         <div class="start-contact__benefit-body">
-                            <h3 class="start-contact__benefit-title">+500 clientes satisfechos</h3>
-                            <p class="start-contact__benefit-text">Más de 10 años ayudando a empresas a crecer en digital.
-                            </p>
+                            <h3 class="start-contact__benefit-title">+500 proyectos completados</h3>
+                            <p class="start-contact__benefit-text">Más de 10 años de experiencia en diseño y desarrollo
+                                web.</p>
                         </div>
                     </li>
                     <li class="start-contact__benefit">
                         <div class="start-contact__benefit-icon"><i data-lucide="headphones"></i></div>
                         <div class="start-contact__benefit-body">
-                            <h3 class="start-contact__benefit-title">Acompañamiento continuo</h3>
-                            <p class="start-contact__benefit-text">No desaparecemos después de entregar. Estamos contigo
-                                siempre.</p>
+                            <h3 class="start-contact__benefit-title">Soporte post-entrega</h3>
+                            <p class="start-contact__benefit-text">Planes de mantenimiento y soporte disponibles para
+                                mantener tu sitio siempre activo.</p>
                         </div>
                     </li>
                 </ul>
@@ -409,64 +408,73 @@
 
             <!-- ===== Lado derecho — Formulario ===== -->
             <div class="start-contact__form-wrapper">
-                <form class="start-contact__form" method="POST" action="{{ route('leads.store') }}">
-                    @csrf
 
-                    <input type="hidden" name="origin" value="start">
-                    <input type="hidden" name="service_interest" value="general">
-
-                    <div class="start-contact__form-header">
-                        <h3 class="start-contact__form-title">Solicita tu asesoría gratuita</h3>
-                        <p class="start-contact__form-subtitle">Completa el formulario y te llamamos</p>
+                @if (session('success'))
+                    <div class="start-contact__success">
+                        <i data-lucide="circle-check"></i>
+                        <h3>¡Mensaje enviado!</h3>
+                        <p>{{ session('success') }}</p>
                     </div>
+                @else
+                    <form class="start-contact__form" method="POST" action="{{ route('leads.store') }}">
+                        @csrf
 
-                    <div class="start-contact__form-row">
-                        <div class="start-contact__form-group">
-                            <label for="contact_first_name" class="start-contact__form-label">Nombre</label>
-                            <input type="text" id="contact_first_name" name="first_name"
-                                class="start-contact__form-input" placeholder="Tu nombre" maxlength="50" required>
+                        <input type="hidden" name="origin" value="web">
+
+                        <div class="start-contact__form-header">
+                            <h3 class="start-contact__form-title">Cuéntanos sobre tu proyecto</h3>
+                            <p class="start-contact__form-subtitle">Completa el formulario y te contactamos</p>
                         </div>
-                        <div class="start-contact__form-group">
-                            <label for="contact_last_name" class="start-contact__form-label">Apellido</label>
-                            <input type="text" id="contact_last_name" name="last_name"
-                                class="start-contact__form-input" placeholder="Tu apellido" maxlength="50" required>
+
+                        <div class="start-contact__form-row">
+                            <div class="start-contact__form-group">
+                                <label for="contact_first_name" class="start-contact__form-label">Nombre</label>
+                                <input type="text" id="contact_first_name" name="first_name"
+                                    class="start-contact__form-input" placeholder="Tu nombre" maxlength="50" required>
+                            </div>
+                            <div class="start-contact__form-group">
+                                <label for="contact_last_name" class="start-contact__form-label">Apellido</label>
+                                <input type="text" id="contact_last_name" name="last_name"
+                                    class="start-contact__form-input" placeholder="Tu apellido" maxlength="50" required>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="start-contact__form-group">
-                        <label for="contact_whatsapp" class="start-contact__form-label">WhatsApp</label>
-                        <input type="tel" id="contact_whatsapp" name="whatsapp" class="start-contact__form-input"
-                            placeholder="+57 320 413 25 00" maxlength="20" required>
-                    </div>
+                        <div class="start-contact__form-group">
+                            <label for="contact_whatsapp" class="start-contact__form-label">WhatsApp</label>
+                            <input type="tel" id="contact_whatsapp" name="whatsapp"
+                                class="start-contact__form-input" placeholder="+57 320 413 25 00" maxlength="20"
+                                required>
+                        </div>
 
-                    <div class="start-contact__form-group">
-                        <label for="contact_email" class="start-contact__form-label">Correo electrónico</label>
-                        <input type="email" id="contact_email" name="email" class="start-contact__form-input"
-                            placeholder="tu@correo.com" maxlength="100">
-                    </div>
+                        <div class="start-contact__form-group">
+                            <label for="contact_email" class="start-contact__form-label">Correo electrónico</label>
+                            <input type="email" id="contact_email" name="email" class="start-contact__form-input"
+                                placeholder="tu@correo.com" maxlength="100">
+                        </div>
 
-                    <div class="start-contact__form-group">
-                        <label for="contact_service" class="start-contact__form-label">¿Qué necesitas?</label>
-                        <select id="contact_service" name="service_interest" class="start-contact__form-input">
-                            <option value="pagina_web">Página web</option>
-                            <option value="correos">Correos corporativos</option>
-                            <option value="diseno_grafico">Diseño gráfico</option>
-                            <option value="marketing">Marketing digital</option>
-                            <option value="otro">Otro</option>
-                        </select>
-                    </div>
+                        <div class="start-contact__form-group">
+                            <label for="contact_service" class="start-contact__form-label">¿Qué necesitas?</label>
+                            <select id="contact_service" name="service_interest" class="start-contact__form-input">
+                                <option value="pagina_web">Página web</option>
+                                <option value="correos">Correos corporativos</option>
+                                <option value="diseno_grafico">Diseño gráfico</option>
+                                <option value="marketing">Marketing digital</option>
+                                <option value="otro">Otro</option>
+                            </select>
+                        </div>
 
-                    <button type="submit" class="start-contact__form-btn">
-                        <i data-lucide="send"></i>
-                        Solicitar asesoría gratuita
-                    </button>
+                        <button type="submit" class="start-contact__form-btn">
+                            <i data-lucide="send"></i>
+                            Enviar mensaje
+                        </button>
 
-                </form>
+                    </form>
+                @endif
+
             </div>
 
         </div>
     </section>
-
 
     <!-- ═══════════════ PORTFOLIO ═══════════════ -->
     <section id="portafolio" class="start-portfolio">

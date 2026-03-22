@@ -42,7 +42,8 @@
         <table class="data-table">
             <thead>
                 <tr>
-                    <th>Client</th>
+                    <th>Company</th>
+                    <th>Name</th>
                     <th>Last invoice</th>
                     <th>Amount</th>
                     <th>Status</th>
@@ -57,9 +58,8 @@
                         $lastInvoice = $contact->services->flatMap->invoices->sortByDesc('created_at')->first();
                     @endphp
                     <tr>
-                        <td class="font-medium">
-                            {{ $contact->company_name ?? $contact->first_name . ' ' . $contact->last_name }}
-                        </td>
+                        <td class="font-medium">{{ $contact->company_name ?? '—' }}</td>
+                        <td>{{ $contact->first_name }} {{ $contact->last_name }}</td>
                         <td>
                             @if($lastInvoice)
                                 {{ $lastInvoice->contactService->service->name ?? '—' }}
@@ -91,14 +91,13 @@
                         <td>{{ $lastInvoice ? $lastInvoice->created_at->format('Y-m-d') : '—' }}</td>
                         <td class="text-center">
                             @if($contact->message_sent === 'n8n')
-                                {{-- n8n lo envió — solo visual, no se toca --}}
                                 <i data-lucide="check" style="color: var(--paid);" title="Enviado por n8n"></i>
                             @else
-                                {{-- manual o no — botón toggle --}}
                                 <form method="POST" action="{{ route('contacts.message.toggle', $contact->id) }}">
                                     @csrf
                                     @method('PATCH')
-                                    <button type="submit" class="btn-action" title="{{ $contact->message_sent === 'manual' ? 'Quitar marca' : 'Marcar como enviado' }}"
+                                    <button type="submit" class="btn-action"
+                                        title="{{ $contact->message_sent === 'manual' ? 'Quitar marca' : 'Marcar como enviado' }}"
                                         style="background: none; border: none; cursor: pointer;
                                                color: {{ $contact->message_sent === 'manual' ? 'var(--primary-color)' : 'var(--text-secondary)' }};">
                                         <i data-lucide="check"></i>
@@ -114,7 +113,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="7" class="text-center">No clients with invoices found.</td>
+                        <td colspan="8" class="text-center">No clients with invoices found.</td>
                     </tr>
                 @endforelse
             </tbody>

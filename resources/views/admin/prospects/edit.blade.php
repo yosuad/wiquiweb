@@ -61,7 +61,7 @@
             {{-- Row 3: Email and Company --}}
             <div class="form-row">
                 <div class="form-group">
-                    <label for="email">Email</label>
+                    <label for="email" id="label-email">Email</label>
                     <input type="email" id="email" name="email" value="{{ old('email', $contact->email) }}"
                         class="form-input @error('email') is-invalid @enderror" placeholder="email@example.com">
                     @error('email')
@@ -70,10 +70,10 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="company_name">Company</label>
+                    <label for="company_name" id="label-company">Company</label>
                     <input type="text" id="company_name" name="company_name"
                         value="{{ old('company_name', $contact->company_name) }}" class="form-input"
-                        placeholder="Company name (optional)">
+                        placeholder="Company name">
                 </div>
             </div>
 
@@ -109,7 +109,7 @@
             {{-- Row 5: Client type and Service interest --}}
             <div class="form-row">
                 <div class="form-group">
-                    <label for="client_type">Client type</label>
+                    <label for="client_type" id="label-client-type">Client type</label>
                     <select id="client_type" name="client_type" class="form-input">
                         <option value="">— Select —</option>
                         <option value="persona_natural"     {{ old('client_type', $contact->client_type) == 'persona_natural'     ? 'selected' : '' }}>Persona natural</option>
@@ -208,5 +208,31 @@
                 this.value = this.value.replace(/[^\d\+\s\-\(\)]/g, '');
             });
         });
+
+        // Campos obligatorios al pasar a Customer
+        const statusSelect  = document.getElementById('status');
+        const emailInput    = document.getElementById('email');
+        const companyInput  = document.getElementById('company_name');
+        const clientSelect  = document.getElementById('client_type');
+        const labelEmail    = document.getElementById('label-email');
+        const labelCompany  = document.getElementById('label-company');
+        const labelClient   = document.getElementById('label-client-type');
+
+        const requiredMark = ' <span class="required">*</span>';
+
+        function toggleCustomerRequired() {
+            const isCustomer = statusSelect.value === 'customer';
+
+            emailInput.required   = isCustomer;
+            companyInput.required = isCustomer;
+            clientSelect.required = isCustomer;
+
+            labelEmail.innerHTML   = 'Email'       + (isCustomer ? requiredMark : '');
+            labelCompany.innerHTML = 'Company'     + (isCustomer ? requiredMark : '');
+            labelClient.innerHTML  = 'Client type' + (isCustomer ? requiredMark : '');
+        }
+
+        statusSelect.addEventListener('change', toggleCustomerRequired);
+        toggleCustomerRequired(); // ejecutar al cargar por si ya está en customer
     </script>
 @endpush

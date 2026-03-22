@@ -90,12 +90,6 @@
          botón de WhatsApp (naranja sobre negro) contraste bien. ── */
     --color-page-dark:                #000000;
 
-    /* ── Acento naranja
-         Disponible para: botón WhatsApp, badges de portafolio,
-         detalles de énfasis. Úsalo con moderación (máx. 3 puntos). ── */
-    --color-page-accent:              #FB8500;
-    --color-page-accent-bg:           rgba(251, 133, 0, 0.10);
-
     /* ── Fondos ── */
     --color-page-white:               #ffffff;
     --color-page-bg:                  #f5f6fa;

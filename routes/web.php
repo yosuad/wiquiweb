@@ -32,12 +32,17 @@ Route::get('/privacy_policy', function () {
     return view('pages.privacyPolicy');
 })->middleware('guest')->name('privacy');
 
+// ===== Leads (formulario pagina start) =====
+Route::post('/contacto', [ContactController::class, 'formstartstore'])->name('leads.store');
+
 // ===== Leads (formulario público Meta) =====
 Route::get('/form', function () {
     return view('leads.form');
 })->middleware('guest')->name('form');
 
-Route::post('/form', [ContactController::class, 'leadStore'])->name('leads.store');
+Route::post('/form', [ContactController::class, 'leadStore'])->name('leads.meta.store');
+
+
 
 /*
 |--------------------------------------------------------------------------

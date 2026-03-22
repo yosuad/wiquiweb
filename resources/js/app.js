@@ -37,99 +37,17 @@ import '../css/admin/admin.css';
 import '../css/components/footer.css';
 
 
-/************************************************************************************/
-/*        Customer show — precios y período  perteneciente al dashboar            */
-/*********************************************************************************/
 
-window.togglePeriod = function() {
-    const cycle     = document.getElementById('billing_cycle');
-    const periodRow = document.getElementById('period-row');
-    const input     = document.getElementById('billing_month');
 
-    if (!cycle || !periodRow || !input) return;
-
-    if (cycle.value === 'monthly') {
-        periodRow.style.display = 'flex';
-        input.disabled = false;
-    } else {
-        periodRow.style.display = 'none';
-        input.disabled = true;
-    }
-};
-
-window.calcularPrecio = function() {
-    const serviceId    = document.getElementById('service_id');
-    const region       = document.getElementById('region');
-    const clientType   = document.getElementById('client_type');
-    const billingCycle = document.getElementById('billing_cycle');
-
-    if (!serviceId || !region || !clientType || !billingCycle) return;
-
-    const key   = `${serviceId.value}_${region.value}_${clientType.value}_${billingCycle.value}`;
-    const entry = window.preciosData?.[key];
-
-    const sugerido       = document.getElementById('precio-sugerido');
-    const amount         = document.getElementById('amount');
-    const servicePriceId = document.getElementById('service_price_id');
-
-    if (entry) {
-        sugerido.textContent = `$ ${parseFloat(entry.price).toFixed(2)} USD`;
-        amount.value         = parseFloat(entry.price).toFixed(2);
-        servicePriceId.value = entry.id;
-    } else {
-        sugerido.textContent = '— No price configured —';
-        amount.value         = '';
-        servicePriceId.value = '';
-    }
-};
-
-document.addEventListener('DOMContentLoaded', function() {
-    if (document.getElementById('billing_cycle')) {
-        window.calcularPrecio();
-        window.togglePeriod();
-    }
-});
+/* ========= Pages ========= */
+import './admin/prospects/close.js';
+import './pages/start.js';
+import './pages/services/web-design.js';
 
 
 
-/**************************************/
-/*        START web-design.js         */
-/**************************************/
 
-(function () {
-  'use strict';
 
-  function initFaqAccordion() {
-    var triggers = document.querySelectorAll('[data-faq-trigger]');
 
-    if (!triggers.length) return;
 
-    triggers.forEach(function (trigger) {
-      trigger.addEventListener('click', function () {
-        var item   = trigger.closest('.faq-item');
-        var isOpen = item.classList.contains('faq-item--open');
 
-        document.querySelectorAll('.faq-item--open').forEach(function (openItem) {
-          openItem.classList.remove('faq-item--open');
-          openItem.querySelector('[data-faq-trigger]').setAttribute('aria-expanded', 'false');
-          openItem.querySelector('.faq-item__body').setAttribute('aria-hidden', 'true');
-        });
-
-        if (!isOpen) {
-          item.classList.add('faq-item--open');
-          trigger.setAttribute('aria-expanded', 'true');
-          item.querySelector('.faq-item__body').setAttribute('aria-hidden', 'false');
-        }
-      });
-    });
-  }
-
-  document.addEventListener('DOMContentLoaded', function () {
-    initFaqAccordion();
-  });
-
-})();
-
-/**************************************/
-/*         END web-design.js          */
-/**************************************/

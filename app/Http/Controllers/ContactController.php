@@ -18,12 +18,10 @@ class ContactController extends Controller
     {
         $user = auth()->user();
 
-        // Administrator ve todo
         if ($user->hasRole('administrator')) {
             return $query;
         }
 
-        // El resto solo ve sus asignados
         return $query->where('assigned_to', $user->id);
     }
 
@@ -62,7 +60,6 @@ class ContactController extends Controller
 
     public function show(Contact $contact)
     {
-        // Verificar que el agente tenga acceso a este contacto
         if (!auth()->user()->hasRole('administrator') && $contact->assigned_to !== auth()->id()) {
             abort(403);
         }
@@ -93,8 +90,8 @@ class ContactController extends Controller
             'first_name'      => 'required|string|max:255',
             'last_name'       => 'nullable|string|max:255',
             'email'           => 'nullable|email|unique:contacts,email,' . $contact->id,
-            'phone'           => 'nullable|string|max:20',
-            'whatsapp'        => 'nullable|string|max:20',
+            'phone'           => 'nullable|string|max:30',
+            'whatsapp'        => 'nullable|string|max:30',
             'company_name'    => 'nullable|string|max:255',
             'document_type'   => 'nullable|in:national_id,tax_id,rut,foreign_id,passport,ein',
             'document_number' => 'nullable|string|max:30',
@@ -146,9 +143,9 @@ class ContactController extends Controller
         $request->validate([
             'first_name'       => 'required|string|max:255',
             'last_name'        => 'nullable|string|max:255',
-            'email'            => 'nullable|email|unique:contacts,email',
-            'phone'            => 'nullable|string|max:20',
-            'whatsapp'         => 'nullable|string|max:20',
+            'email'            => 'nullable|email|',
+            'phone'            => 'nullable|string|max:30',
+            'whatsapp'         => 'required|string|max:30|unique:contacts,whatsapp',
             'company_name'     => 'nullable|string|max:255',
             'origin'           => 'nullable|in:facebook,instagram,referido,web,agente,meta',
             'client_type'      => 'nullable|in:persona_natural,empresa,emprendimiento,artista,organizacion_social',
@@ -182,13 +179,41 @@ class ContactController extends Controller
         return redirect()->route('prospects.index')->with('success', 'Prospect created successfully.');
     }
 
+
+    // ========= Lead store (formulario start) =========
+    public function formstartstore(Request $request)
+    {
+        $request->validate([
+            'first_name'       => 'required|string|max:50',
+            'last_name'        => 'nullable|string|max:50',
+            'whatsapp'         => 'required|string|max:20',
+            'email'            => 'nullable|email|unique:contacts,email',
+            'service_interest' => 'nullable|string|max:100',
+        ]);
+
+        Contact::create([
+            'first_name'       => $request->first_name,
+            'last_name'        => $request->last_name,
+            'whatsapp'         => $request->whatsapp,
+            'email'            => $request->email,
+            'origin'           => 'web',
+            'service_interest' => $request->service_interest ?? 'pagina_web',
+            'status'           => 'prospect',
+            'pipeline_stage'   => 'new',
+            'password'         => bcrypt('password'),
+        ]);
+
+        return response()->json(['success' => true]);
+    }
+
+
     // ========= Lead store (formulario público) =========
     public function leadStore(Request $request)
     {
         $request->validate([
             'first_name' => 'required|string|max:255',
             'last_name'  => 'nullable|string|max:255',
-            'whatsapp'   => 'required|string|max:20',
+            'whatsapp'   => 'required|string|max:30',
             'email'      => 'nullable|email|unique:contacts,email',
         ]);
 
@@ -206,6 +231,8 @@ class ContactController extends Controller
 
         return redirect()->route('form')->with('success', '¡Gracias! Nos pondremos en contacto contigo pronto.');
     }
+
+
 
     public function edit(Contact $contact)
     {
@@ -233,8 +260,8 @@ class ContactController extends Controller
             'first_name'       => 'required|string|max:255',
             'last_name'        => 'nullable|string|max:255',
             'email'            => 'nullable|email|unique:contacts,email,' . $contact->id,
-            'phone'            => 'nullable|string|max:20',
-            'whatsapp'         => 'nullable|string|max:20',
+            'phone'            => 'nullable|string|max:30',
+            'whatsapp'         => 'nullable|string|max:30',
             'company_name'     => 'nullable|string|max:255',
             'origin'           => 'nullable|in:facebook,instagram,referido,web,agente,meta',
             'client_type'      => 'nullable|in:persona_natural,empresa,emprendimiento,artista,organizacion_social',
@@ -347,7 +374,6 @@ class ContactController extends Controller
 
         $contact->update(['pipeline_stage' => 'pending_payment']);
 
-        // Redirigir según permisos — agentes no tienen view billing
         if (auth()->user()->can('view billing')) {
             return redirect()->route('billing')->with('success', 'Invoice generated successfully.');
         }
