@@ -221,7 +221,44 @@
                              style="width: {{ $mensualidadesPercent }}%"></div>
                     </div>
                 </div>
+            </div>
+        @endrole
 
+        {{-- Site settings: solo administrator --}}
+        @role('administrator')
+            <div class="dash-section dash-section--settings">
+                <h3 class="dash-section__title">Site Settings</h3>
+                <form method="POST" action="{{ route('dashboard.settings.update') }}">
+                    @csrf
+                    @method('PUT')
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Proyectos realizados</label>
+                            <input type="number" name="proyectos_realizados" class="form-input"
+                                value="{{ $settings['proyectos_realizados'] }}" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label>Trabajos colaborativos <span style="font-size:0.75rem; color:var(--text-secondary);">(proyectos × 2)</span></label>
+                            <input type="text" class="form-input" disabled
+                                value="{{ $settings['proyectos_realizados'] * 2 }}">
+                        </div>
+                        <div class="form-group">
+                            <label>Clientes contentos <span style="font-size:0.75rem; color:var(--text-secondary);">(proyectos × 20)</span></label>
+                            <input type="text" class="form-input" disabled
+                                value="{{ $settings['proyectos_realizados'] * 20 }}">
+                        </div>
+                        <div class="form-group">
+                            <label>Años de actividad <span style="font-size:0.75rem; color:var(--text-secondary);">(desde {{ \Carbon\Carbon::parse($settings['fecha_inicio'])->format('Y') }})</span></label>
+                            <input type="text" class="form-input" disabled
+                                value="{{ now()->year - \Carbon\Carbon::parse($settings['fecha_inicio'])->year }}">
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">
+                            <i data-lucide="save"></i> Save settings
+                        </button>
+                    </div>
+                </form>
             </div>
         @endrole
 

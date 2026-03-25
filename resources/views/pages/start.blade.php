@@ -486,54 +486,67 @@
                 <p class="start-portfolio__description">Una muestra de nuestros mejores trabajos y casos de éxito.</p>
             </div>
             <div class="start-portfolio__grid">
-                <a href="#" class="start-project">
-                    <img src="images/project1.jpg" alt="Periódico El Taller" class="start-project__image">
+
+                <a href="https://tulibroencasa.com" target="_blank" class="start-project">
+                    <img src="{{ asset('img/portafolio/tulibroencasa.webp') }}" alt="Tu Libro en Casa"
+                        class="start-project__image">
+                    <div class="start-project__overlay"></div>
+                    <div class="start-project__content">
+                        <span class="start-project__category">Diseño & E-commerce</span>
+                        <h3 class="start-project__title">Tu Libro en Casa</h3>
+                    </div>
+                </a>
+
+                <a href="https://enlacetropical.com" target="_blank" class="start-project">
+                    <img src="{{ asset('img/portafolio/enlacetropical.webp') }}" alt="Enlace Tropical"
+                        class="start-project__image">
+                    <div class="start-project__overlay"></div>
+                    <div class="start-project__content">
+                        <span class="start-project__category">Identidad & Diseño Web</span>
+                        <h3 class="start-project__title">Enlace Tropical</h3>
+                    </div>
+                </a>
+
+                <a href="https://wiquiweb.co/persianasycortinasvalencia" target="_blank" class="start-project">
+                    <img src="{{ asset('img/portafolio/persianasycortinasvalencia.webp') }}"
+                        alt="Persianas y Cortinas Valencia" class="start-project__image">
+                    <div class="start-project__overlay"></div>
+                    <div class="start-project__content">
+                        <span class="start-project__category">Landing Page</span>
+                        <h3 class="start-project__title">Persianas y Cortinas Valencia</h3>
+                    </div>
+                </a>
+
+                <a href="https://wiquiweb.co/canalzona6tv" target="_blank" class="start-project">
+                    <img src="{{ asset('img/portafolio/canalzona6tv.webp') }}" alt="Canal Zona 6 TV"
+                        class="start-project__image">
+                    <div class="start-project__overlay"></div>
+                    <div class="start-project__content">
+                        <span class="start-project__category">Landing Page</span>
+                        <h3 class="start-project__title">Canal Zona 6 TV</h3>
+                    </div>
+                </a>
+
+                <a href="https://www.emisoraradiovisual.com" target="_blank" class="start-project">
+                    <img src="{{ asset('img/portafolio/radiovisual.webp') }}" alt="Emisora Radio Visual"
+                        class="start-project__image">
+                    <div class="start-project__overlay"></div>
+                    <div class="start-project__content">
+                        <span class="start-project__category">Streaming</span>
+                        <h3 class="start-project__title">Emisora Radio Visual</h3>
+                    </div>
+                </a>
+
+                <a href="https://las10noticiasmasbuscadas.com" target="_blank" class="start-project">
+                    <img src="{{ asset('img/portafolio/las10noticiasmasbuscadas.webp') }}"
+                        alt="Las 10 Noticias Más Buscadas" class="start-project__image">
                     <div class="start-project__overlay"></div>
                     <div class="start-project__content">
                         <span class="start-project__category">Diseño Web</span>
-                        <h3 class="start-project__title">Periódico El Taller</h3>
+                        <h3 class="start-project__title">Las 10 Noticias Más Buscadas</h3>
                     </div>
                 </a>
-                <a href="#" class="start-project">
-                    <img src="images/project2.jpg" alt="Mesa de Medios" class="start-project__image">
-                    <div class="start-project__overlay"></div>
-                    <div class="start-project__content">
-                        <span class="start-project__category">Identidad Corporativa</span>
-                        <h3 class="start-project__title">Mesa de Medios</h3>
-                    </div>
-                </a>
-                <a href="#" class="start-project">
-                    <img src="images/project3.jpg" alt="A Todo Deporte" class="start-project__image">
-                    <div class="start-project__overlay"></div>
-                    <div class="start-project__content">
-                        <span class="start-project__category">E-commerce</span>
-                        <h3 class="start-project__title">A Todo Deporte</h3>
-                    </div>
-                </a>
-                <a href="#" class="start-project">
-                    <img src="images/project4.jpg" alt="Consultora Legal" class="start-project__image">
-                    <div class="start-project__overlay"></div>
-                    <div class="start-project__content">
-                        <span class="start-project__category">Diseño Web</span>
-                        <h3 class="start-project__title">Consultora Legal</h3>
-                    </div>
-                </a>
-                <a href="#" class="start-project">
-                    <img src="images/project5.jpg" alt="Restaurante Gourmet" class="start-project__image">
-                    <div class="start-project__overlay"></div>
-                    <div class="start-project__content">
-                        <span class="start-project__category">Branding</span>
-                        <h3 class="start-project__title">Restaurante Gourmet</h3>
-                    </div>
-                </a>
-                <a href="#" class="start-project">
-                    <img src="images/project6.jpg" alt="Tech Startup" class="start-project__image">
-                    <div class="start-project__overlay"></div>
-                    <div class="start-project__content">
-                        <span class="start-project__category">Aplicación Web</span>
-                        <h3 class="start-project__title">Tech Startup</h3>
-                    </div>
-                </a>
+
             </div>
             <div class="start-portfolio__cta">
                 <a href="#" class="start-portfolio__btn">Ver todos los proyectos</a>
@@ -554,22 +567,22 @@
             <div class="start-stats__grid">
                 <div class="start-stat">
                     <div class="start-stat__icon"><i data-lucide="calendar"></i></div>
-                    <span class="start-stat__count">+10</span>
+                    <span class="start-stat__count">+{{ $anos }}</span>
                     <h3 class="start-stat__label">Período de Actividad</h3>
                 </div>
                 <div class="start-stat">
                     <div class="start-stat__icon"><i data-lucide="briefcase"></i></div>
-                    <span class="start-stat__count">+45</span>
+                    <span class="start-stat__count">+{{ $proyectos }}</span>
                     <h3 class="start-stat__label">Proyectos realizados</h3>
                 </div>
                 <div class="start-stat">
                     <div class="start-stat__icon"><i data-lucide="users"></i></div>
-                    <span class="start-stat__count">+20</span>
+                    <span class="start-stat__count">+{{ $colaborativos }}</span>
                     <h3 class="start-stat__label">Trabajo colaborativo</h3>
                 </div>
                 <div class="start-stat">
                     <div class="start-stat__icon"><i data-lucide="heart"></i></div>
-                    <span class="start-stat__count">+500</span>
+                    <span class="start-stat__count">+{{ $clientes }}</span>
                     <h3 class="start-stat__label">Clientes Contentos</h3>
                 </div>
             </div>
@@ -578,57 +591,71 @@
 
     <!-- ═══════════════ REVIEWS ═══════════════ -->
     <section id="testimonios" class="start-reviews">
-        <div class="start-reviews__container">
-            <div class="start-reviews__header">
-                <p class="start-reviews__subtitle">Reseñas</p>
-                <h2 class="start-reviews__title">Qué dicen nuestros <span
-                        class="start-reviews__title-highlight">Clientes?</span></h2>
-                <p class="start-reviews__description">Nuestros clientes siempre salen satisfechos con sus webs y apps.</p>
-            </div>
-            <div class="start-reviews__grid">
-                <article class="start-review-card">
-                    <img src="images/user1.jpg" alt="Jorge Mario Escobar" class="start-review-card__avatar">
-                    <div class="start-review-card__body">
-                        <span class="start-review-card__company">Periódico el Taller</span>
-                        <h3 class="start-review-card__name">Jorge Mario Escobar</h3>
-                        <p class="start-review-card__text">Destacamos en la red gracias a su eficaz capacitación y asesoría
-                            constante, permitiéndonos gestionar la página de forma autónoma.</p>
-                        <button class="start-review-card__more">Ver más</button>
-                    </div>
-                </article>
-                <article class="start-review-card">
-                    <img src="images/user2.jpg" alt="Alejandra Osorio" class="start-review-card__avatar">
-                    <div class="start-review-card__body">
-                        <span class="start-review-card__company">Mesa de Medios</span>
-                        <h3 class="start-review-card__name">Alejandra Osorio</h3>
-                        <p class="start-review-card__text">La empresa Wiquiweb ha llevado a cabo diversos proyectos de
-                            diseño web, hosting y diseño gráfico para nuestra organización.</p>
-                        <button class="start-review-card__more">Ver más</button>
-                    </div>
-                </article>
-                <article class="start-review-card">
-                    <img src="images/user3.jpg" alt="Edwin Ortega" class="start-review-card__avatar">
-                    <div class="start-review-card__body">
-                        <span class="start-review-card__company">A todo deporte</span>
-                        <h3 class="start-review-card__name">Edwin Ortega</h3>
-                        <p class="start-review-card__text">He recibido un considerable respaldo para llevar a cabo la
-                            implementación tecnológica de mi página web y correo corporativo.</p>
-                        <button class="start-review-card__more">Ver más</button>
-                    </div>
-                </article>
-                <article class="start-review-card">
-                    <img src="images/user4.jpg" alt="Vanessa Martinez" class="start-review-card__avatar">
-                    <div class="start-review-card__body">
-                        <span class="start-review-card__company">Web Designer</span>
-                        <h3 class="start-review-card__name">Vanessa Martinez</h3>
-                        <p class="start-review-card__text">Estoy profundamente agradecido con WiquiWeb. Su profesionalismo
-                            y dedicación se reflejan en cada detalle del sitio.</p>
-                        <button class="start-review-card__more">Ver más</button>
-                    </div>
-                </article>
-            </div>
+    <div class="start-reviews__container">
+        <div class="start-reviews__header">
+            <p class="start-reviews__subtitle">Reseñas</p>
+            <h2 class="start-reviews__title">Qué dicen nuestros <span
+                    class="start-reviews__title-highlight">Clientes</span></h2>
+            <p class="start-reviews__description">Nuestros clientes siempre salen satisfechos con sus webs y apps.</p>
         </div>
-    </section>
+        <div class="start-reviews__grid">
+
+            <article class="start-review-card">
+                <div class="start-review-card__avatar-wrapper">
+                    <img src="{{ asset('images/user1.jpg') }}" alt="Jorge Mario Escobar" class="start-review-card__avatar">
+                </div>
+                <div class="start-review-card__body">
+                    <h3 class="start-review-card__company">Periódico el Taller</h3>
+                    <span class="start-review-card__name">Jorge Mario Escobar</span>
+                    <p class="start-review-card__text">Destacamos en la red gracias a su eficaz capacitación y asesoría
+                        constante, permitiéndonos gestionar la página de forma autónoma.</p>
+                    <button class="start-review-card__more">Ver más</button>
+                </div>
+            </article>
+
+            <article class="start-review-card">
+                <div class="start-review-card__avatar-wrapper">
+                    <img src="{{ asset('images/user2.jpg') }}" alt="Alejandra Osorio" class="start-review-card__avatar">
+                </div>
+                <div class="start-review-card__body">
+                    <h3 class="start-review-card__company">Mesa de Medios</h3>
+                    <span class="start-review-card__name">Alejandra Osorio</span>
+                    <p class="start-review-card__text">La empresa Wiquiweb ha llevado a cabo diversos proyectos de
+                        diseño web, hosting y diseño gráfico para nuestra organización.</p>
+                    <button class="start-review-card__more">Ver más</button>
+                </div>
+            </article>
+
+            <article class="start-review-card">
+                <div class="start-review-card__avatar-wrapper">
+                    <img src="{{ asset('images/user3.jpg') }}" alt="Edwin Ortega" class="start-review-card__avatar">
+                </div>
+                <div class="start-review-card__body">
+                    <h3 class="start-review-card__company">A todo deporte</h3>
+                    <span class="start-review-card__name">Edwin Ortega</span>
+                    <p class="start-review-card__text">He recibido un considerable respaldo para llevar a cabo la
+                        implementación tecnológica de mi página web y correo corporativo.</p>
+                    <button class="start-review-card__more">Ver más</button>
+                </div>
+            </article>
+
+            <article class="start-review-card">
+                <div class="start-review-card__avatar-wrapper">
+                    <img src="{{ asset('images/user4.jpg') }}" alt="Vanessa Martinez" class="start-review-card__avatar">
+                </div>
+                <div class="start-review-card__body">
+                    <h3 class="start-review-card__company">Web Designer</h3>
+                    <span class="start-review-card__name">Vanessa Martinez</span>
+                    <p class="start-review-card__text">Estoy profundamente agradecida con WiquiWeb. Su profesionalismo
+                        y dedicación se reflejan en cada detalle del sitio.</p>
+                    <button class="start-review-card__more">Ver más</button>
+                </div>
+            </article>
+
+        </div>
+    </div>
+</section>
+    
 
 
 

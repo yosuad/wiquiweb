@@ -8,6 +8,7 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SupportController;
+use App\Http\Controllers\PageController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -18,31 +19,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 // ===== Páginas públicas =====
-Route::get('/', function () {
-    return view('pages.start');
-})->middleware('guest')->name('home');
-
-// ===== Servicios diseño paginas web =====
-Route::get('/servicios/diseno-web', function () {
-    return view('pages.services.web-design');
-})->name('services.web-design');
-
-// ===== Legal =====
-Route::get('/privacy_policy', function () {
-    return view('pages.privacyPolicy');
-})->middleware('guest')->name('privacy');
+Route::get('/', [PageController::class, 'start'])->middleware('guest')->name('home');
+Route::get('/servicios/diseno-web', [PageController::class, 'webDesign'])->name('services.web-design');
+Route::get('/privacy_policy', [PageController::class, 'privacy'])->middleware('guest')->name('privacy');
 
 // ===== Leads (formulario pagina start) =====
 Route::post('/contacto', [ContactController::class, 'formstartstore'])->name('leads.store');
 
 // ===== Leads (formulario público Meta) =====
-Route::get('/form', function () {
-    return view('leads.form');
-})->middleware('guest')->name('form');
-
+Route::get('/form', [PageController::class, 'form'])->middleware('guest')->name('form');
 Route::post('/form', [ContactController::class, 'leadStore'])->name('leads.meta.store');
-
-
 
 /*
 |--------------------------------------------------------------------------
@@ -55,9 +41,9 @@ Route::middleware(['auth', 'verified', 'approved'])->group(function () {
 
     // ── Dashboard ── (todos los roles)
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::put('/dashboard/settings', [DashboardController::class, 'updateSettings'])->name('dashboard.settings.update');
 
     // ── Prospects ── (permission: view prospects)
-    // administrator, agent, sales-agent
     Route::middleware('permission:view prospects')->group(function () {
         Route::get('/prospects', [ContactController::class, 'index'])->name('prospects.index');
         Route::get('/prospects/lost', [ContactController::class, 'lost'])->name('prospects.lost');
@@ -85,7 +71,6 @@ Route::middleware(['auth', 'verified', 'approved'])->group(function () {
     });
 
     // ── Customers ── (permission: view customers)
-    // administrator, agent, sales-agent, billing-agent
     Route::middleware('permission:view customers')->group(function () {
         Route::get('/customers', [ContactController::class, 'customers'])->name('customers');
         Route::get('/customers/{contact}', [ContactController::class, 'show'])->name('customers.show');
@@ -97,7 +82,6 @@ Route::middleware(['auth', 'verified', 'approved'])->group(function () {
         Route::patch('/customers/service/{contactService}/status', [ContactController::class, 'updateServiceStatus'])->name('customers.service.status');
         Route::patch('/customers/service/{contactService}/description', [ContactController::class, 'updateServiceDescription'])->name('customers.service.description');
         Route::patch('/customers/{contact}/message-sent', [ContactController::class, 'toggleMessageSent'])->name('contacts.message.toggle');
-        // billing.update aquí para que agentes puedan actualizar facturas desde customers.show
         Route::put('/billing/{invoice}', [BillingController::class, 'update'])->name('billing.update');
     });
 
@@ -106,7 +90,6 @@ Route::middleware(['auth', 'verified', 'approved'])->group(function () {
     });
 
     // ── Billing ── (permission: view billing)
-    // administrator, billing-agent
     Route::middleware('permission:view billing')->group(function () {
         Route::get('/billing', [BillingController::class, 'index'])->name('billing');
         Route::get('/billing/{contact}/invoices', [BillingController::class, 'show'])->name('billing.show');
@@ -133,8 +116,6 @@ Route::middleware(['auth', 'verified', 'approved'])->group(function () {
     });
 
     // ── Support ── (permission: view support)
-    // administrator, support
-    // IMPORTANTE: /support/create debe ir antes de /support/{ticket}
     Route::middleware('permission:view support')->group(function () {
         Route::get('/support', [SupportController::class, 'index'])->name('support');
         Route::get('/support/create', [SupportController::class, 'create'])->name('support.create');
@@ -150,14 +131,12 @@ Route::middleware(['auth', 'verified', 'approved'])->group(function () {
     });
 
     // ── Admin ── (permission: view admin / manage users)
-    // solo administrator
     Route::middleware('permission:view admin')->group(function () {
         Route::get('/admin', [AdminController::class, 'index'])->name('admin');
     });
 
     Route::middleware('permission:manage users')->group(function () {
         Route::post('/admin', [AdminController::class, 'store'])->name('admin.store');
-        // permissions debe ir antes de {user} para evitar conflicto de rutas
         Route::put('/admin/permissions', [AdminController::class, 'updatePermissions'])->name('admin.permissions.update');
         Route::put('/admin/{user}', [AdminController::class, 'update'])->name('admin.update');
         Route::delete('/admin/{user}', [AdminController::class, 'destroy'])->name('admin.destroy');

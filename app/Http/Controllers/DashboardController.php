@@ -9,6 +9,8 @@ use App\Models\ContactService;
 use App\Models\Service;
 use App\Models\Invoice;
 use App\Models\SupportTicket;
+use App\Models\Setting;
+use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
@@ -73,7 +75,7 @@ class DashboardController extends Controller
             ? min(100, round(($mensualidadesActivas / $metaMensualidades) * 100))
             : 0;
 
-        // ─── Recent activity — logs de contactos ──────────────────────────────
+        // ─── Recent activity ──────────────────────────────────────────────────
         $recentActivity = ContactLog::with(['contact', 'author'])
             ->whereIn('type', ['status_change', 'assignment_change'])
             ->when(!$isAdmin, function($q) use ($user) {
@@ -83,7 +85,7 @@ class DashboardController extends Controller
             ->take(5)
             ->get();
 
-        // ─── My conversions — últimos 10 clientes convertidos por el agente ───
+        // ─── My conversions ───────────────────────────────────────────────────
         $myConversions = !$isAdmin
             ? Contact::where('assigned_to', $user->id)
                 ->where('status', 'customer')
@@ -108,6 +110,15 @@ class DashboardController extends Controller
             })
             ->sum('amount');
 
+        // ─── Site settings (solo administrator) ───────────────────────────────
+        $settings = [];
+        if ($isAdmin) {
+            $settings = [
+                'fecha_inicio'          => Setting::get('fecha_inicio', '2021-12-02'),
+                'proyectos_realizados'  => (int) Setting::get('proyectos_realizados', 11),
+            ];
+        }
+
         return view('admin.dashboard', compact(
             'totalProspects',
             'totalCustomers',
@@ -130,7 +141,22 @@ class DashboardController extends Controller
             'totalPending',
             'isAdmin',
             'isBilling',
-            'isSupport'
+            'isSupport',
+            'settings'
         ));
+    }
+
+    // ─── Update site settings ─────────────────────────────────────────────────
+    public function updateSettings(Request $request)
+    {
+        $request->validate([
+            'fecha_inicio'         => 'required|date',
+            'proyectos_realizados' => 'required|integer|min:0',
+        ]);
+
+        Setting::set('fecha_inicio',         $request->fecha_inicio);
+        Setting::set('proyectos_realizados', $request->proyectos_realizados);
+
+        return redirect()->route('dashboard')->with('success', 'Settings updated successfully.');
     }
 }

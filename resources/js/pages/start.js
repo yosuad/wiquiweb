@@ -58,12 +58,24 @@ if (contactForm) {
                 // Mostrar mensaje de éxito
                 formWrapper.innerHTML = `
                     <div class="start-contact__success">
-                        <i data-lucide="circle-check"></i>
+                        <div class="start-contact__success__icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" 
+                                fill="none" stroke="currentColor" stroke-width="2.5" 
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
                         <h3>¡Mensaje enviado!</h3>
                         <p>¡Gracias! Te contactamos en menos de 24 horas.</p>
                     </div>
                 `;
-                lucide.createIcons();
+
+// Apuntar createIcons al contenedor específico
+lucide.createIcons({ 
+    nameAttr: 'data-lucide',
+    attrs: { 'stroke-width': 2 },
+    nodes: formWrapper.querySelectorAll('[data-lucide]')
+});
             }
         } catch (error) {
             console.error('Error:', error);
