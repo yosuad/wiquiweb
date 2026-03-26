@@ -1126,6 +1126,11 @@ select.start-contact__form-input {
   margin: 0;
 }
 
+.start-contact__form-privacy a {
+    color: var(--primary-color);
+    text-decoration: underline;
+}
+
 
 /**************************************/
 /*          START PORTFOLIO           */

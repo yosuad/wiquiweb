@@ -1,6 +1,5 @@
 @extends('layouts.app')
 @section('title', '404 - Página no encontrada')
-@vite('resources/css/errors/404.css')
 
 @section('content')  
     <main class="error404">

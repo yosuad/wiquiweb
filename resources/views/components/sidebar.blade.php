@@ -58,6 +58,11 @@
                     class="sidebar__link {{ request()->routeIs('services.*') ? 'sidebar__link--active' : '' }}">
                     Servicios
                 </a>
+
+                <a href="{{ route('subscribers.index') }}"
+                    class="sidebar__link {{ request()->routeIs('subscribers.*') ? 'sidebar__link--active' : '' }}">
+                    Suscriptores
+                </a>
             @endrole
 
             @can('view admin')

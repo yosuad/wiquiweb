@@ -1,0 +1,10 @@
+/* ═══════════════════════════════════════
+   SUBSCRIBERS — Filtros y acciones
+   ═══════════════════════════════════════ */
+
+.subscribers__actions {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.5rem;
+    justify-content: flex-end;
+}

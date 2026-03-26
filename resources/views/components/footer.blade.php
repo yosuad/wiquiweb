@@ -6,10 +6,25 @@
         <div class="footer__newsletter">
             <h2 class="footer__newsletter-title">¡Contáctanos!</h2>
             <p class="footer__newsletter-text">Si deseas recibir actualizaciones y contenido exclusivo, déjanos tu correo electrónico:</p>
-            <form class="footer__form">
+
+            @if(session('success'))
+                <p style="color: var(--secondary-color); font-size: 0.875rem; margin-bottom: 0.75rem;">
+                    {{ session('success') }}
+                </p>
+            @endif
+
+            @if($errors->has('email'))
+                <p style="color: var(--danger); font-size: 0.875rem; margin-bottom: 0.75rem;">
+                    {{ $errors->first('email') }}
+                </p>
+            @endif
+
+            <form class="footer__form" method="POST" action="{{ route('subscribers.store') }}">
+                @csrf
                 <div class="footer__input-wrapper">
                     <i data-lucide="mail" class="footer__input-icon"></i>
-                    <input type="email" placeholder="Correo Electrónico" class="footer__input" required>
+                    <input type="email" name="email" placeholder="Correo Electrónico"
+                        class="footer__input" required value="{{ old('email') }}">
                 </div>
                 <button type="submit" class="footer__btn">
                     <i data-lucide="send" class="footer__btn-icon"></i>

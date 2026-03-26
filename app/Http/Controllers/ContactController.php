@@ -207,7 +207,7 @@ class ContactController extends Controller
     }
 
 
-    // ========= Lead store (formulario público) =========
+    // ========= Lead store (formulario público META ) =========
     public function leadStore(Request $request)
     {
         $request->validate([
@@ -229,7 +229,7 @@ class ContactController extends Controller
             'password'         => bcrypt('password'),
         ]);
 
-        return redirect()->route('form')->with('success', '¡Gracias! Nos pondremos en contacto contigo pronto.');
+        return response()->json(['message' => '¡Gracias! Nos pondremos en contacto contigo pronto.']);
     }
 
 

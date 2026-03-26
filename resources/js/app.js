@@ -23,7 +23,10 @@ import '../css/components/navbar.css';
 
 /* ========= page ========= */
 import '../css/pages/start.css';
+import '../css/pages/privacyPolicy.css';
 import '../css/pages/services/web-design.css';
+
+import '../css/errors/404.css';
 
 /* ========= Componentes ========= */
 import '../css/components/navigation.css';
@@ -34,7 +37,9 @@ import '../css/admin/create.css';
 import '../css/admin/billing/invoice.css';
 import '../css/admin/customer/show.css';
 import '../css/admin/admin.css';
+import '../css/admin/subscribers.css';
 import '../css/components/footer.css';
+import '../css/pages/unsubscribe.css';
 
 
 

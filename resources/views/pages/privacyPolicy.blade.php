@@ -82,13 +82,13 @@
     <h2 class="beam-text-2xl beam-font-semibold beam-mb-4">10. Tus derechos</h2>
     <p class="beam-mb-6">
         Tienes derecho a acceder, corregir o eliminar tus datos personales, así como a oponerte al procesamiento en determinados casos.
-        Para ejercer estos derechos, contáctanos mediante <a href="mailto:info@wiquiweb.com" class="beam-text-blue-600 beam-underline">info@wiquiweb.com</a>.
+        Para ejercer estos derechos, contáctanos mediante <a href="mailto:soporte@wiquiweb.com" class="beam-text-blue-600 beam-underline">soporte@wiquiweb.com</a>.
     </p>
 
     <h2 class="beam-text-2xl beam-font-semibold beam-mb-4">11. Contacto</h2>
     <p class="beam-mb-6">
         Para cualquier duda, comentario o solicitud sobre esta política de privacidad, puedes escribirnos a:
-        <a href="mailto:info@wiquiweb.com" class="beam-text-blue-600 beam-underline">info@wiquiweb.com</a>
+        <a href="mailto:soporte@wiquiweb.com" class="beam-text-blue-600 beam-underline">soporte@wiquiweb.com</a>
     </p>
 
     <p class="beam-text-sm beam-text-gray-500 beam-text-center">Última actualización: 8 de febrero de 2026</p>

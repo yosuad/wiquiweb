@@ -9,6 +9,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SupportController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\SubscriberController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -30,7 +31,16 @@ Route::post('/contacto', [ContactController::class, 'formstartstore'])->name('le
 Route::get('/form', [PageController::class, 'form'])->middleware('guest')->name('form');
 Route::post('/form', [ContactController::class, 'leadStore'])->name('leads.meta.store');
 
+// ===== Suscriptores (formulario público footer) =====
+Route::post('/suscribirse', [SubscriberController::class, 'store'])->name('subscribers.store');
+Route::post('/desuscribirse', [SubscriberController::class, 'unsubscribe'])->name('subscribers.unsubscribe');
+
+
+
+  Route::get('/unsubscribe', [SubscriberController::class, 'unsubscribePage'])->name('subscribers.unsubscribe.page');
+        Route::post('/unsubscribe', [SubscriberController::class, 'unsubscribe'])->name('subscribers.unsubscribe');
 /*
+
 |--------------------------------------------------------------------------
 | Internal Routes (Panel/Admin)
 | Middleware: auth + verified + approved
@@ -100,7 +110,7 @@ Route::middleware(['auth', 'verified', 'approved'])->group(function () {
         Route::delete('/billing/{invoice}', [BillingController::class, 'destroy'])->name('billing.destroy');
     });
 
-    // ── Services ── (solo administrator)
+    // ── Services + Subscribers ── (solo administrator)
     Route::middleware('role:administrator')->group(function () {
         Route::get('/services', [ServiceController::class, 'index'])->name('services.index');
         Route::get('/services/create', [ServiceController::class, 'create'])->name('services.create');
@@ -113,6 +123,11 @@ Route::middleware(['auth', 'verified', 'approved'])->group(function () {
         Route::delete('/services/{service}/prices/{price}', [ServiceController::class, 'destroyPrice'])->name('services.prices.destroy');
         Route::get('/services/{service}/prices/{price}/edit', [ServiceController::class, 'editPrice'])->name('services.prices.edit');
         Route::put('/services/{service}/prices/{price}', [ServiceController::class, 'updatePrice'])->name('services.prices.update');
+
+        // Suscriptores
+        Route::get('/subscribers', [SubscriberController::class, 'index'])->name('subscribers.index');
+        Route::delete('/subscribers/{subscriber}', [SubscriberController::class, 'destroy'])->name('subscribers.destroy');
+        Route::get('/subscribers/export', [SubscriberController::class, 'export'])->name('subscribers.export');      
     });
 
     // ── Support ── (permission: view support)
@@ -147,7 +162,6 @@ Route::middleware(['auth', 'verified', 'approved'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
 });
 
 /*
@@ -155,8 +169,8 @@ Route::middleware(['auth', 'verified', 'approved'])->group(function () {
 | Authentication Routes
 |--------------------------------------------------------------------------
 */
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
 Route::fallback(function () {
-    return view('pages.404');
+    abort(404);
 });

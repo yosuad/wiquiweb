@@ -463,6 +463,15 @@
                             </select>
                         </div>
 
+                        {{-- Política de privacidad --}}
+                        <div class="start-contact__form-privacy">
+                            <input type="checkbox" id="privacy" name="privacy" required>
+                            <label for="privacy">
+                                He leído y acepto la
+                                <a href="{{ route('privacy') }}" target="_blank">Política de Privacidad</a>
+                            </label>
+                        </div>
+
                         <button type="submit" class="start-contact__form-btn">
                             <i data-lucide="send"></i>
                             Enviar mensaje
