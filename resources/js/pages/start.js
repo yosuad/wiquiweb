@@ -82,3 +82,39 @@ lucide.createIcons({
         }
     });
 }
+
+
+
+
+/***********************************************************/
+/*           Animación contadores — Stats                 */
+/*********************************************************/
+
+const counters = document.querySelectorAll('.start-stat__count');
+
+if (counters.length) {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const el = entry.target;
+                const target = parseInt(el.textContent.replace(/\D/g, ''));
+                const duration = 1500;
+                const step = Math.ceil(target / (duration / 16));
+                let current = 0;
+
+                const timer = setInterval(() => {
+                    current += step;
+                    if (current >= target) {
+                        current = target;
+                        clearInterval(timer);
+                    }
+                    el.textContent = '+' + current;
+                }, 16);
+
+                observer.unobserve(el);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    counters.forEach(counter => observer.observe(counter));
+}

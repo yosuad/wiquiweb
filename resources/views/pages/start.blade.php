@@ -595,14 +595,13 @@
         <div class="start-reviews__header">
             <p class="start-reviews__subtitle">Reseñas</p>
             <h2 class="start-reviews__title">Qué dicen nuestros <span
-                    class="start-reviews__title-highlight">Clientes</span></h2>
-            <p class="start-reviews__description">Nuestros clientes siempre salen satisfechos con sus webs y apps.</p>
+                    class="start-reviews__title-highlight">Clientes</span></h2>           
         </div>
         <div class="start-reviews__grid">
 
             <article class="start-review-card">
                 <div class="start-review-card__avatar-wrapper">
-                    <img src="{{ asset('images/user1.jpg') }}" alt="Jorge Mario Escobar" class="start-review-card__avatar">
+                    <img src="{{ asset('img/reviews/Jorge_Mario.webp') }}" alt="Jorge Mario Escobar" class="start-review-card__avatar">
                 </div>
                 <div class="start-review-card__body">
                     <h3 class="start-review-card__company">Periódico el Taller</h3>
@@ -615,7 +614,7 @@
 
             <article class="start-review-card">
                 <div class="start-review-card__avatar-wrapper">
-                    <img src="{{ asset('images/user2.jpg') }}" alt="Alejandra Osorio" class="start-review-card__avatar">
+                    <img src="{{ asset('img/reviews/Alejandra_Osorio.webp') }}" alt="Alejandra Osorio" class="start-review-card__avatar">
                 </div>
                 <div class="start-review-card__body">
                     <h3 class="start-review-card__company">Mesa de Medios</h3>
@@ -628,7 +627,7 @@
 
             <article class="start-review-card">
                 <div class="start-review-card__avatar-wrapper">
-                    <img src="{{ asset('images/user3.jpg') }}" alt="Edwin Ortega" class="start-review-card__avatar">
+                    <img src="{{ asset('img/reviews/Edwin_Ortega.webp') }}" alt="Edwin Ortega" class="start-review-card__avatar">
                 </div>
                 <div class="start-review-card__body">
                     <h3 class="start-review-card__company">A todo deporte</h3>
@@ -641,7 +640,7 @@
 
             <article class="start-review-card">
                 <div class="start-review-card__avatar-wrapper">
-                    <img src="{{ asset('images/user4.jpg') }}" alt="Vanessa Martinez" class="start-review-card__avatar">
+                    <img src="{{ asset('img/reviews/Vanessa_Martinez.webp') }}" alt="Vanessa Martinez" class="start-review-card__avatar">
                 </div>
                 <div class="start-review-card__body">
                     <h3 class="start-review-card__company">Web Designer</h3>
@@ -656,7 +655,16 @@
     </div>
 </section>
     
-
+{{-- ═══════════════ WHATSAPP BUTTON ═══════════════ --}}
+<a href="https://api.whatsapp.com/send?phone=+573506396283&text=Me%20interesan%20sus%20servicios%20y%20me%20gustar%C3%ADa%20obtener%20m%C3%A1s%20informaci%C3%B3n."
+    target="_blank"
+    rel="noopener noreferrer"
+    class="whatsapp-btn"
+    aria-label="Contactar por WhatsApp">
+    <svg class="whatsapp-btn__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+    </svg>
+</a>
 
 
 @endsection

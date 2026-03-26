@@ -6,10 +6,10 @@
 .start-card__text,
 .start-feature-card__text,
 .start-step__text,
-.start-reviews__description,
 .start-review-card__text,
 .start-contact__benefit-text,
-.start-contact__form-subtitle {
+.start-contact__form-subtitle,
+.start-review-card__text {
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-regular);  
 }
@@ -24,7 +24,9 @@
 .start-step__title,
 .start-contact__subtitle,
 .start-portfolio__subtitle,
-.start-stats__subtitle {
+.start-stats__subtitle,
+.start-reviews__subtitle,
+.start-review-card__company {
   font-size: var(--font-size-base);  
   font-weight: var(--font-weight-semibold);
 }
@@ -34,7 +36,8 @@
 .start-process__description,
 .start-contact__description,
 .start-portfolio__description,
-.start-stats__description {
+.start-stats__description,
+.start-review-card__name {
   font-size: var(--font-size-base);
 }
 
@@ -45,7 +48,8 @@
 .start-process__title,
 .start-contact__title,
 .start-portfolio__title,
-.start-stats__title {
+.start-stats__title,
+.start-reviews__title {
   font-size: var(--font-size-xl);
   font-weight: var(--font-weight-bold);
 }
@@ -1382,10 +1386,6 @@ select.start-contact__form-input {
 /*           START REVIEWS            */
 /**************************************/
 
-/**************************************/
-/*           START REVIEWS            */
-/**************************************/
-
 .start-reviews {
   padding: 6rem 0;
   background: var(--color-page-white);
@@ -1402,18 +1402,14 @@ select.start-contact__form-input {
   margin-bottom: 3.5rem;
 }
 
-.start-reviews__subtitle {
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-semibold);
+.start-reviews__subtitle {  
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--color-page-primary);
   margin: 0 0 0.75rem;
 }
 
-.start-reviews__title {
-  font-size: var(--font-size-xl);
-  font-weight: var(--font-weight-bold);
+.start-reviews__title {  
   color: var(--color-page-dark);
   margin: 0 0 1rem;
   line-height: 1.2;
@@ -1423,12 +1419,6 @@ select.start-contact__form-input {
   color: var(--color-page-primary);
 }
 
-.start-reviews__description {
-  color: var(--color-page-text-secondary);
-  max-width: 480px;
-  margin: 0 auto;
-  line-height: 1.75;
-}
 
 .start-reviews__grid {
   display: grid;
@@ -1480,22 +1470,16 @@ select.start-contact__form-input {
   gap: 0.3rem;
 }
 
-.start-review-card__company {
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-bold);
+.start-review-card__company {  
   color: var(--color-page-dark);
   margin: 0;
 }
 
-.start-review-card__name {
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-regular);
+.start-review-card__name { 
   color: var(--color-page-primary);
 }
 
-.start-review-card__text {
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-regular);
+.start-review-card__text {  
   color: var(--color-page-text-secondary);
   line-height: 1.7;
   margin: 0.5rem 0;
@@ -1505,7 +1489,7 @@ select.start-contact__form-input {
   background: none;
   border: none;
   padding: 0;
-  font-size: 0.75rem;
+  font-size: 1rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -1622,4 +1606,50 @@ select.start-contact__form-input {
   .start-contact__form-wrapper {
     padding: 1.25rem;
   }
+}
+
+.start-review-card__avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.start-review-card__avatar-wrapper {
+  width: 7rem;
+  height: 7rem;
+  min-width: 7rem;
+  min-height: 7rem;
+  border-radius: 50%;
+  border: 3px solid var(--color-page-primary);
+  overflow: hidden;
+  flex-shrink: 0;
+  align-self: center;
+}
+
+/* ===== WhatsApp Button ===== */
+.whatsapp-btn {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 50;
+  width: 64px;
+  height: 64px;
+  background: var(--color-page-secondary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.whatsapp-btn:hover {
+  transform: scale(1.1);
+}
+
+.whatsapp-btn__icon {
+  width: 32px;
+  height: 32px;
+  fill: var(--white-color);
 }

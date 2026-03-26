@@ -5,7 +5,7 @@
         <!-- Logo -->
         <div class="navbar__logo">
             <a href="{{ url('/') }}" class="navbar__logo-link">
-                <img src="{{ asset('img/logo_wiquiweb.png') }}" alt="Logo del sitio" class="navbar__logo-img">
+                <img src="{{ asset('img/logo_wiquiweb.webp') }}" alt="Logo del sitio" class="navbar__logo-img">
             </a>
         </div>
 
@@ -40,12 +40,12 @@
                                     consultoría
                                 </a>
                             </li>
-                          <li class="navbar__submenu-item">
-    <a href="{{ route('services.web-design') }}" class="navbar__submenu-link">
-        <x-icon-bowl />
-        diseño páginas web
-    </a>
-</li>
+                            <li class="navbar__submenu-item">
+                                <a href="{{ route('services.web-design') }}" class="navbar__submenu-link">
+                                    <x-icon-bowl />
+                                    diseño páginas web
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     <li class="navbar__item">
