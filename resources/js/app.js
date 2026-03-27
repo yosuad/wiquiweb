@@ -23,6 +23,10 @@ import '../css/components/navbar.css';
 
 /* ========= page ========= */
 import '../css/pages/start.css';
+import '../css/pages/nosotros.css';
+
+import '../css/pages/contact.css';
+
 import '../css/pages/privacyPolicy.css';
 import '../css/pages/services/web-design.css';
 
@@ -47,6 +51,7 @@ import '../css/pages/unsubscribe.css';
 /* ========= Pages ========= */
 import './admin/prospects/close.js';
 import './pages/start.js';
+import './pages/contact.js';
 import './pages/services/web-design.js';
 
 

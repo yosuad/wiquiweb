@@ -83,7 +83,7 @@
             <div class="start-banner__actions">
                 <a href="{{ route('services.web-design') }}"
                     class="start-banner__btn start-banner__btn--primary wow fadeInLeft">Quiero mi web</a>
-                <a href="#" class="start-banner__btn start-banner__btn--secondary wow fadeInRight">Hablar con un
+                <a href="{{ route('contact') }}" class="start-banner__btn start-banner__btn--secondary wow fadeInRight">Hablar con un
                     asesor</a>
             </div>
         </div>
@@ -592,7 +592,7 @@
                 <div class="start-stat">
                     <div class="start-stat__icon"><i data-lucide="heart"></i></div>
                     <span class="start-stat__count">+{{ $clientes }}</span>
-                    <h3 class="start-stat__label">Clientes Contentos</h3>
+                    <h3 class="start-stat__label">Clientes satisfechos</h3>
                 </div>
             </div>
         </div>
@@ -665,7 +665,7 @@
 </section>
     
 {{-- ═══════════════ WHATSAPP BUTTON ═══════════════ --}}
-<a href="https://api.whatsapp.com/send?phone=+573506396283&text=Me%20interesan%20sus%20servicios%20y%20me%20gustar%C3%ADa%20obtener%20m%C3%A1s%20informaci%C3%B3n."
+<a href="https://api.whatsapp.com/send?phone=+573205864135&text=Me%20interesan%20sus%20servicios%20y%20me%20gustar%C3%ADa%20obtener%20m%C3%A1s%20informaci%C3%B3n."
     target="_blank"
     rel="noopener noreferrer"
     class="whatsapp-btn"

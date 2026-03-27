@@ -21,6 +21,10 @@ use Illuminate\Support\Facades\Route;
 
 // ===== Páginas públicas =====
 Route::get('/', [PageController::class, 'start'])->middleware('guest')->name('home');
+Route::get('/nosotros', [PageController::class, 'nosotros'])->middleware('guest')->name('nosotros');
+Route::get('/contacto', [PageController::class, 'contact'])->name('contact');
+
+
 Route::get('/servicios/diseno-web', [PageController::class, 'webDesign'])->name('services.web-design');
 Route::get('/privacy_policy', [PageController::class, 'privacy'])->middleware('guest')->name('privacy');
 

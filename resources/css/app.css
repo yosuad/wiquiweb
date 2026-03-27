@@ -69,40 +69,47 @@
 }
 
 
+
 /* =============================================
    5. VARIABLES — PÁGINA PÚBLICA (LANDING)
       Prefijo --color-page-*
-      Archivo: start.css y todas las secciones públicas
+      Archivos: start.css, footer.css y todas las secciones públicas
    ============================================= */
 :root {
-
+ 
     /* ── Color principal ── */
     --color-page-primary:             #189dbb;
     --color-page-primary-bg:          rgba(24, 157, 187, 0.10);
-
+ 
     /* ── Color secundario ── */
     --color-page-secondary:           #1ABC9C;
     --color-page-secondary-bg:        rgba(26, 188, 156, 0.12);
-
-    /* ── Color oscuro
-         Usado en: sección "¿Por qué elegirnos?", badges de pasos,
-         hover de botones. Se mantiene en negro puro para que el
-         botón de WhatsApp (naranja sobre negro) contraste bien. ── */
+ 
+    /* ── Color oscuro ── */
     --color-page-dark:                #000000;
-
+ 
     /* ── Fondos ── */
     --color-page-white:               #ffffff;
     --color-page-bg:                  #f5f6fa;
     --color-page-bg-card:             #ffffff;
     --color-page-bg-secondary:        var(--color-page-secondary-bg);
-
+ 
     /* ── Texto ── */
     --color-page-text-primary:        #1a1a2e;
     --color-page-text-secondary:      #6b7280;
-
+ 
     /* ── Bordes ── */
     --color-page-border:              #e5e7eb;
-
+ 
+    /* ── Blancos semitransparentes
+         Usados en footer, banner, stats — secciones sobre fondo primario ── */
+    --color-page-white-high:          rgba(255, 255, 255, 0.90);
+    --color-page-white-mid:           rgba(255, 255, 255, 0.65);
+    --color-page-white-low:           rgba(255, 255, 255, 0.50);
+    --color-page-white-subtle:        rgba(255, 255, 255, 0.10);
+    --color-page-white-border:        rgba(255, 255, 255, 0.20);
+    --color-page-divider:             rgba(255, 255, 255, 0.10);
+ 
     /* ── Tipografía ── */
     --font-size-xxl:        4rem;
     --font-size-xl:         2.5rem;
@@ -110,15 +117,14 @@
     --font-size-base:       1.2rem;
     --font-size-sm:         0.95rem;
     --font-size-xs:         0.8rem;
-
-     /* Pesos */
+ 
+    /* Pesos */
     --font-weight-bold:     700;
     --font-weight-semibold: 600;
     --font-weight-regular:  400;
-
+ 
     --radius-base:          0.75rem;
 }
-
 
 /* =============================================
    6. VARIABLES — DASHBOARD ADMINISTRATIVO

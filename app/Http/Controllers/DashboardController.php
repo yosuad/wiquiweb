@@ -148,14 +148,25 @@ class DashboardController extends Controller
 
     // ─── Update site settings ─────────────────────────────────────────────────
     public function updateSettings(Request $request)
-    {
+    {        
         $request->validate([
-            'fecha_inicio'         => 'required|date',
+            'fecha_inicio'         => 'nullable|date',
             'proyectos_realizados' => 'required|integer|min:0',
         ]);
 
-        Setting::set('fecha_inicio',         $request->fecha_inicio);
-        Setting::set('proyectos_realizados', $request->proyectos_realizados);
+        // Guardar proyectos realizados
+        Setting::updateOrCreate(
+            ['key' => 'proyectos_realizados'],
+            ['value' => $request->proyectos_realizados]
+        );
+
+        // Guardar fecha_inicio solo si viene en el request
+        if ($request->filled('fecha_inicio')) {
+            Setting::updateOrCreate(
+                ['key' => 'fecha_inicio'],
+                ['value' => $request->fecha_inicio]
+            );
+        }
 
         return redirect()->route('dashboard')->with('success', 'Settings updated successfully.');
     }

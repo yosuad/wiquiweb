@@ -48,14 +48,14 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="navbar__item">
+                    {{-- <li class="navbar__item">
                         <a href="blog.html" class="navbar__link">portafolio</a>
-                    </li>
-                    <li class="navbar__item">
+                    </li> --}}
+                    {{-- <li class="navbar__item">
                         <a href="contact.html" class="navbar__link">blog</a>
-                    </li>
+                    </li> --}}
                     <li class="navbar__item">
-                        <a href="contact.html" class="navbar__link">contacto</a>
+                        <a href="{{ route('contact') }}" class="navbar__link">contacto</a>
                     </li>
                 </ul>
             </nav>
@@ -80,9 +80,9 @@
                 <li class="navbar__mobile-item">
                     <a href="{{ url('/') }}" class="navbar__mobile-link">inicio</a>
                 </li>
-                <li class="navbar__mobile-item">
+                {{-- <li class="navbar__mobile-item">
                     <a href="{{ url('nosotros') }}" class="navbar__mobile-link">nosotros</a>
-                </li>
+                </li> --}}
                 <li class="navbar__mobile-item navbar__mobile-item--has-children">
                     <a href="#" class="navbar__mobile-link">servicios</a>
                     <ul class="navbar__mobile-submenu">
@@ -96,18 +96,18 @@
                             <a href="404.html" class="navbar__mobile-submenu-link">consultoría</a>
                         </li>
                         <li class="navbar__mobile-submenu-item">
-                            <a href="404.html" class="navbar__mobile-submenu-link">diseño páginas web</a>
+                            <a href="{{ route('services.web-design') }}" class="navbar__mobile-submenu-link">diseño páginas web</a>
                         </li>
                     </ul>
                 </li>
-                <li class="navbar__mobile-item">
+                {{-- <li class="navbar__mobile-item">
                     <a href="blog.html" class="navbar__mobile-link">portafolio</a>
-                </li>
-                <li class="navbar__mobile-item">
+                </li> --}}
+                {{-- <li class="navbar__mobile-item">
                     <a href="contact.html" class="navbar__mobile-link">blog</a>
-                </li>
+                </li> --}}
                 <li class="navbar__mobile-item">
-                    <a href="contact.html" class="navbar__mobile-link">contacto</a>
+                    <a href="{{ route('contact') }}" class="navbar__mobile-link">contacto</a>
                 </li>
             </ul>
         </nav>

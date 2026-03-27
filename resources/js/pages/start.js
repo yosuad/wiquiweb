@@ -23,7 +23,7 @@ if (steps.length) {
 
 
 /***********************************************************/
-/*           Formulario contacto — envío AJAX            */
+/*           Formulario contacto  de start — envío AJAX            */
 /*********************************************************/
 
 const contactForm = document.querySelector('.start-contact__form');

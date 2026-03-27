@@ -12,7 +12,7 @@ class SettingSeeder extends Seeder
         $settings = [
             [
                 'key'   => 'fecha_inicio',
-                'value' => '2021-12-02',
+                'value' => '2016-12-02',
                 'label' => 'Fecha de inicio de actividad',
             ],
             [
