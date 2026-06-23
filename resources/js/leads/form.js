@@ -1,3 +1,5 @@
+import { createIcons, icons } from 'lucide';
+
 /***********************************************************/
 /*        Formulario Meta — envío AJAX                   */
 /*********************************************************/
@@ -11,7 +13,7 @@ if (metaForm) {
 
         const submitBtn = document.querySelector('#submitBtn');
         submitBtn.disabled = true;
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+        submitBtn.textContent = 'Enviando...';
 
         const formData = new FormData(metaForm);
 
@@ -30,7 +32,6 @@ if (metaForm) {
                 const data = await response.json();
 
                 if (response.status === 422) {
-                    // Mostrar errores de validación
                     const errors = data.errors || {};
                     Object.keys(errors).forEach(field => {
                         const errorEl = document.querySelector(`#error-${field}`);
@@ -40,8 +41,14 @@ if (metaForm) {
                     });
 
                     submitBtn.disabled = false;
-                    submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar solicitud';
+                    submitBtn.innerHTML = '<i data-lucide="send"></i> Enviar solicitud';
+                    createIcons({ icons });
                     return;
+                }
+
+                // Disparar evento Lead al Pixel de Meta
+                if (typeof fbq !== 'undefined') {
+                    fbq('track', 'Lead');
                 }
 
                 // Mostrar mensaje de éxito
@@ -62,7 +69,8 @@ if (metaForm) {
         } catch (error) {
             console.error('Error:', error);
             submitBtn.disabled = false;
-            submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar solicitud';
+            submitBtn.innerHTML = '<i data-lucide="send"></i> Enviar solicitud';
+            createIcons({ icons });
         }
     });
 
