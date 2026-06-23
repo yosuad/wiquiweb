@@ -28,7 +28,6 @@
                     <th>Status</th>
                     <th>Assigned to</th>
                     <th>Date</th>
-                    <th class="text-center">Msg</th>
                     <th class="text-center">Notes</th>
                     <th class="text-center">Actions</th>
                 </tr>
@@ -68,22 +67,6 @@
                         <td>{{ $prospect->agent->name ?? '—' }}</td>
                         <td>{{ $prospect->created_at->format('Y-m-d') }}</td>
                         <td class="text-center">
-                            @if($prospect->message_sent === 'n8n')
-                                <i data-lucide="check" style="color: var(--paid);" title="Enviado por n8n"></i>
-                            @else
-                                <form method="POST" action="{{ route('contacts.message.toggle', $prospect->id) }}">
-                                    @csrf
-                                    @method('PATCH')
-                                    <button type="submit" class="btn-action"
-                                        title="{{ $prospect->message_sent === 'manual' ? 'Quitar marca' : 'Marcar como enviado' }}"
-                                        style="background: none; border: none; cursor: pointer;
-                                               color: {{ $prospect->message_sent === 'manual' ? '#189dbb' : 'var(--text-secondary)' }};">
-                                        <i data-lucide="check"></i>
-                                    </button>
-                                </form>
-                            @endif
-                        </td>
-                        <td class="text-center">
                             <a href="{{ route('prospects.notes.index', $prospect->id) }}" class="btn-action btn-notes" title="View notes">
                                 <i data-lucide="clipboard-list"></i>
                             </a>
@@ -106,7 +89,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="10" class="text-center">No prospects registered.</td>
+                        <td colspan="9" class="text-center">No prospects registered.</td>
                     </tr>
                 @endforelse
             </tbody>

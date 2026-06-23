@@ -95,7 +95,6 @@ Route::middleware(['auth', 'verified', 'approved'])->group(function () {
         Route::put('/customers/{contact}', [ContactController::class, 'customerUpdate'])->name('customers.update');
         Route::patch('/customers/service/{contactService}/status', [ContactController::class, 'updateServiceStatus'])->name('customers.service.status');
         Route::patch('/customers/service/{contactService}/description', [ContactController::class, 'updateServiceDescription'])->name('customers.service.description');
-        Route::patch('/customers/{contact}/message-sent', [ContactController::class, 'toggleMessageSent'])->name('contacts.message.toggle');
         Route::put('/billing/{invoice}', [BillingController::class, 'update'])->name('billing.update');
     });
 

@@ -181,7 +181,7 @@ class ContactController extends Controller
 
 
     // ========= Lead store (formulario start) =========
-    public function formstartstore(Request $request)
+   public function formstartstore(Request $request)
     {
         $request->validate([
             'first_name'       => 'required|string|max:50',
@@ -191,7 +191,7 @@ class ContactController extends Controller
             'service_interest' => 'nullable|string|max:100',
         ]);
 
-        Contact::create([
+        $contact = Contact::create([
             'first_name'       => $request->first_name,
             'last_name'        => $request->last_name,
             'whatsapp'         => $request->whatsapp,
@@ -201,6 +201,14 @@ class ContactController extends Controller
             'status'           => 'prospect',
             'pipeline_stage'   => 'new',
             'password'         => bcrypt('password'),
+        ]);
+
+        ContactLog::create([
+            'contact_id' => $contact->id,
+            'created_by' => null,
+            'type'       => 'status_change',
+            'from'       => null,
+            'to'         => 'prospect',
         ]);
 
         return response()->json(['success' => true]);
@@ -217,7 +225,7 @@ class ContactController extends Controller
             'email'      => 'nullable|email|unique:contacts,email',
         ]);
 
-        Contact::create([
+        $contact = Contact::create([
             'first_name'       => $request->first_name,
             'last_name'        => $request->last_name,
             'whatsapp'         => $request->whatsapp,
@@ -227,6 +235,14 @@ class ContactController extends Controller
             'status'           => 'prospect',
             'pipeline_stage'   => 'new',
             'password'         => bcrypt('password'),
+        ]);
+
+        ContactLog::create([
+            'contact_id' => $contact->id,
+            'created_by' => null,
+            'type'       => 'status_change',
+            'from'       => null,
+            'to'         => 'prospect',
         ]);
 
         return response()->json(['message' => '¡Gracias! Nos pondremos en contacto contigo pronto.']);
@@ -415,13 +431,4 @@ class ContactController extends Controller
         return redirect()->back()->with('success', 'Description updated.');
     }
 
-    // ========= Toggle message_sent (no <-> manual) =========
-    public function toggleMessageSent(Contact $contact)
-    {
-        $contact->update([
-            'message_sent' => $contact->message_sent === 'manual' ? 'no' : 'manual',
-        ]);
-
-        return back();
-    }
 }

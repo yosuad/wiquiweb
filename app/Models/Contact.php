@@ -28,8 +28,7 @@ class Contact extends Authenticatable
     'assigned_to',
     'status',
     'pipeline_stage',
-    'is_active',
-    'message_sent',       // ← agregar esto
+    'is_active',    
     'privacy_accepted_at',
     ];
 

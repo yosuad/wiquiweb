@@ -67,12 +67,6 @@ return new class extends Migration
 
             $table->boolean('is_active')->default(true);
 
-            // Messaging
-            // no     = no se ha enviado nada
-            // n8n    = n8n envió el mensaje automáticamente
-            // manual = marcado manualmente desde la plataforma (n8n lo ignora)
-            $table->enum('message_sent', ['no', 'n8n', 'manual'])->default('no');
-
             // GDPR / Ley 1581 compliance
             $table->timestamp('privacy_accepted_at')->nullable();
 

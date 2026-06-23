@@ -47,7 +47,7 @@ class PageController extends Controller
         return view('pages.services.web-design');
     }
 
-     // ========= contacto =========
+     // ========= pagina de contacto =========
     public function contact()
     {
         return view('pages.contact');

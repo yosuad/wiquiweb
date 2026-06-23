@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('contact_logs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('contact_id')->constrained('contacts')->cascadeOnDelete();
-            $table->foreignId('created_by')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('contact_id')->constrained('contacts')->cascadeOnDelete();            
+            $table->foreignId('created_by')->nullable()->nullOnDelete()->constrained('users');
             $table->string('type'); // 'status_change', 'assignment_change'
             $table->string('from')->nullable();
             $table->string('to')->nullable();
