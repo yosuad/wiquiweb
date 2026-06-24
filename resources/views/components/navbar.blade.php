@@ -23,19 +23,19 @@
                         <a href="#" class="navbar__link">servicios</a>
                         <ul class="navbar__submenu">
                             <li class="navbar__submenu-item">
-                                <a href="blog-details.html" class="navbar__submenu-link">
+                                <a href="{{ route('services.emails') }}" class="navbar__submenu-link">
                                     <x-icon-bowl />
                                     correos
                                 </a>
                             </li>
                             <li class="navbar__submenu-item">
-                                <a href="portfolio-details.html" class="navbar__submenu-link">
+                                <a href="{{ route('services.design') }}" class="navbar__submenu-link">
                                     <x-icon-bowl />
-                                    diseño
+                                    Diseño gráfico
                                 </a>
                             </li>
                             <li class="navbar__submenu-item">
-                                <a href="404.html" class="navbar__submenu-link">
+                                <a href="{{ route('services.consulting') }}" class="navbar__submenu-link">
                                     <x-icon-bowl />
                                     consultoría
                                 </a>
@@ -48,9 +48,9 @@
                             </li>
                         </ul>
                     </li>
-                    {{-- <li class="navbar__item">
-                        <a href="blog.html" class="navbar__link">portafolio</a>
-                    </li> --}}
+                    <li class="navbar__item">
+                        <a href="{{ route('portfolio') }}" class="navbar__link">portafolio</a>
+                    </li>
                     {{-- <li class="navbar__item">
                         <a href="contact.html" class="navbar__link">blog</a>
                     </li> --}}
@@ -80,29 +80,30 @@
                 <li class="navbar__mobile-item">
                     <a href="{{ url('/') }}" class="navbar__mobile-link">inicio</a>
                 </li>
-                {{-- <li class="navbar__mobile-item">
+                <li class="navbar__mobile-item">
                     <a href="{{ url('nosotros') }}" class="navbar__mobile-link">nosotros</a>
-                </li> --}}
+                </li>
                 <li class="navbar__mobile-item navbar__mobile-item--has-children">
                     <a href="#" class="navbar__mobile-link">servicios</a>
                     <ul class="navbar__mobile-submenu">
                         <li class="navbar__mobile-submenu-item">
-                            <a href="blog-details.html" class="navbar__mobile-submenu-link">correos</a>
+                            <a href="{{ route('services.emails') }}" class="navbar__mobile-submenu-link">correos</a>
                         </li>
                         <li class="navbar__mobile-submenu-item">
-                            <a href="portfolio-details.html" class="navbar__mobile-submenu-link">diseño</a>
+                            <a href="{{ route('services.design') }}" class="navbar__mobile-submenu-link">diseño</a>
                         </li>
                         <li class="navbar__mobile-submenu-item">
-                            <a href="404.html" class="navbar__mobile-submenu-link">consultoría</a>
+                            <a href="{{ route('services.consulting') }}" class="navbar__mobile-submenu-link">consultoría</a>
                         </li>
                         <li class="navbar__mobile-submenu-item">
-                            <a href="{{ route('services.web-design') }}" class="navbar__mobile-submenu-link">diseño páginas web</a>
+                            <a href="{{ route('services.web-design') }}" class="navbar__mobile-submenu-link">diseño
+                                páginas web</a>
                         </li>
                     </ul>
                 </li>
-                {{-- <li class="navbar__mobile-item">
-                    <a href="blog.html" class="navbar__mobile-link">portafolio</a>
-                </li> --}}
+                <li class="navbar__mobile-item">
+                    <a href="{{ route('portfolio') }}" class="navbar__mobile-link">portafolio</a>
+                </li>
                 {{-- <li class="navbar__mobile-item">
                     <a href="contact.html" class="navbar__mobile-link">blog</a>
                 </li> --}}
