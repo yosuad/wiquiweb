@@ -29,6 +29,8 @@ import '../css/pages/contact.css';
 
 import '../css/pages/privacyPolicy.css';
 import '../css/pages/services/web-design.css';
+import '../css/pages/services/landing.css';
+
 
 import '../css/errors/404.css';
 

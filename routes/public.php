@@ -18,6 +18,9 @@ Route::get('/servicios/correos-corporativos', [PageController::class, 'emails'])
 Route::get('/servicios/diseno', [PageController::class, 'design'])->name('services.design');
 Route::get('/servicios/consultoria-digital', [PageController::class, 'consulting'])->name('services.consulting');
 Route::get('/servicios/diseno-web', [PageController::class, 'webDesign'])->name('services.web-design');
+Route::get('/servicios/landing-page', [PageController::class, 'landing'])->name('services.landing');
+
+Route::get('/portafolio/yosuad', [PageController::class, 'yosuad'])->name('portfolio.yosuad');
 
 
 

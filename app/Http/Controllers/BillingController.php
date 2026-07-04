@@ -43,7 +43,8 @@ class BillingController extends Controller
 
         $invoices = Invoice::with(['contactService.service', 'contactService.contact'])
             ->whereHas('contactService', fn($q) => $q->where('contact_id', $contact->id))
-            ->orderBy('created_at', 'desc')
+            ->orderByRaw("CASE WHEN period_start IS NULL THEN 0 ELSE 1 END ASC")
+            ->orderBy('period_start', 'asc')
             ->get();
 
         return view('admin.billing.show', compact('contact', 'invoices'));

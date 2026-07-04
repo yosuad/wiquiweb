@@ -48,14 +48,14 @@ class PageController extends Controller
         return view('pages.services.emails');
     }
 
-     // ========= Diseño =========
-        public function design()
+    // ========= Diseño =========
+    public function design()
     {
         return view('pages.services.design');
     }
 
-     // ========= Consultoría =========
-        public function consulting()
+    // ========= Consultoría =========
+    public function consulting()
     {
         return view('pages.services.consulting');
     }
@@ -64,11 +64,23 @@ class PageController extends Controller
     {
         return view('pages.services.web-design');
     }
-        
-    // ========= pagina de contacto =========
-        public function portfolio()
+
+    // ========= Servicios — Landing page =========
+    public function landing()
     {
-        return view('pages.portfolio');
+        return view('pages.services.landing');
+    }
+
+    // ========= Demo de Yosuad =========
+    public function yosuad()
+    {
+        return view('pages.portfolio.yosuad');
+    }
+
+    // ========= pagina de contacto =========
+    public function portfolio()
+    {
+        return view('pages.portfolio.index');
     }
 
     // ========= pagina de contacto =========

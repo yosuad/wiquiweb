@@ -83,7 +83,8 @@
             <div class="start-banner__actions">
                 <a href="{{ route('services.web-design') }}"
                     class="start-banner__btn start-banner__btn--primary wow fadeInLeft">Quiero mi web</a>
-                <a href="{{ route('contact') }}" class="start-banner__btn start-banner__btn--secondary wow fadeInRight">Hablar con un
+                <a href="{{ route('contact') }}"
+                    class="start-banner__btn start-banner__btn--secondary wow fadeInRight">Hablar con un
                     asesor</a>
             </div>
         </div>
@@ -496,13 +497,13 @@
             </div>
             <div class="start-portfolio__grid">
 
-                <a href="https://tulibroencasa.com" target="_blank" class="start-project">
-                    <img src="{{ asset('img/portafolio/tulibroencasa.webp') }}" alt="Tu Libro en Casa"
+                <a href="{{ route('services.landing') }}" class="start-project">
+                    <img src="{{ asset('img/portafolio/persianasycortinasvalencia.webp') }}" alt="Landing Pages"
                         class="start-project__image">
                     <div class="start-project__overlay"></div>
                     <div class="start-project__content">
-                        <span class="start-project__category">Diseño & E-commerce</span>
-                        <h3 class="start-project__title">Tu Libro en Casa</h3>
+                        <span class="start-project__category">Landing Page</span>
+                        <h3 class="start-project__title">Artistas, organizaciones y negocios</h3>
                     </div>
                 </a>
 
@@ -600,80 +601,82 @@
 
     <!-- ═══════════════ REVIEWS ═══════════════ -->
     <section id="testimonios" class="start-reviews">
-    <div class="start-reviews__container">
-        <div class="start-reviews__header">
-            <p class="start-reviews__subtitle">Reseñas</p>
-            <h2 class="start-reviews__title">Qué dicen nuestros <span
-                    class="start-reviews__title-highlight">Clientes</span></h2>           
+        <div class="start-reviews__container">
+            <div class="start-reviews__header">
+                <p class="start-reviews__subtitle">Reseñas</p>
+                <h2 class="start-reviews__title">Qué dicen nuestros <span
+                        class="start-reviews__title-highlight">Clientes</span></h2>
+            </div>
+            <div class="start-reviews__grid">
+
+                <article class="start-review-card">
+                    <div class="start-review-card__avatar-wrapper">
+                        <img src="{{ asset('img/reviews/Jorge_Mario.webp') }}" alt="Jorge Mario Escobar"
+                            class="start-review-card__avatar">
+                    </div>
+                    <div class="start-review-card__body">
+                        <h3 class="start-review-card__company">Periódico el Taller</h3>
+                        <span class="start-review-card__name">Jorge Mario Escobar</span>
+                        <p class="start-review-card__text">Destacamos en la red gracias a su eficaz capacitación y asesoría
+                            constante, permitiéndonos gestionar la página de forma autónoma.</p>
+                        <button class="start-review-card__more">Ver más</button>
+                    </div>
+                </article>
+
+                <article class="start-review-card">
+                    <div class="start-review-card__avatar-wrapper">
+                        <img src="{{ asset('img/reviews/Alejandra_Osorio.webp') }}" alt="Alejandra Osorio"
+                            class="start-review-card__avatar">
+                    </div>
+                    <div class="start-review-card__body">
+                        <h3 class="start-review-card__company">Mesa de Medios</h3>
+                        <span class="start-review-card__name">Alejandra Osorio</span>
+                        <p class="start-review-card__text">La empresa Wiquiweb ha llevado a cabo diversos proyectos de
+                            diseño web, hosting y diseño gráfico para nuestra organización.</p>
+                        <button class="start-review-card__more">Ver más</button>
+                    </div>
+                </article>
+
+                <article class="start-review-card">
+                    <div class="start-review-card__avatar-wrapper">
+                        <img src="{{ asset('img/reviews/Edwin_Ortega.webp') }}" alt="Edwin Ortega"
+                            class="start-review-card__avatar">
+                    </div>
+                    <div class="start-review-card__body">
+                        <h3 class="start-review-card__company">A todo deporte</h3>
+                        <span class="start-review-card__name">Edwin Ortega</span>
+                        <p class="start-review-card__text">He recibido un considerable respaldo para llevar a cabo la
+                            implementación tecnológica de mi página web y correo corporativo.</p>
+                        <button class="start-review-card__more">Ver más</button>
+                    </div>
+                </article>
+
+                <article class="start-review-card">
+                    <div class="start-review-card__avatar-wrapper">
+                        <img src="{{ asset('img/reviews/Vanessa_Martinez.webp') }}" alt="Vanessa Martinez"
+                            class="start-review-card__avatar">
+                    </div>
+                    <div class="start-review-card__body">
+                        <h3 class="start-review-card__company">Web Designer</h3>
+                        <span class="start-review-card__name">Vanessa Martinez</span>
+                        <p class="start-review-card__text">Estoy profundamente agradecida con WiquiWeb. Su profesionalismo
+                            y dedicación se reflejan en cada detalle del sitio.</p>
+                        <button class="start-review-card__more">Ver más</button>
+                    </div>
+                </article>
+
+            </div>
         </div>
-        <div class="start-reviews__grid">
+    </section>
 
-            <article class="start-review-card">
-                <div class="start-review-card__avatar-wrapper">
-                    <img src="{{ asset('img/reviews/Jorge_Mario.webp') }}" alt="Jorge Mario Escobar" class="start-review-card__avatar">
-                </div>
-                <div class="start-review-card__body">
-                    <h3 class="start-review-card__company">Periódico el Taller</h3>
-                    <span class="start-review-card__name">Jorge Mario Escobar</span>
-                    <p class="start-review-card__text">Destacamos en la red gracias a su eficaz capacitación y asesoría
-                        constante, permitiéndonos gestionar la página de forma autónoma.</p>
-                    <button class="start-review-card__more">Ver más</button>
-                </div>
-            </article>
-
-            <article class="start-review-card">
-                <div class="start-review-card__avatar-wrapper">
-                    <img src="{{ asset('img/reviews/Alejandra_Osorio.webp') }}" alt="Alejandra Osorio" class="start-review-card__avatar">
-                </div>
-                <div class="start-review-card__body">
-                    <h3 class="start-review-card__company">Mesa de Medios</h3>
-                    <span class="start-review-card__name">Alejandra Osorio</span>
-                    <p class="start-review-card__text">La empresa Wiquiweb ha llevado a cabo diversos proyectos de
-                        diseño web, hosting y diseño gráfico para nuestra organización.</p>
-                    <button class="start-review-card__more">Ver más</button>
-                </div>
-            </article>
-
-            <article class="start-review-card">
-                <div class="start-review-card__avatar-wrapper">
-                    <img src="{{ asset('img/reviews/Edwin_Ortega.webp') }}" alt="Edwin Ortega" class="start-review-card__avatar">
-                </div>
-                <div class="start-review-card__body">
-                    <h3 class="start-review-card__company">A todo deporte</h3>
-                    <span class="start-review-card__name">Edwin Ortega</span>
-                    <p class="start-review-card__text">He recibido un considerable respaldo para llevar a cabo la
-                        implementación tecnológica de mi página web y correo corporativo.</p>
-                    <button class="start-review-card__more">Ver más</button>
-                </div>
-            </article>
-
-            <article class="start-review-card">
-                <div class="start-review-card__avatar-wrapper">
-                    <img src="{{ asset('img/reviews/Vanessa_Martinez.webp') }}" alt="Vanessa Martinez" class="start-review-card__avatar">
-                </div>
-                <div class="start-review-card__body">
-                    <h3 class="start-review-card__company">Web Designer</h3>
-                    <span class="start-review-card__name">Vanessa Martinez</span>
-                    <p class="start-review-card__text">Estoy profundamente agradecida con WiquiWeb. Su profesionalismo
-                        y dedicación se reflejan en cada detalle del sitio.</p>
-                    <button class="start-review-card__more">Ver más</button>
-                </div>
-            </article>
-
-        </div>
-    </div>
-</section>
-    
-{{-- ═══════════════ WHATSAPP BUTTON ═══════════════ --}}
-<a href="https://api.whatsapp.com/send?phone=+573205864135&text=Me%20interesan%20sus%20servicios%20y%20me%20gustar%C3%ADa%20obtener%20m%C3%A1s%20informaci%C3%B3n."
-    target="_blank"
-    rel="noopener noreferrer"
-    class="whatsapp-btn"
-    aria-label="Contactar por WhatsApp">
-    <svg class="whatsapp-btn__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
-    </svg>
-</a>
+    {{-- ═══════════════ WHATSAPP BUTTON ═══════════════ --}}
+    <a href="https://api.whatsapp.com/send?phone=+573205864135&text=Me%20interesan%20sus%20servicios%20y%20me%20gustar%C3%ADa%20obtener%20m%C3%A1s%20informaci%C3%B3n."
+        target="_blank" rel="noopener noreferrer" class="whatsapp-btn" aria-label="Contactar por WhatsApp">
+        <svg class="whatsapp-btn__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path
+                d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+        </svg>
+    </a>
 
 
 @endsection

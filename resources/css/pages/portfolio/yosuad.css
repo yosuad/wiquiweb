@@ -1,0 +1,811 @@
+/* ==============================================
+   LANDING PAGE — YOSUAD
+   Metodología: BEM  (Block__Element--Modifier)
+   Paleta: Negro #0a0a0a | Amarillo #f5c518 | Rojo #e8384f | Crema #f5f0e8
+   ============================================== */
+
+/* ── Variables ── */
+:root {
+  --ys-black:   #0a0a0a;
+  --ys-yellow:  #f5c518;
+  --ys-red:     #e8384f;
+  --ys-cream:   #f5f0e8;
+  --ys-gray:    #888;
+  --ys-border:  rgba(255,255,255,0.1);
+}
+
+/* ── Reset base ── */
+.yosuad * { box-sizing: border-box; margin: 0; padding: 0; }
+
+.yosuad {
+  background: var(--ys-black);
+  color: var(--ys-cream);
+  font-family: 'Space Grotesk', sans-serif;
+  overflow-x: hidden;
+}
+
+/* ── Fuentes ── */
+.yosuad [class*="ys-hero__title"],
+.yosuad [class*="ys-vm__heading"],
+.yosuad [class*="ys-disco__title"],
+.yosuad [class*="ys-tray__title"],
+.yosuad [class*="ys-contact__title"],
+.yosuad [class*="ys-album__year"],
+.yosuad [class*="ys-album__name"],
+.yosuad [class*="ys-tray__num"],
+.yosuad [class*="ys-tray__place"],
+.yosuad [class*="ys-nav__name"],
+.yosuad [class*="ys-footer__name"],
+.yosuad [class*="ys-bio__title"],
+.yosuad [class*="ys-marquee"],
+.yosuad [class*="ys-vm__slogan"],
+.yosuad [class*="ys-hero__est"],
+.yosuad [class*="ys-disco__label"],
+.yosuad [class*="ys-contact__label"],
+.yosuad [class*="ys-btn"] {
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 0.05em;
+}
+
+.yosuad [class*="ys-hero__script"],
+.yosuad [class*="ys-bio__quote"],
+.yosuad [class*="ys-contact__script"],
+.yosuad [class*="ys-footer__quote"] {
+  font-family: 'Dancing Script', cursive;
+}
+
+/* ──────────────────────────────────────────────
+   NAV
+   ────────────────────────────────────────────── */
+
+.ys-nav {
+  position: fixed;
+  top: 0;
+  inset-inline: 0;
+  z-index: 100;
+  background: rgba(10,10,10,0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--ys-border);
+}
+
+.ys-nav__container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.ys-nav__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+}
+
+.ys-nav__logo { width: 40px; height: 40px; object-fit: contain; }
+
+.ys-nav__name {
+  font-size: 1.5rem;
+  color: var(--ys-cream);
+}
+
+.ys-nav__links {
+  display: flex;
+  gap: 2rem;
+}
+
+.ys-nav__link {
+  font-size: 0.78rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ys-cream);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.ys-nav__link:hover { color: var(--ys-yellow); }
+
+.ys-nav__cta {
+  background: var(--ys-yellow);
+  color: var(--ys-black);
+  padding: 0.5rem 1.25rem;
+  font-size: 0.85rem;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.ys-nav__cta:hover { background: var(--ys-red); color: var(--ys-cream); }
+
+
+/* ──────────────────────────────────────────────
+   HERO
+   ────────────────────────────────────────────── */
+
+.ys-hero {
+  position: relative;
+  min-height: 100vh;
+  padding-top: 5rem;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.ys-hero__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.3;
+}
+
+.ys-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(10,10,10,0.6), rgba(10,10,10,0.4), var(--ys-black));
+}
+
+.ys-hero__bolt {
+  position: absolute;
+  font-size: 4rem;
+  opacity: 0.8;
+  z-index: 1;
+}
+
+.ys-hero__bolt--left  { top: 8rem; left: 2rem; color: var(--ys-red); transform: rotate(12deg); }
+.ys-hero__bolt--right { bottom: 10rem; right: 2rem; color: var(--ys-yellow); transform: rotate(-12deg); }
+
+.ys-hero__container {
+  position: relative;
+  z-index: 2;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 5rem 2rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+  width: 100%;
+}
+
+.ys-hero__content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.ys-hero__est {
+  color: var(--ys-red);
+  font-size: 1.1rem;
+  letter-spacing: 0.4em;
+}
+
+.ys-hero__title {
+  display: flex;
+  flex-direction: column;
+  line-height: 0.85;
+}
+
+.ys-hero__title-home {
+  font-size: clamp(3rem, 9vw, 9rem);
+  color: var(--ys-cream);
+}
+
+.ys-hero__title-run {
+  font-size: clamp(3.5rem, 11vw, 11rem);
+  color: var(--ys-yellow);
+  text-shadow: 8px 8px 0 rgba(232,56,79,0.6);
+  margin-top: -0.5rem;
+}
+
+.ys-hero__script {
+  font-size: 2.5rem;
+  color: var(--ys-cream);
+  margin-top: 0.5rem;
+}
+
+.ys-hero__desc {
+  font-size: 1.05rem;
+  color: rgba(245,240,232,0.7);
+  line-height: 1.75;
+  max-width: 480px;
+  margin-top: 1rem;
+}
+
+.ys-hero__actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
+}
+
+/* ── Botones globales ── */
+.ys-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+}
+
+.ys-btn--primary {
+  background: var(--ys-yellow);
+  color: var(--ys-black);
+}
+
+.ys-btn--primary:hover { background: var(--ys-red); color: var(--ys-cream); }
+
+.ys-btn--outline {
+  border: 2px solid var(--ys-cream);
+  color: var(--ys-cream);
+}
+
+.ys-btn--outline:hover { background: var(--ys-cream); color: var(--ys-black); }
+
+.ys-btn--dark {
+  background: var(--ys-black);
+  color: var(--ys-cream);
+  border: 2px solid var(--ys-cream);
+}
+
+.ys-btn--dark:hover { background: var(--ys-red); border-color: var(--ys-red); }
+
+/* ── Visual hero ── */
+.ys-hero__visual {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.ys-hero__frame {
+  position: absolute;
+  inset: -1.5rem;
+}
+
+.ys-hero__frame--red {
+  background: var(--ys-red);
+  transform: rotate(3deg);
+  z-index: 0;
+}
+
+.ys-hero__frame--yellow {
+  background: var(--ys-yellow);
+  transform: rotate(-2deg) translate(1rem, 1rem);
+  z-index: -1;
+}
+
+.ys-hero__portrait {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  aspect-ratio: 4/5;
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.25);
+}
+
+.ys-hero__emblem {
+  position: absolute;
+  bottom: -2.5rem;
+  left: -2.5rem;
+  width: 10rem;
+  transform: rotate(12deg);
+  z-index: 2;
+  filter: drop-shadow(0 8px 24px rgba(0,0,0,0.5));
+}
+
+
+/* ──────────────────────────────────────────────
+   MARQUEE
+   ────────────────────────────────────────────── */
+
+.ys-marquee {
+  background: var(--ys-yellow);
+  border-top: 4px solid var(--ys-black);
+  border-bottom: 4px solid var(--ys-black);
+  overflow: hidden;
+  padding: 1rem 0;
+}
+
+.ys-marquee__track {
+  display: flex;
+  gap: 3rem;
+  white-space: nowrap;
+  animation: ys-marquee 30s linear infinite;
+  font-size: 1.75rem;
+  color: var(--ys-black);
+  letter-spacing: 0.3em;
+}
+
+@keyframes ys-marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+
+/* ──────────────────────────────────────────────
+   BIOGRAFÍA
+   ────────────────────────────────────────────── */
+
+.ys-bio {
+  padding: 8rem 2rem;
+}
+
+.ys-bio__container {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 4rem;
+}
+
+.ys-bio__label {
+  position: relative;
+}
+
+.ys-bio__label-box {
+  background: var(--ys-yellow);
+  color: var(--ys-black);
+  padding: 1.5rem 1.75rem;
+  transform: rotate(-2deg);
+  display: inline-block;
+}
+
+.ys-bio__title {
+  font-size: 4.5rem;
+  line-height: 1;
+}
+
+.ys-bio__emblem {
+  margin-top: 2rem;
+  width: 7rem;
+  opacity: 0.8;
+}
+
+.ys-bio__text {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  font-size: 1.05rem;
+  color: rgba(245,240,232,0.88);
+  line-height: 1.8;
+}
+
+.ys-bio__text strong { color: var(--ys-yellow); }
+
+.ys-bio__quote {
+  border-left: 4px solid var(--ys-red);
+  padding: 0.75rem 1.5rem;
+  font-size: 1.4rem;
+  color: var(--ys-cream);
+  font-style: italic;
+}
+
+
+/* ──────────────────────────────────────────────
+   VISIÓN & MISIÓN
+   ────────────────────────────────────────────── */
+
+.ys-vm {
+  background: var(--ys-yellow);
+  color: var(--ys-black);
+  padding: 8rem 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.ys-vm__bolt {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  font-size: 6rem;
+  opacity: 0.15;
+}
+
+.ys-vm__container {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+}
+
+.ys-vm__heading {
+  font-size: clamp(4rem, 8vw, 8rem);
+  line-height: 1;
+  color: var(--ys-black);
+}
+
+.ys-vm__line {
+  width: 8rem;
+  height: 4px;
+  background: var(--ys-black);
+  margin: 1.5rem 0;
+}
+
+.ys-vm__text {
+  font-size: 1.1rem;
+  line-height: 1.75;
+}
+
+.ys-vm__col--offset { padding-top: 6rem; }
+
+.ys-vm__slogan {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  line-height: 0.9;
+  margin-top: 2rem;
+}
+
+.ys-vm__slogan-red { color: var(--ys-red); }
+
+
+/* ──────────────────────────────────────────────
+   DISCOGRAFÍA
+   ────────────────────────────────────────────── */
+
+.ys-disco {
+  padding: 8rem 2rem;
+}
+
+.ys-disco__container {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.ys-disco__header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-bottom: 3rem;
+}
+
+.ys-disco__label {
+  color: var(--ys-red);
+  font-size: 1rem;
+  letter-spacing: 0.3em;
+  margin-bottom: 0.5rem;
+}
+
+.ys-disco__title {
+  font-size: clamp(3.5rem, 7vw, 7rem);
+  line-height: 1;
+  color: var(--ys-cream);
+}
+
+.ys-disco__title-accent { color: var(--ys-yellow); }
+
+.ys-disco__desc {
+  max-width: 380px;
+  color: var(--ys-gray);
+  line-height: 1.7;
+}
+
+.ys-disco__desc strong { color: var(--ys-yellow); }
+
+.ys-disco__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+/* ── ys-album ── */
+
+.ys-album {
+  border: 2px solid var(--ys-border);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transition: border-color 0.3s;
+}
+
+.ys-album:hover { border-color: var(--ys-yellow); }
+
+.ys-album--featured {
+  background: var(--ys-yellow);
+  color: var(--ys-black);
+  border-color: var(--ys-yellow);
+}
+
+.ys-album__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.ys-album__year { font-size: 2.5rem; }
+
+.ys-album__icon {
+  font-size: 1.5rem;
+  color: var(--ys-yellow);
+}
+
+.ys-album--featured .ys-album__icon { color: var(--ys-black); }
+
+.ys-album__name {
+  font-size: 1.75rem;
+  line-height: 1;
+  margin-top: 1rem;
+}
+
+.ys-album__type {
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ys-gray);
+}
+
+.ys-album--featured .ys-album__type { color: rgba(10,10,10,0.6); }
+
+.ys-album__play {
+  margin-top: 1.5rem;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1rem;
+  letter-spacing: 0.15em;
+  color: var(--ys-yellow);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.ys-album--featured .ys-album__play { color: var(--ys-black); }
+.ys-album__play:hover { color: var(--ys-red); }
+
+
+/* ──────────────────────────────────────────────
+   TRAYECTORIA
+   ────────────────────────────────────────────── */
+
+.ys-tray {
+  background: #111;
+  padding: 8rem 2rem;
+}
+
+.ys-tray__container {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  gap: 4rem;
+}
+
+.ys-tray__title {
+  font-size: clamp(3.5rem, 7vw, 6rem);
+  line-height: 1;
+  color: var(--ys-cream);
+}
+
+.ys-tray__title-red { color: var(--ys-red); }
+
+.ys-tray__line {
+  width: 8rem;
+  height: 4px;
+  background: var(--ys-yellow);
+  margin: 1.5rem 0;
+}
+
+.ys-tray__desc {
+  font-size: 1rem;
+  color: var(--ys-gray);
+  line-height: 1.75;
+  max-width: 320px;
+}
+
+.ys-tray__emblem {
+  margin-top: 2.5rem;
+  width: 10rem;
+  opacity: 0.9;
+  transform: rotate(-12deg);
+}
+
+.ys-tray__list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.ys-tray__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  padding: 1.25rem 1rem;
+  border-bottom: 1px solid var(--ys-border);
+  transition: background 0.2s;
+}
+
+.ys-tray__item:hover { background: rgba(255,255,255,0.03); }
+
+.ys-tray__num {
+  font-size: 1.5rem;
+  color: var(--ys-yellow);
+  flex-shrink: 0;
+  width: 3rem;
+}
+
+.ys-tray__place {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.4rem;
+  letter-spacing: 0.05em;
+  color: var(--ys-cream);
+}
+
+.ys-tray__detail {
+  font-size: 0.88rem;
+  color: var(--ys-gray);
+  margin-top: 0.25rem;
+}
+
+
+/* ──────────────────────────────────────────────
+   CONTACTO
+   ────────────────────────────────────────────── */
+
+.ys-contact {
+  background: var(--ys-yellow);
+  color: var(--ys-black);
+  padding: 8rem 2rem;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+
+.ys-contact__bolt {
+  position: absolute;
+  font-size: 8rem;
+  opacity: 0.15;
+}
+
+.ys-contact__bolt--top  { top: -1rem; left: 25%; transform: rotate(12deg); }
+.ys-contact__bolt--bottom { bottom: 2rem; right: 2rem; font-size: 10rem; color: var(--ys-red); opacity: 0.3; transform: rotate(-12deg); }
+
+.ys-contact__container {
+  max-width: 900px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.ys-contact__label {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1rem;
+  letter-spacing: 0.4em;
+}
+
+.ys-contact__title {
+  font-size: clamp(3rem, 8vw, 8rem);
+  line-height: 0.9;
+  color: var(--ys-black);
+}
+
+.ys-contact__script {
+  font-size: clamp(2.5rem, 7vw, 7rem);
+  color: var(--ys-red);
+  font-style: italic;
+}
+
+.ys-contact__desc {
+  font-size: 1.1rem;
+  max-width: 560px;
+  line-height: 1.75;
+}
+
+.ys-contact__location {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1rem;
+  letter-spacing: 0.2em;
+  color: rgba(10,10,10,0.7);
+}
+
+.ys-contact__social {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.ys-contact__social-link {
+  width: 3.5rem;
+  height: 3.5rem;
+  border: 2px solid var(--ys-black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.1rem;
+  color: var(--ys-black);
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+}
+
+.ys-contact__social-link:hover {
+  background: var(--ys-black);
+  color: var(--ys-yellow);
+}
+
+
+/* ──────────────────────────────────────────────
+   FOOTER
+   ────────────────────────────────────────────── */
+
+.ys-footer {
+  background: var(--ys-black);
+  color: var(--ys-cream);
+  padding: 3rem 2rem;
+  border-top: 4px solid var(--ys-yellow);
+}
+
+.ys-footer__container {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.ys-footer__brand {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.ys-footer__logo { width: 3rem; height: 3rem; object-fit: contain; }
+
+.ys-footer__name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.5rem;
+  letter-spacing: 0.2em;
+}
+
+.ys-footer__sub {
+  font-size: 0.72rem;
+  color: var(--ys-gray);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.ys-footer__quote {
+  font-size: 1.2rem;
+  color: var(--ys-yellow);
+  font-style: italic;
+}
+
+.ys-footer__copy {
+  font-size: 0.75rem;
+  color: var(--ys-gray);
+}
+
+
+/* ──────────────────────────────────────────────
+   RESPONSIVE
+   ────────────────────────────────────────────── */
+
+@media (max-width: 1024px) {
+  .ys-hero__container,
+  .ys-bio__container,
+  .ys-vm__container,
+  .ys-tray__container {
+    grid-template-columns: 1fr;
+  }
+
+  .ys-hero__visual { display: none; }
+  .ys-vm__col--offset { padding-top: 0; }
+  .ys-disco__grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 768px) {
+  .ys-nav__links { display: none; }
+  .ys-bio, .ys-vm, .ys-disco, .ys-tray, .ys-contact { padding: 4rem 1.5rem; }
+  .ys-footer__container { flex-direction: column; text-align: center; }
+  .ys-hero__actions { flex-direction: column; }
+  .ys-disco__header { flex-direction: column; }
+}
