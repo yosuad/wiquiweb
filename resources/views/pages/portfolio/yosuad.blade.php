@@ -1,27 +1,31 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Yosuad — rapero, poeta y maestro de ceremonia. Disco 'Home Run' ya disponible. Bio, discografía, trayectoria y contacto.">
+    <meta name="description"
+        content="Yosuad — rapero, poeta y maestro de ceremonia. Disco 'Home Run' ya disponible. Bio, discografía, trayectoria y contacto.">
     <meta property="og:title" content="YOSUAD — Home Run">
     <meta property="og:description" content="Rapero, poeta y maestro de ceremonia. Disco 'Home Run' ya disponible.">
     <title>YOSUAD — Home Run · Hip Hop desde Medellín</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Dancing+Script:wght@700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Dancing+Script:wght@700&family=Space+Grotesk:wght@400;500;700&display=swap"
+        rel="stylesheet">
 
     @vite(['resources/css/pages/portfolio/yosuad.css'])
 </head>
+
 <body class="yosuad">
 
     <!-- ════════════════ NAV ════════════════ -->
     <header class="ys-nav">
         <div class="ys-nav__container">
             <a href="#top" class="ys-nav__brand">
-                <img src="{{ asset('img/yosuad/bats-emblem.png') }}" alt="" class="ys-nav__logo">
-                <span class="ys-nav__name">YOSUAD</span>
+                <img src="{{ asset('img/portfolio/yosuad/logo.png') }}" alt="" class="ys-nav__logo">
             </a>
             <nav class="ys-nav__links">
                 <a href="#bio" class="ys-nav__link">Bio</a>
@@ -38,35 +42,12 @@
 
     <!-- ════════════════ HERO ════════════════ -->
     <section id="top" class="ys-hero">
-        <img src="{{ asset('img/yosuad/stadium-bg.jpg') }}" alt="" class="ys-hero__bg">
-        <div class="ys-hero__overlay"></div>
+        <img src="{{ asset('img/portfolio/yosuad/Banner.webp') }}" alt="Yosuad — Home Run" class="ys-hero__bg">
+        <div class="ys-hero__overlay"></div>       
 
-        <span class="ys-hero__bolt ys-hero__bolt--left">⚡</span>
-        <span class="ys-hero__bolt ys-hero__bolt--right">⚡</span>
-
-        <div class="ys-hero__container">
-            <div class="ys-hero__content">
-                <p class="ys-hero__est">★ ★ ★ EST. 2005 ★ ★ ★</p>
-                <h1 class="ys-hero__title">
-                    <span class="ys-hero__title-home">HOME</span>
-                    <span class="ys-hero__title-run">RUN</span>
-                </h1>
-                <p class="ys-hero__script">Yosuad</p>
-                <p class="ys-hero__desc">
-                    Rapero, poeta y maestro de ceremonia. Desde Medellín, la música
-                    que no tiene stop ni precio. Batazos que rompen el silencio.
-                </p>
-                <div class="ys-hero__actions">
-                    <a href="#disco" class="ys-btn ys-btn--primary">▶ ESCUCHAR DISCO</a>
-                    <a href="#bio" class="ys-btn ys-btn--outline">CONOCER +</a>
-                </div>
-            </div>
-            <div class="ys-hero__visual">
-                <div class="ys-hero__frame ys-hero__frame--red"></div>
-                <div class="ys-hero__frame ys-hero__frame--yellow"></div>
-                <img src="{{ asset('img/yosuad/yosuad-portrait.jpg') }}" alt="Yosuad — retrato" class="ys-hero__portrait">
-                <img src="{{ asset('img/yosuad/bats-emblem.png') }}" alt="" class="ys-hero__emblem">
-            </div>
+        <div class="ys-hero__actions ys-hero__actions--centered">
+            <a href="#disco" class="ys-btn ys-btn--primary">▶ ESCUCHAR DISCO</a>
+            <a href="#bio" class="ys-btn ys-btn--outline">CONOCER +</a>
         </div>
     </section>
 
@@ -112,7 +93,7 @@
                     A finales del 2005, GMG, Newman y <strong>Yosuad</strong> conocieron a Andrés Muñoz,
                     músico manizaleño que estaba empezando a producir. Deciden trabajar su
                     producción musical, y en 2009 sacan su primer sencillo titulado <em>«Nuestro
-                    Sentir»</em>. Al año siguiente el grupo y Yosuad comienzan su recorrido como
+                        Sentir»</em>. Al año siguiente el grupo y Yosuad comienzan su recorrido como
                     solistas.
                 </p>
                 <blockquote class="ys-bio__quote">
@@ -290,8 +271,10 @@
             </div>
             <p class="ys-contact__location">📍 MEDELLÍN · COLOMBIA</p>
             <div class="ys-contact__social">
-                <a href="https://www.facebook.com/yosuadoficial" target="_blank" rel="noopener noreferrer" class="ys-contact__social-link">f</a>
-                <a href="https://www.instagram.com/yosuadoficial" target="_blank" rel="noopener noreferrer" class="ys-contact__social-link">in</a>
+                <a href="https://www.facebook.com/yosuadoficial" target="_blank" rel="noopener noreferrer"
+                    class="ys-contact__social-link">f</a>
+                <a href="https://www.instagram.com/yosuadoficial" target="_blank" rel="noopener noreferrer"
+                    class="ys-contact__social-link">in</a>
                 <a href="#" class="ys-contact__social-link">♫</a>
             </div>
         </div>
@@ -313,4 +296,5 @@
     </footer>
 
 </body>
+
 </html>
