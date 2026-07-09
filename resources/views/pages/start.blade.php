@@ -498,7 +498,7 @@
             <div class="start-portfolio__grid">
 
                 <a href="{{ route('services.landing') }}" class="start-project">
-                    <img src="{{ asset('img/portafolio/persianasycortinasvalencia.webp') }}" alt="Landing Pages"
+                    <img src="{{ asset('img/portfolio/persianasycortinasvalencia.webp') }}" alt="Landing Pages"
                         class="start-project__image">
                     <div class="start-project__overlay"></div>
                     <div class="start-project__content">
@@ -508,7 +508,7 @@
                 </a>
 
                 <a href="https://enlacetropical.com" target="_blank" class="start-project">
-                    <img src="{{ asset('img/portafolio/enlacetropical.webp') }}" alt="Enlace Tropical"
+                    <img src="{{ asset('img/portfolio/enlacetropical.webp') }}" alt="Enlace Tropical"
                         class="start-project__image">
                     <div class="start-project__overlay"></div>
                     <div class="start-project__content">
@@ -518,7 +518,7 @@
                 </a>
 
                 <a href="https://wiquiweb.co/persianasycortinasvalencia" target="_blank" class="start-project">
-                    <img src="{{ asset('img/portafolio/persianasycortinasvalencia.webp') }}"
+                    <img src="{{ asset('img/portfolio/persianasycortinasvalencia.webp') }}"
                         alt="Persianas y Cortinas Valencia" class="start-project__image">
                     <div class="start-project__overlay"></div>
                     <div class="start-project__content">
@@ -528,7 +528,7 @@
                 </a>
 
                 <a href="https://wiquiweb.co/canalzona6tv" target="_blank" class="start-project">
-                    <img src="{{ asset('img/portafolio/canalzona6tv.webp') }}" alt="Canal Zona 6 TV"
+                    <img src="{{ asset('img/portfolio/canalzona6tv.webp') }}" alt="Canal Zona 6 TV"
                         class="start-project__image">
                     <div class="start-project__overlay"></div>
                     <div class="start-project__content">
@@ -538,7 +538,7 @@
                 </a>
 
                 <a href="https://www.emisoraradiovisual.com" target="_blank" class="start-project">
-                    <img src="{{ asset('img/portafolio/radiovisual.webp') }}" alt="Emisora Radio Visual"
+                    <img src="{{ asset('img/portfolio/radiovisual.webp') }}" alt="Emisora Radio Visual"
                         class="start-project__image">
                     <div class="start-project__overlay"></div>
                     <div class="start-project__content">
@@ -548,7 +548,7 @@
                 </a>
 
                 <a href="https://las10noticiasmasbuscadas.com" target="_blank" class="start-project">
-                    <img src="{{ asset('img/portafolio/las10noticiasmasbuscadas.webp') }}"
+                    <img src="{{ asset('img/portfolio/las10noticiasmasbuscadas.webp') }}"
                         alt="Las 10 Noticias Más Buscadas" class="start-project__image">
                     <div class="start-project__overlay"></div>
                     <div class="start-project__content">

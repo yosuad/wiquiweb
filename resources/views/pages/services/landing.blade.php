@@ -166,7 +166,7 @@
                 {{-- Yosuad --}}
                 <article class="landing-case">
                     <div class="landing-case__image-wrapper">
-                        <img src="{{ asset('img/portafolio/yosuad.webp') }}" alt="Yosuad" class="landing-case__image"
+                        <img src="{{ asset('img/portfolio/yosuad.webp') }}" alt="Yosuad" class="landing-case__image"
                             loading="lazy">
                         <span class="landing-case__tag">Artista</span>
                     </div>
@@ -188,7 +188,7 @@
                 {{-- Canal Zona 6 --}}
                 <article class="landing-case">
                     <div class="landing-case__image-wrapper">
-                        <img src="{{ asset('img/portafolio/canalzona6tv.webp') }}" alt="Canal Zona 6 TV"
+                        <img src="{{ asset('img/portfolio/canalzona6tv.webp') }}" alt="Canal Zona 6 TV"
                             class="landing-case__image" loading="lazy">
                         <span class="landing-case__tag">Organización</span>
                     </div>
@@ -211,7 +211,7 @@
                 {{-- Persianas y Cortinas Valencia --}}
                 <article class="landing-case">
                     <div class="landing-case__image-wrapper">
-                        <img src="{{ asset('img/portafolio/persianasycortinasvalencia.webp') }}"
+                        <img src="{{ asset('img/portfolio/persianasycortinasvalencia.webp') }}"
                             alt="Persianas y Cortinas Valencia" class="landing-case__image" loading="lazy">
                         <span class="landing-case__tag">Negocio</span>
                     </div>
