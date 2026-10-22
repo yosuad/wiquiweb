@@ -1,5 +1,3 @@
-
-
 /************************************************************************************/
 /*                 ADMIN PROSPECTOS CLOSE- PERMITIR CARGAR LOS PRECIOS             */
 /*********************************************************************************/
@@ -32,17 +30,34 @@ window.calcularPrecio = function() {
     const entry = window.preciosData?.[key];
 
     const sugerido       = document.getElementById('precio-sugerido');
-    const amount         = document.getElementById('amount');
+    const amountInput    = document.getElementById('amount');
     const servicePriceId = document.getElementById('service_price_id');
+    const amountLabel    = document.getElementById('amount-label');
 
     if (entry) {
-        sugerido.textContent = `$ ${parseFloat(entry.price).toFixed(2)} USD`;
-        amount.value         = parseFloat(entry.price).toFixed(2);
+        const isCOP  = entry.currency === 'COP';
+        const precio = parseFloat(entry.price);
+
+        sugerido.textContent = isCOP
+            ? `$ ${precio.toLocaleString('es-CO', { maximumFractionDigits: 0 })} COP`
+            : `$ ${precio.toFixed(2)} USD`;
+
+        amountInput.value    = precio.toFixed(2);
         servicePriceId.value = entry.id;
+
+        if (amountLabel) {
+            amountLabel.innerHTML = isCOP
+                ? 'Final price COP <span class="required">*</span>'
+                : 'Final price USD <span class="required">*</span>';
+        }
     } else {
         sugerido.textContent = '— No price configured —';
-        amount.value         = '';
+        amountInput.value    = '';
         servicePriceId.value = '';
+
+        if (amountLabel) {
+            amountLabel.innerHTML = 'Final price <span class="required">*</span>';
+        }
     }
 };
 
@@ -52,4 +67,3 @@ document.addEventListener('DOMContentLoaded', function() {
         window.togglePeriod();
     }
 });
-

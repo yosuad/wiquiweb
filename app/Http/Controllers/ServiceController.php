@@ -12,6 +12,7 @@ class ServiceController extends Controller
     public function index()
     {
         $services = Service::all();
+
         return view('admin.services', compact('services'));
     }
 
@@ -23,13 +24,13 @@ class ServiceController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'        => 'required|string|max:255|unique:services,name',
+            'name' => 'required|string|max:255|unique:services,name',
             'description' => 'nullable|string',
         ]);
 
         Service::create([
-            'name'        => $request->name,
-            'slug'        => Str::slug($request->name),
+            'name' => $request->name,
+            'slug' => Str::slug($request->name),
             'description' => $request->description,
         ]);
 
@@ -44,13 +45,13 @@ class ServiceController extends Controller
     public function update(Request $request, Service $service)
     {
         $request->validate([
-            'name'        => 'required|string|max:255|unique:services,name,' . $service->id,
+            'name' => 'required|string|max:255|unique:services,name,'.$service->id,
             'description' => 'nullable|string',
         ]);
 
         $service->update([
-            'name'        => $request->name,
-            'slug'        => Str::slug($request->name),
+            'name' => $request->name,
+            'slug' => Str::slug($request->name),
             'description' => $request->description,
         ]);
 
@@ -60,32 +61,34 @@ class ServiceController extends Controller
     public function destroy(Service $service)
     {
         $service->delete();
+
         return redirect()->route('services.index')->with('success', 'Service deleted successfully.');
     }
 
     public function prices(Service $service)
     {
         $prices = $service->prices()->get();
-        return view('admin.services.prices', compact('service', 'prices'));
+
+        return view('admin.services.prices.index', compact('service', 'prices'));
     }
 
     public function storePrice(Request $request, Service $service)
     {
         $request->validate([
-            'region'        => 'required|in:colombia,international',
-            'client_type'   => 'required|in:persona_natural,empresa,emprendimiento,artista,organizacion_social',
+            'region' => 'required|in:colombia,international',
+            'client_type' => 'required|in:persona_natural,empresa,emprendimiento,artista,organizacion_social',
             'billing_cycle' => 'required|in:monthly,annual,one_time',
-            'price'         => 'required|numeric|min:0',
-            'plan'          => 'nullable|string|max:100',
+            'price' => 'required|numeric|min:0',
+            'plan' => 'nullable|string|max:100',
         ]);
 
         $service->prices()->create([
-            'region'        => $request->region,
-            'client_type'   => $request->client_type,
+            'region' => $request->region,
+            'client_type' => $request->client_type,
             'billing_cycle' => $request->billing_cycle,
-            'plan'          => $request->plan,
-            'price'         => $request->price,
-            'currency'      => 'USD',
+            'plan' => $request->plan,
+            'price' => $request->price,
+            'currency' => $request->region === 'colombia' ? 'COP' : 'USD',
         ]);
 
         return redirect()->route('services.prices', $service->id)->with('success', 'Price added successfully.');
@@ -93,25 +96,27 @@ class ServiceController extends Controller
 
     public function editPrice(Service $service, ServicePrice $price)
     {
-        return view('admin.services.prices-edit', compact('service', 'price'));
+
+        return view('admin.services.prices.edit', compact('service', 'price'));
     }
 
     public function updatePrice(Request $request, Service $service, ServicePrice $price)
     {
         $request->validate([
-            'region'        => 'required|in:colombia,international',
-            'client_type'   => 'required|in:persona_natural,empresa,emprendimiento,artista,organizacion_social',
+            'region' => 'required|in:colombia,international',
+            'client_type' => 'required|in:persona_natural,empresa,emprendimiento,artista,organizacion_social',
             'billing_cycle' => 'required|in:monthly,annual,one_time',
-            'price'         => 'required|numeric|min:0',
-            'plan'          => 'nullable|string|max:100',
+            'price' => 'required|numeric|min:0',
+            'plan' => 'nullable|string|max:100',
         ]);
 
         $price->update([
-            'region'        => $request->region,
-            'client_type'   => $request->client_type,
+            'region' => $request->region,
+            'client_type' => $request->client_type,
             'billing_cycle' => $request->billing_cycle,
-            'plan'          => $request->plan,
-            'price'         => $request->price,
+            'plan' => $request->plan,
+            'price' => $request->price,
+            'currency' => $request->region === 'colombia' ? 'COP' : 'USD',
         ]);
 
         return redirect()->route('services.prices', $service->id)->with('success', 'Price updated successfully.');
@@ -120,6 +125,7 @@ class ServiceController extends Controller
     public function destroyPrice(Service $service, ServicePrice $price)
     {
         $price->delete();
+
         return redirect()->route('services.prices', $service->id)->with('success', 'Price deleted successfully.');
     }
 }

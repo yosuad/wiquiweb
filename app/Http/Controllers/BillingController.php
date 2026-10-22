@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Invoice;
 use App\Models\Contact;
+use App\Models\Invoice;
 use Illuminate\Http\Request;
 
 class BillingController extends Controller
@@ -12,20 +12,20 @@ class BillingController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
-        $user   = auth()->user();
+        $user = auth()->user();
 
         $contacts = Contact::whereHas('services.invoices')
-            ->with(['services.invoices' => function($q) {
+            ->with(['services.invoices' => function ($q) {
                 $q->orderBy('created_at', 'desc');
             }, 'services.service'])
-            ->when($search, function($q) use ($search) {
-                $q->where(function($q) use ($search) {
+            ->when($search, function ($q) use ($search) {
+                $q->where(function ($q) use ($search) {
                     $q->where('first_name', 'like', "%$search%")
-                      ->orWhere('last_name', 'like', "%$search%")
-                      ->orWhere('company_name', 'like', "%$search%");
+                        ->orWhere('last_name', 'like', "%$search%")
+                        ->orWhere('company_name', 'like', "%$search%");
                 });
             })
-            ->when(!$user->hasRole('administrator'), function($q) use ($user) {
+            ->when(! $user->hasRole('administrator'), function ($q) use ($user) {
                 $q->where('assigned_to', $user->id);
             })
             ->orderBy('first_name')
@@ -37,14 +37,15 @@ class BillingController extends Controller
     // ========= Invoice detail =========
     public function show(Contact $contact)
     {
-        if (!auth()->user()->hasRole('administrator') && $contact->assigned_to !== auth()->id()) {
+        if (! auth()->user()->hasRole('administrator') && $contact->assigned_to !== auth()->id()) {
             abort(403);
         }
-
         $invoices = Invoice::with(['contactService.service', 'contactService.contact'])
-            ->whereHas('contactService', fn($q) => $q->where('contact_id', $contact->id))
-            ->orderByRaw("CASE WHEN period_start IS NULL THEN 0 ELSE 1 END ASC")
-            ->orderBy('period_start', 'asc')
+            ->whereHas('contactService', fn ($q) => $q->where('contact_id', $contact->id))
+            ->orderByRaw("CASE WHEN status = 'pending' THEN 0 ELSE 1 END ASC")
+            ->orderByRaw('CASE WHEN period_start IS NULL THEN 1 ELSE 0 END ASC')
+            ->orderBy('period_start', 'desc')
+            ->orderBy('id', 'desc')
             ->get();
 
         return view('admin.billing.show', compact('contact', 'invoices'));
@@ -54,20 +55,20 @@ class BillingController extends Controller
     public function update(Request $request, Invoice $invoice)
     {
         $contact = $invoice->contactService->contact;
-        if (!auth()->user()->hasRole('administrator') && $contact->assigned_to !== auth()->id()) {
+        if (! auth()->user()->hasRole('administrator') && $contact->assigned_to !== auth()->id()) {
             abort(403);
         }
 
         $request->validate([
-            'status'       => 'required|in:pending,paid,approved,courtesy,cancelled',
+            'status' => 'required|in:pending,paid,approved,courtesy,cancelled',
             'payment_link' => 'nullable|url',
         ]);
 
         $invoice->update([
-            'status'       => $request->status,
+            'status' => $request->status,
             'payment_link' => $request->payment_link,
-            'paid_at'      => $request->status === 'paid' ? now() : $invoice->paid_at,
-            'approved_at'  => in_array($request->status, ['approved', 'courtesy']) ? now() : $invoice->approved_at,
+            'paid_at' => $request->status === 'paid' ? now() : $invoice->paid_at,
+            'approved_at' => in_array($request->status, ['approved', 'courtesy']) ? now() : $invoice->approved_at,
         ]);
 
         // Activate as customer when invoice is approved or courtesy
@@ -77,9 +78,9 @@ class BillingController extends Controller
             \App\Models\ContactLog::create([
                 'contact_id' => $contact->id,
                 'created_by' => auth()->id(),
-                'type'       => 'status_change',
-                'from'       => 'prospect',
-                'to'         => 'customer',
+                'type' => 'status_change',
+                'from' => 'prospect',
+                'to' => 'customer',
             ]);
         }
 
@@ -105,7 +106,7 @@ class BillingController extends Controller
     public function invoice(Invoice $invoice)
     {
         $contact = $invoice->contactService->contact;
-        if (!auth()->user()->hasRole('administrator') && $contact->assigned_to !== auth()->id()) {
+        if (! auth()->user()->hasRole('administrator') && $contact->assigned_to !== auth()->id()) {
             abort(403);
         }
 
@@ -116,7 +117,7 @@ class BillingController extends Controller
         ]);
 
         $history = Invoice::with(['contactService.service'])
-            ->whereHas('contactService', function($q) use ($invoice) {
+            ->whereHas('contactService', function ($q) use ($invoice) {
                 $q->where('contact_id', $invoice->contactService->contact_id);
             })
             ->orderBy('created_at', 'desc')

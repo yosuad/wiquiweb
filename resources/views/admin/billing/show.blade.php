@@ -24,7 +24,7 @@
                     <th>Service</th>
                     <th>Description</th>
                     <th>Cycle</th>
-                    <th>Amount USD</th>
+                    <th>Amount</th>
                     <th>Payment link</th>
                     <th>Status</th>
                     <th>Date</th>
@@ -34,7 +34,7 @@
             <tbody>
                 @forelse($invoices as $item)
                     <tr>
-                        <td># {{ $item->id }}</td>
+                        <td>{{ $item->id }}</td>
                         <td>{{ $item->contactService->service->name ?? '—' }}</td>
                         <td>{{ $item->contactService->description ?? '—' }}</td>
                         <td>
@@ -50,7 +50,14 @@
                                 —
                             @endif
                         </td>
-                        <td>$ {{ number_format($item->amount, 2) }}</td>
+                        <td>
+                            @php $currency = $item->contactService->currency ?? 'USD'; @endphp
+                            @if ($currency === 'COP')
+                                $ {{ number_format($item->amount, 0, ',', '.') }} <small>COP</small>
+                            @else
+                                $ {{ number_format($item->amount, 2) }} <small>USD</small>
+                            @endif
+                        </td>
                         <td>
                             @if ($item->status === 'pending')
                                 <form method="POST" action="{{ route('billing.update', $item->id) }}"
@@ -75,21 +82,22 @@
                             @endif
                         </td>
                         <td>
-                            <span class="badge {{ match ($item->status) {
-                                'pending'   => 'badge-new',
-                                'paid'      => 'badge-contact',
-                                'approved'  => 'badge-closed',
-                                'courtesy'  => 'badge-follow',
-                                'cancelled' => 'badge-lost',
-                                default     => 'badge-new',
-                            } }}">
+                            <span
+                                class="badge {{ match ($item->status) {
+                                    'pending' => 'badge-new',
+                                    'paid' => 'badge-contact',
+                                    'approved' => 'badge-closed',
+                                    'courtesy' => 'badge-follow',
+                                    'cancelled' => 'badge-lost',
+                                    default => 'badge-new',
+                                } }}">
                                 {{ match ($item->status) {
-                                    'pending'   => 'Pending',
-                                    'paid'      => 'Paid',
-                                    'approved'  => 'Approved',
-                                    'courtesy'  => 'Courtesy',
+                                    'pending' => 'Pending',
+                                    'paid' => 'Paid',
+                                    'approved' => 'Approved',
+                                    'courtesy' => 'Courtesy',
                                     'cancelled' => 'Cancelled',
-                                    default     => ucfirst($item->status),
+                                    default => ucfirst($item->status),
                                 } }}
                             </span>
                         </td>
