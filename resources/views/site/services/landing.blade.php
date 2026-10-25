@@ -3,7 +3,7 @@
 @section('title', 'Landing Pages — Wiquiweb')
 
 @push('styles')
-    @vite('resources/css/pages/services/landing.css')
+    @vite('resources/css/site/services/landing.css')
 @endpush
 
 @section('content')

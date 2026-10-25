@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Contact;
 use App\Models\ContactNote;
 use Illuminate\Http\Request;
@@ -31,15 +32,14 @@ class ContactNoteController extends Controller
         ContactNote::create([
             'contact_id' => $contact->id,
             'created_by' => auth()->id(),
-            'note'       => $request->note,
+            'note' => $request->note,
         ]);
 
         $from = $request->input('from');
-        $url  = route('prospects.notes.index', $contact->id) . ($from ? '?from=' . $from : '');
+        $url = route('prospects.notes.index', $contact->id).($from ? '?from='.$from : '');
 
         return redirect($url)->with('success', 'Note added successfully.');
     }
-
 
     // ========= Update note =========
     public function update(Request $request, Contact $contact, ContactNote $note)
@@ -51,11 +51,10 @@ class ContactNoteController extends Controller
         $note->update(['note' => $request->note]);
 
         $from = $request->input('from');
-        $url  = route('prospects.notes.index', $contact->id) . ($from ? '?from=' . $from : '');
+        $url = route('prospects.notes.index', $contact->id).($from ? '?from='.$from : '');
 
         return redirect($url)->with('success', 'Note updated successfully.');
     }
-
 
     // ========= Delete note =========
     public function destroy(Request $request, Contact $contact, ContactNote $note)
@@ -63,7 +62,7 @@ class ContactNoteController extends Controller
         $note->delete();
 
         $from = $request->input('from');
-        $url  = route('prospects.notes.index', $contact->id) . ($from ? '?from=' . $from : '');
+        $url = route('prospects.notes.index', $contact->id).($from ? '?from='.$from : '');
 
         return redirect($url)->with('success', 'Note deleted successfully.');
     }

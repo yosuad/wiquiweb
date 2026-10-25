@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Service;
 use App\Models\ServicePrice;
 use Illuminate\Http\Request;
@@ -13,7 +14,7 @@ class ServiceController extends Controller
     {
         $services = Service::all();
 
-        return view('admin.services', compact('services'));
+        return view('admin.services.index', compact('services'));
     }
 
     public function create()

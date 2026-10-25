@@ -3,7 +3,9 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="description" content="Agencia especializada en diseño y desarrollo de páginas web, actualizaciones y diseño para ayudar a tu empresa a destacar. Contáctanos para crear una presencia digital única y efectiva." />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="description"
+        content="Agencia especializada en diseño y desarrollo de páginas web, actualizaciones y diseño para ayudar a tu empresa a destacar. Contáctanos para crear una presencia digital única y efectiva." />
     <meta name="author" content="wiquiweb" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>wiquiweb | @yield('title', 'Inicio')</title>
@@ -45,8 +47,8 @@
     <script>
         window._alerts = {
             success: @json(session('success')),
-            error:   @json(session('error')),
-            info:    @json(session('info')),
+            error: @json(session('error')),
+            info: @json(session('info')),
             warning: @json(session('warning')),
         };
     </script>

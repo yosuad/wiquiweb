@@ -3,7 +3,7 @@
 @section('title', 'Diseño Gráfico — Wiquiweb')
 
 @push('styles')
-    @vite('resources/css/pages/services/design.css')
+    @vite('resources/css/site/services/design.css')
 @endpush
 
 @section('content')
@@ -75,25 +75,29 @@
                 <article class="design-card">
                     <div class="design-card__icon"><i data-lucide="star" aria-hidden="true"></i></div>
                     <h3 class="design-card__title">Logotipos</h3>
-                    <p class="design-card__text">Tu logo es la cara de tu negocio. Diseñamos identidades visuales únicas, memorables y versátiles que representan exactamente lo que eres.</p>
+                    <p class="design-card__text">Tu logo es la cara de tu negocio. Diseñamos identidades visuales únicas,
+                        memorables y versátiles que representan exactamente lo que eres.</p>
                 </article>
 
                 <article class="design-card">
                     <div class="design-card__icon"><i data-lucide="file-text" aria-hidden="true"></i></div>
                     <h3 class="design-card__title">Plegables y Panfletos</h3>
-                    <p class="design-card__text">Material impreso listo para enviar a la imprenta. Diseñamos plegables, volantes y panfletos con una maquetación profesional y atractiva.</p>
+                    <p class="design-card__text">Material impreso listo para enviar a la imprenta. Diseñamos plegables,
+                        volantes y panfletos con una maquetación profesional y atractiva.</p>
                 </article>
 
                 <article class="design-card">
                     <div class="design-card__icon"><i data-lucide="package" aria-hidden="true"></i></div>
                     <h3 class="design-card__title">Empaques</h3>
-                    <p class="design-card__text">El empaque es el primer contacto físico del cliente con tu producto. Diseñamos empaques que destacan en el punto de venta y refuerzan tu marca.</p>
+                    <p class="design-card__text">El empaque es el primer contacto físico del cliente con tu producto.
+                        Diseñamos empaques que destacan en el punto de venta y refuerzan tu marca.</p>
                 </article>
 
                 <article class="design-card">
                     <div class="design-card__icon"><i data-lucide="newspaper" aria-hidden="true"></i></div>
                     <h3 class="design-card__title">Periódicos y Revistas</h3>
-                    <p class="design-card__text">Maquetación editorial profesional para medios impresos y digitales. Diseño de portadas, diagramación de contenido y edición lista para publicar.</p>
+                    <p class="design-card__text">Maquetación editorial profesional para medios impresos y digitales. Diseño
+                        de portadas, diagramación de contenido y edición lista para publicar.</p>
                 </article>
 
             </div>
@@ -119,23 +123,29 @@
 
                 <div class="design-tool">
                     <div class="design-tool__icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon
+                                points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                            </polygon>
                         </svg>
                     </div>
                     <h3 class="design-tool__title">Adobe Illustrator</h3>
-                    <p class="design-tool__text">Diseño vectorial para logos, íconos e ilustraciones. Archivos escalables a cualquier tamaño sin perder calidad.</p>
+                    <p class="design-tool__text">Diseño vectorial para logos, íconos e ilustraciones. Archivos escalables a
+                        cualquier tamaño sin perder calidad.</p>
                 </div>
 
                 <div class="design-tool">
                     <div class="design-tool__icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                             <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
                             <line x1="9" y1="3" x2="9" y2="21"></line>
                         </svg>
                     </div>
                     <h3 class="design-tool__title">Adobe InDesign</h3>
-                    <p class="design-tool__text">Maquetación editorial profesional para revistas, periódicos, catálogos y cualquier material impreso de múltiples páginas.</p>
+                    <p class="design-tool__text">Maquetación editorial profesional para revistas, periódicos, catálogos y
+                        cualquier material impreso de múltiples páginas.</p>
                 </div>
 
             </div>
@@ -162,7 +172,8 @@
                     <div class="design-step__number">01</div>
                     <div class="design-step__icon"><i data-lucide="message-circle" aria-hidden="true"></i></div>
                     <h3 class="design-step__title">Briefing</h3>
-                    <p class="design-step__text">Conocemos tu negocio, tu público y lo que quieres transmitir con el diseño.</p>
+                    <p class="design-step__text">Conocemos tu negocio, tu público y lo que quieres transmitir con el
+                        diseño.</p>
                 </div>
 
                 <div class="design-step__connector" aria-hidden="true"></div>
@@ -171,7 +182,8 @@
                     <div class="design-step__number">02</div>
                     <div class="design-step__icon"><i data-lucide="pen-tool" aria-hidden="true"></i></div>
                     <h3 class="design-step__title">Diseño y revisión</h3>
-                    <p class="design-step__text">Creamos propuestas visuales y aplicamos los ajustes que necesites hasta quedar satisfecho.</p>
+                    <p class="design-step__text">Creamos propuestas visuales y aplicamos los ajustes que necesites hasta
+                        quedar satisfecho.</p>
                 </div>
 
                 <div class="design-step__connector" aria-hidden="true"></div>
@@ -180,7 +192,8 @@
                     <div class="design-step__number">03</div>
                     <div class="design-step__icon"><i data-lucide="download" aria-hidden="true"></i></div>
                     <h3 class="design-step__title">Entrega de archivos</h3>
-                    <p class="design-step__text">Recibes todos los archivos en los formatos que necesitas — listos para imprimir o usar digitalmente.</p>
+                    <p class="design-step__text">Recibes todos los archivos en los formatos que necesitas — listos para
+                        imprimir o usar digitalmente.</p>
                 </div>
 
             </div>

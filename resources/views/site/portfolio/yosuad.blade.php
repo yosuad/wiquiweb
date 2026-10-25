@@ -17,7 +17,7 @@
         href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Dancing+Script:wght@700&family=Space+Grotesk:wght@400;500;700&display=swap"
         rel="stylesheet">
 
-    @vite(['resources/css/pages/portfolio/yosuad.css'])
+    @vite(['resources/css/site/portfolio/yosuad.css'])
 </head>
 
 <body class="yosuad">

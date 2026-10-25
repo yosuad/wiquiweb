@@ -3,18 +3,28 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="description" content="Agencia especializada en diseño y desarrollo de páginas web, actualizaciones y diseño para ayudar a tu empresa a destacar. Contáctanos para crear una presencia digital única y efectiva." />
-    <meta name="author" content="wiquiweb" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="wiquiweb">
     <title>wiquiweb | @yield('title', 'Inicio')</title>
 
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+
+    {{-- Meta para compartir (OG / Twitter) --}}
+    @include('components.meta-compartir', [
+        'titulo' => $metaTitulo ?? null,
+        'descripcion' => $metaDescripcion ?? null,
+        'imagen' => $metaImagen ?? null,
+        'tipo' => $metaTipo ?? 'website',
+    ])
 
     {{-- Google Analytics --}}
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-P3VQQCCJC6"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
         gtag("js", new Date());
         gtag("config", "G-P3VQQCCJC6");
     </script>

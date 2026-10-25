@@ -15,6 +15,11 @@ import './alerts.js';
 import { createIcons, icons } from 'lucide';
 document.addEventListener('DOMContentLoaded', () => createIcons({ icons }));
 
+/* ========= Quill editor ========= */
+import Quill from 'quill';
+import 'quill/dist/quill.snow.css';
+window.Quill = Quill;
+
 /* ========= Estilos globales ========= */
 import '../css/app.css';
 
@@ -22,15 +27,15 @@ import '../css/app.css';
 import '../css/components/navbar.css';
 
 /* ========= page ========= */
-import '../css/pages/start.css';
-import '../css/pages/nosotros.css';
-
-import '../css/pages/contact.css';
-
-import '../css/pages/privacyPolicy.css';
-import '../css/pages/services/web-design.css';
-import '../css/pages/services/landing.css';
-
+import '../css/site/start.css';
+import '../css/site/about.css';
+import '../css/site/contact.css';
+import '../css/site/services/web-design.css';
+import '../css/site/privacy-policy.css';
+import '../css/site/services/landing.css';
+import '../css/site/portfolio/index.css';  // ← está en portfolio/index.css
+import '../css/site/blog/index.css';
+import '../css/site/blog/show.css';
 
 import '../css/errors/404.css';
 
@@ -45,21 +50,10 @@ import '../css/admin/customer/show.css';
 import '../css/admin/admin.css';
 import '../css/admin/subscribers.css';
 import '../css/components/footer.css';
-import '../css/pages/unsubscribe.css';
-
-
-
+import '../css/site/unsubscribe.css';
 
 /* ========= Pages ========= */
 import './admin/prospects/close.js';
-import './pages/start.js';
-import './pages/contact.js';
-import './pages/services/web-design.js';
-
-
-
-
-
-
-
-
+import './site/start.js';
+import './site/contact.js';
+import './site/services/web-design.js';

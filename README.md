@@ -15,41 +15,67 @@
 
 # 📋 Sistema CRM y Facturación — Wiquiweb
 
-Sistema desarrollado con **Laravel 12** para administrar prospectos, clientes, servicios y facturación. Incluye automatizaciones con n8n, control de roles y notificaciones automáticas.
+Sistema desarrollado con **Laravel 12** para administrar prospectos, clientes, servicios, facturación y el blog del sitio. Incluye automatizaciones con n8n, control de roles y notificaciones automáticas.
 
 - Gestión de prospectos y leads con pipeline de ventas
 - Clientes activos con seguimiento de servicios contratados
 - Facturación con recordatorios automáticos (n8n)
 - Catálogo de servicios con precios por región y tipo de cliente
+- Blog público administrable desde el panel
 - Panel de administración con roles y permisos (Spatie)
 
 ---
 
-## 🔐 Autenticación y Roles
+## 📐 Convenciones del proyecto
+
+| Ámbito | Idioma | Ejemplos |
+|--------|--------|----------|
+| Código | Inglés | Clases, modelos, tablas, columnas, variables, nombres de rutas, valores de enum |
+| Interfaz | Español | Textos de vistas, botones, títulos, mensajes de validación |
+
+- CSS con metodología **BEM**. Sin Tailwind.
+- Sin estilos ni JavaScript inline.
+- Assets locales vía npm + Vite. Sin CDN.
+- Separación de responsabilidades: la lógica de autorización no vive en las vistas ni en los modelos.
+
+---
+
+## 🔐 Autenticación, Roles y Autorización
 
 ### Laravel Breeze
 Starter kit oficial para autenticación. Incluye registro, login, recuperación de contraseña y panel básico de usuario.
 
-### Spatie Laravel Permission
-Manejo de roles y permisos del equipo interno.
+### Roles (Spatie Laravel Permission)
+Los roles se crean en `database/seeders/UserSeeder.php`.
 
 | Rol | Descripción |
 |-----|-------------|
-| `admin` | Control total del sistema |
+| `administrator` | Control total del sistema |
 | `agent` | Supervisor — recluta y gestiona sales-agents |
-| `sales-agent` | Vende, crea prospectos y cierra ventas |
+| `sales-agent` | Vende, crea prospectos y cierra ventas. Solo ve los prospectos asignados a él |
 | `billing-agent` | Gestiona facturas y pagos |
 | `support` | Atiende clientes activos e implementaciones |
+
+### Arquitectura de autorización
+
+| Pieza | Responsabilidad | Dónde se define |
+|-------|-----------------|-----------------|
+| **Spatie** | Guarda roles, permisos y qué usuario tiene cada uno | Seeders |
+| **Policies** | Reglas por registro (ej: "¿este post es suyo?") | `app/Policies/` |
+| **Laravel (`can`)** | Única puerta de entrada que consulta Spatie y Policies | Rutas, controladores, vistas |
+
+**Reglas:**
+1. Los nombres de roles solo aparecen en los seeders. En código se verifican **permisos**, no roles.
+2. Un módulo necesita Policy solo si la decisión depende del registro, no solo del usuario.
+   - "Solo quien tenga `view billing` entra a facturación" → permiso en la ruta.
+   - "Un redactor solo edita sus propios posts" → Policy.
+3. No se crean Policies vacías por coherencia aparente.
 
 ---
 
 ## 🎨 Íconos — Lucide Icons
 
-El sitio público utiliza **Lucide Icons** como librería de íconos de interfaz. Se carga vía CDN en `layouts/app.blade.php` antes del `</body>`.
-```html
-<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
-<script>lucide.createIcons();</script>
-```
+El sitio usa **Lucide Icons** como librería de íconos de interfaz.
 
 **Uso en blade:**
 ```html
@@ -60,14 +86,9 @@ El sitio público utiliza **Lucide Icons** como librería de íconos de interfaz
 
 Lucide convierte automáticamente los atributos `data-lucide` en SVGs inline al cargar la página.
 
-> **Nota:** FontAwesome **no se usa en el sitio público**. Solo se carga vía CDN en `layouts/admin.blade.php` para los íconos del panel CRM (`fas`, `fa-brands`).
+**Íconos de redes sociales** — como Lucide no incluye íconos de marcas (Facebook, Instagram, etc.), se usan **SVGs inline** directamente en el blade, sin dependencia externa.
 
-| Layout | Librería de íconos |
-|--------|-------------------|
-| `layouts/app.blade.php` | Lucide Icons (CDN) |
-| `layouts/admin.blade.php` | FontAwesome 6 (CDN) |
-
-**Íconos de redes sociales** — como Lucide no incluye íconos de marcas (Facebook, Instagram, etc.), se usan **SVGs inline** directamente en el blade. Los paths SVG se toman de FontAwesome y se incluyen sin dependencia externa.
+> **FontAwesome fue eliminado del proyecto.**
 
 ---
 
@@ -83,7 +104,7 @@ Agente completa close sale → genera factura (pipeline_stage: pending_payment)
         ↓
 Cliente paga → Agente marca factura como "paid"
         ↓
-Admin valida que el dinero llegó → Aprueba factura
+Administrator valida que el dinero llegó → Aprueba factura
         ↓
 Contacto se convierte en "customer" → pasa a vista Customers
         ↓
@@ -92,7 +113,7 @@ Soporte recibe el cliente para implementación
 
 **Roles involucrados en el flujo:**
 - `sales-agent` → cierra la venta y marca cuando el cliente paga
-- `admin` → valida el pago y aprueba la factura
+- `administrator` → valida el pago y aprueba la factura
 - `support` → recibe el cliente para implementación
 
 ---
@@ -128,6 +149,14 @@ Solo accesibles para usuarios autenticados y verificados (`auth`, `verified`).
 | `/billing` | Facturación | Facturas, pagos y aprobaciones |
 | `/services` | Servicios | Catálogo de servicios y precios |
 | `/admin` | Administración | Usuarios internos y privilegios |
+| `/admin/blog` | Blog | Artículos, categorías y etiquetas |
+
+## 🌐 Páginas públicas
+
+| Ruta | Nombre de ruta | Descripción |
+|------|----------------|-------------|
+| `/blog` | `blog` | Listado de artículos publicados |
+| `/blog/{slug}` | `blog.post` | Detalle de un artículo |
 
 ---
 
@@ -168,8 +197,8 @@ Seguimiento de facturas. Los recordatorios los genera n8n automáticamente.
 | Estado factura | Descripción |
 |----------------|-------------|
 | `pending` | Factura generada, cliente no ha pagado |
-| `paid` | Cliente pagó — pendiente validación del admin |
-| `approved` | Admin validó el pago — contacto pasa a cliente |
+| `paid` | Cliente pagó — pendiente validación del administrator |
+| `approved` | Administrator validó el pago — contacto pasa a cliente |
 | `courtesy` | Servicio cortesía — sin cobro |
 | `cancelled` | Factura anulada |
 
@@ -184,10 +213,32 @@ Catálogo de servicios con precios configurables por región, tipo de cliente y 
 
 ---
 
+## 📰 Módulo Blog
+
+### Componentes
+
+| Tipo | Archivo |
+|------|---------|
+| Modelos | `BlogPost`, `BlogCategory`, `BlogTag` |
+| Controladores admin | `Admin/BlogPostController`, `Admin/BlogCategoryController` |
+| Controlador público | `PageController` |
+| Vistas admin | `admin/blog/index`, `create`, `edit`, `_form`, `categories/index` |
+| Editor de contenido | Quill (npm), expuesto como `window.Quill` |
+| Permisos (Spatie) | `view blog`, `create blog`, `edit blog`, `delete blog` |
+
+### Reglas de negocio
+- **Destacados:** máximo 3 posiciones (`featured_order` 1, 2 o 3). Al destacar un post en una posición ocupada, el anterior se libera automáticamente.
+- **Categoría predeterminada:** la primera categoría creada queda como predeterminada. No se puede eliminar; al borrar otra categoría, sus posts se mueven a la predeterminada.
+- **Slug:** si no se escribe, se genera a partir del título y se garantiza único.
+- **Imágenes:** se guardan en el disco `uploads` en `blog/featured`, `blog/thumbnails` y `blog/content`.
+- **Estados:** `draft` / `review` / `published` (se muestran en español en las vistas).
+
+---
+
 ## 🗄️ Estructura de Base de Datos
 
 ### `users`
-Usuarios internos del sistema (agentes, admins, soporte).
+Usuarios internos del sistema (agentes, administradores, soporte).
 
 | Campo | Tipo | Descripción |
 |-------|------|-------------|
@@ -351,12 +402,63 @@ Notas internas de seguimiento por ticket.
 | created_by | BIGINT | FK → users.id |
 | note | TEXT | Contenido de la nota |
 
+### `blog_categories`
+Categorías del blog.
+
+| Campo | Tipo | Descripción |
+|-------|------|-------------|
+| id | BIGINT | PK |
+| name | VARCHAR | Nombre |
+| slug | VARCHAR | Identificador único |
+| is_default | BOOLEAN | Categoría predeterminada (solo una) |
+
+### `blog_tags`
+Etiquetas del blog.
+
+| Campo | Tipo | Descripción |
+|-------|------|-------------|
+| id | BIGINT | PK |
+| name | VARCHAR | Nombre |
+| slug | VARCHAR | Identificador único |
+
+### `blog_posts`
+Artículos del blog.
+
+| Campo | Tipo | Descripción |
+|-------|------|-------------|
+| id | BIGINT | PK |
+| title | VARCHAR | Título |
+| slug | VARCHAR | Identificador único (URL) |
+| category_id | BIGINT | FK → blog_categories.id |
+| featured_image | VARCHAR | Imagen destacada (nullable) |
+| thumbnail_image | VARCHAR | Imagen miniatura (nullable) |
+| excerpt | TEXT | Extracto (nullable) |
+| content | LONGTEXT | Contenido HTML (Quill) |
+| status | ENUM | `draft` / `review` / `published` |
+| featured_status | ENUM | `none` / `featured` |
+| featured_order | TINYINT | Posición destacada 1–3 (nullable) |
+| author_id | BIGINT | FK → users.id |
+| views | INT | Contador de vistas |
+| published_at | TIMESTAMP | Fecha de publicación (nullable) |
+
+> Índice compuesto sobre `(status, published_at)` para el listado público.
+
+### `blog_post_tag`
+Tabla pivote entre posts y etiquetas.
+
+| Campo | Tipo | Descripción |
+|-------|------|-------------|
+| post_id | BIGINT | FK → blog_posts.id |
+| tag_id | BIGINT | FK → blog_tags.id |
+
+> PK compuesta `(post_id, tag_id)`.
+
 ---
 
 ## 🔄 Flujo de Relaciones
 ```
-users (agentes/admins)
-  ↓ assigned_to / created_by
+users (agentes/administradores)
+  ↓ assigned_to / created_by / author_id
 contacts (prospectos/clientes)
   ↓
 contact_services ← services → service_prices
@@ -368,6 +470,10 @@ contacts
 contact_notes
 contact_logs
 support_tickets → support_ticket_notes
+
+blog_categories
+  ↓
+blog_posts ←→ blog_post_tag ←→ blog_tags
 ```
 
 ---
@@ -376,8 +482,8 @@ support_tickets → support_ticket_notes
 
 - [x] Autenticación con Laravel Breeze
 - [x] Roles con Spatie Laravel Permission
-- [x] Íconos de interfaz con Lucide Icons (sitio público)
-- [x] Íconos del panel CRM con FontAwesome 6 (admin)
+- [x] Íconos de interfaz con Lucide Icons
+- [x] FontAwesome eliminado del proyecto
 - [x] Migraciones y modelos
 - [x] Pipeline de prospectos (new → closing → pending_payment)
 - [x] Flujo de facturación (pending → paid → approved)
@@ -385,6 +491,33 @@ support_tickets → support_ticket_notes
 - [x] Historial de cambios por contacto (contact_logs)
 - [x] Integración lista para n8n (invoice_reminders)
 - [x] Tickets de soporte (support_tickets + support_ticket_notes)
+- [x] Blog: migraciones, modelos y controladores en inglés
 - [ ] customers/show — detalle de cliente con servicios
 - [ ] SupportController y vistas de tickets
 - [ ] Notificaciones automáticas con n8n
+
+---
+
+## 📌 Pendientes
+
+### Blog (en curso)
+- [ ] Crear `BlogPostPolicy` (reemplaza el trait `GestionaContenidoPorRol`, que nunca existió en este proyecto)
+- [ ] Revisar `PermissionSeeder`: definir permisos del blog y qué roles los tienen
+- [ ] Actualizar `routes/admin.php`: controladores renombrados, parámetro `{category}`, método `setDefault`, `uploadContentImage`
+- [ ] Actualizar vistas admin: campos del formulario y variables en inglés (`$categories`, `$slots`, `$authors`, `$counts`)
+- [ ] Renombrar carpeta `resources/views/admin/blog/categorias` → `categories`
+- [ ] Actualizar JS de Quill: campo de subida `image` y nueva ruta
+- [ ] Actualizar `PageController` y vistas públicas: `published()`, `incrementViews()`, columnas en inglés
+- [ ] Actualizar `PermissionSeeder` si usa nombres viejos
+
+### Autorización
+- [ ] Revisar `role:administrator` en `routes/admin.php` (líneas 79 y 145) y evaluar pasarlos a permisos
+- [ ] **Refactor futuro:** `ContactPolicy` — hoy un `sales-agent` solo ve los prospectos asignados a él (regla por registro). Esa lógica debería vivir en una Policy siguiendo la arquitectura de autorización
+
+### Seguridad
+- [ ] Sacar la contraseña del administrador de `UserSeeder` y leerla desde `.env`
+- [ ] Cambiar la contraseña del administrador si el seeder ya se subió al repositorio remoto
+
+### Assets y documentación
+- [ ] Verificar que Lucide se cargue localmente vía npm (sin CDN)
+- [ ] Documentar las tablas `subscribers` y `settings` en este README

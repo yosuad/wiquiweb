@@ -4,7 +4,7 @@
 
         <!-- Logo -->
         <div class="navbar__logo">
-            <a href="{{ url('/') }}" class="navbar__logo-link">
+            <a href="{{ route('home') }}" class="navbar__logo-link">
                 <img src="{{ asset('img/logo_wiquiweb.webp') }}" alt="Logo del sitio" class="navbar__logo-img">
             </a>
         </div>
@@ -14,10 +14,10 @@
             <nav class="navbar__nav">
                 <ul class="navbar__list">
                     <li class="navbar__item">
-                        <a href="{{ url('/') }}" class="navbar__link">inicio</a>
+                        <a href="{{ route('home') }}" class="navbar__link">inicio</a>
                     </li>
                     <li class="navbar__item">
-                        <a href="{{ url('nosotros') }}" class="navbar__link">nosotros</a>
+                        <a href="{{ route('about') }}" class="navbar__link">nosotros</a>
                     </li>
                     <li class="navbar__item navbar__item--has-children">
                         <a href="#" class="navbar__link">servicios</a>
@@ -46,14 +46,20 @@
                                     diseño páginas web
                                 </a>
                             </li>
+                            <li class="navbar__submenu-item">
+                                <a href="{{ route('services.landing') }}" class="navbar__submenu-link">
+                                    <x-icon-bowl />
+                                    landing page
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     <li class="navbar__item">
                         <a href="{{ route('portfolio') }}" class="navbar__link">portafolio</a>
                     </li>
-                    {{-- <li class="navbar__item">
-                        <a href="contact.html" class="navbar__link">blog</a>
-                    </li> --}}
+                    <li class="navbar__item">
+                        <a href="{{ route('blog') }}" class="navbar__link">Blog</a>
+                    </li>
                     <li class="navbar__item">
                         <a href="{{ route('contact') }}" class="navbar__link">contacto</a>
                     </li>
@@ -78,10 +84,10 @@
         <nav class="navbar__mobile" aria-label="Menú móvil">
             <ul class="navbar__mobile-list">
                 <li class="navbar__mobile-item">
-                    <a href="{{ url('/') }}" class="navbar__mobile-link">inicio</a>
+                    <a href="{{ route('home') }}" class="navbar__mobile-link">inicio</a>
                 </li>
                 <li class="navbar__mobile-item">
-                    <a href="{{ url('nosotros') }}" class="navbar__mobile-link">nosotros</a>
+                    <a href="{{ route('about') }}" class="navbar__mobile-link">nosotros</a>
                 </li>
                 <li class="navbar__mobile-item navbar__mobile-item--has-children">
                     <a href="#" class="navbar__mobile-link">servicios</a>
@@ -93,20 +99,25 @@
                             <a href="{{ route('services.design') }}" class="navbar__mobile-submenu-link">diseño</a>
                         </li>
                         <li class="navbar__mobile-submenu-item">
-                            <a href="{{ route('services.consulting') }}" class="navbar__mobile-submenu-link">consultoría</a>
+                            <a href="{{ route('services.consulting') }}"
+                                class="navbar__mobile-submenu-link">consultoría</a>
                         </li>
                         <li class="navbar__mobile-submenu-item">
                             <a href="{{ route('services.web-design') }}" class="navbar__mobile-submenu-link">diseño
                                 páginas web</a>
+                        </li>
+                        <li class="navbar__mobile-submenu-item">
+                            <a href="{{ route('services.landing') }}" class="navbar__mobile-submenu-link">landing
+                                page</a>
                         </li>
                     </ul>
                 </li>
                 <li class="navbar__mobile-item">
                     <a href="{{ route('portfolio') }}" class="navbar__mobile-link">portafolio</a>
                 </li>
-                {{-- <li class="navbar__mobile-item">
-                    <a href="contact.html" class="navbar__mobile-link">blog</a>
-                </li> --}}
+                <li class="navbar__mobile-item">
+                    <a href="{{ route('blog') }}" class="navbar__mobile-link">blog</a>
+                </li>
                 <li class="navbar__mobile-item">
                     <a href="{{ route('contact') }}" class="navbar__mobile-link">contacto</a>
                 </li>

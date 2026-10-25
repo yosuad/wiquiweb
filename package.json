@@ -20,6 +20,7 @@
     },
     "dependencies": {
         "lucide": "^0.577.0",
+        "quill": "^2.0.3",
         "sweetalert2": "^11.26.23"
     }
 }

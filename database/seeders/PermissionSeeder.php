@@ -3,8 +3,8 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class PermissionSeeder extends Seeder
 {
@@ -35,6 +35,12 @@ class PermissionSeeder extends Seeder
             // Administración
             'view admin',
             'manage users',
+
+            // Blog
+            'view blog',
+            'create blog',
+            'edit blog',
+            'delete blog',
         ];
 
         foreach ($permissions as $permission) {

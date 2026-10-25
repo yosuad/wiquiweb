@@ -3,7 +3,7 @@
 @section('title', 'Correos Corporativos — Wiquiweb')
 
 @push('styles')
-    @vite('resources/css/pages/services/emails.css')
+    @vite('resources/css/site/services/emails.css')
 @endpush
 
 @section('content')
@@ -63,7 +63,8 @@
             <div class="email-features__header">
                 <p class="email-features__subtitle">¿Qué obtienes?</p>
                 <h2 class="email-features__title">
-                    Todo lo que necesitas para <span class="email-features__title-highlight">comunicarte profesionalmente</span>
+                    Todo lo que necesitas para <span class="email-features__title-highlight">comunicarte
+                        profesionalmente</span>
                 </h2>
                 <p class="email-features__description">
                     Configuramos tu correo corporativo de principio a fin para que solo te preocupes por escribir.
@@ -76,7 +77,8 @@
                     <div class="email-feature__icon"><i data-lucide="at-sign" aria-hidden="true"></i></div>
                     <div class="email-feature__body">
                         <h3 class="email-feature__title">Correo con tu dominio</h3>
-                        <p class="email-feature__text">Tu dirección de correo lleva el nombre de tu empresa. Ej: info@tunegocio.com</p>
+                        <p class="email-feature__text">Tu dirección de correo lleva el nombre de tu empresa. Ej:
+                            info@tunegocio.com</p>
                     </div>
                 </div>
 
@@ -84,7 +86,8 @@
                     <div class="email-feature__icon"><i data-lucide="smartphone" aria-hidden="true"></i></div>
                     <div class="email-feature__body">
                         <h3 class="email-feature__title">Acceso desde cualquier dispositivo</h3>
-                        <p class="email-feature__text">Configura tu correo en computador, celular o tablet. Siempre conectado.</p>
+                        <p class="email-feature__text">Configura tu correo en computador, celular o tablet. Siempre
+                            conectado.</p>
                     </div>
                 </div>
 
@@ -100,7 +103,8 @@
                     <div class="email-feature__icon"><i data-lucide="shield-check" aria-hidden="true"></i></div>
                     <div class="email-feature__body">
                         <h3 class="email-feature__title">Seguro y confiable</h3>
-                        <p class="email-feature__text">Protección antispam y antivirus incluida para mantener tu bandeja limpia.</p>
+                        <p class="email-feature__text">Protección antispam y antivirus incluida para mantener tu bandeja
+                            limpia.</p>
                     </div>
                 </div>
 
@@ -108,7 +112,8 @@
                     <div class="email-feature__icon"><i data-lucide="users" aria-hidden="true"></i></div>
                     <div class="email-feature__body">
                         <h3 class="email-feature__title">Para equipos de cualquier tamaño</h3>
-                        <p class="email-feature__text">Desde un solo correo hasta soluciones para equipos grandes. Escalable según tu negocio.</p>
+                        <p class="email-feature__text">Desde un solo correo hasta soluciones para equipos grandes. Escalable
+                            según tu negocio.</p>
                     </div>
                 </div>
 
@@ -144,7 +149,8 @@
                     <div class="email-step__number">01</div>
                     <div class="email-step__icon"><i data-lucide="search" aria-hidden="true"></i></div>
                     <h3 class="email-step__title">Evaluamos tus necesidades</h3>
-                    <p class="email-step__text">Analizamos el tamaño de tu equipo y el uso que le darás para recomendarte la mejor solución.</p>
+                    <p class="email-step__text">Analizamos el tamaño de tu equipo y el uso que le darás para recomendarte la
+                        mejor solución.</p>
                 </div>
 
                 <div class="email-step__connector" aria-hidden="true"></div>
@@ -153,7 +159,8 @@
                     <div class="email-step__number">02</div>
                     <div class="email-step__icon"><i data-lucide="settings-2" aria-hidden="true"></i></div>
                     <h3 class="email-step__title">Configuramos todo</h3>
-                    <p class="email-step__text">Creamos y configuramos tus cuentas de correo con la solución ideal para tu negocio.</p>
+                    <p class="email-step__text">Creamos y configuramos tus cuentas de correo con la solución ideal para tu
+                        negocio.</p>
                 </div>
 
                 <div class="email-step__connector" aria-hidden="true"></div>
@@ -162,7 +169,8 @@
                     <div class="email-step__number">03</div>
                     <div class="email-step__icon"><i data-lucide="check-circle" aria-hidden="true"></i></div>
                     <h3 class="email-step__title">Te dejamos funcionando</h3>
-                    <p class="email-step__text">Instalamos tu correo en todos tus dispositivos y te explicamos cómo usarlo. Listo para comunicarte.</p>
+                    <p class="email-step__text">Instalamos tu correo en todos tus dispositivos y te explicamos cómo usarlo.
+                        Listo para comunicarte.</p>
                 </div>
 
             </div>
@@ -188,7 +196,8 @@
                         <i class="faq-item__icon" data-lucide="chevron-down" aria-hidden="true"></i>
                     </button>
                     <div class="faq-item__body" aria-hidden="true">
-                        <p class="faq-item__answer">Sí, necesitas un dominio (ej: tunegocio.com). Si aún no tienes uno, podemos ayudarte a conseguirlo a un costo muy accesible.</p>
+                        <p class="faq-item__answer">Sí, necesitas un dominio (ej: tunegocio.com). Si aún no tienes uno,
+                            podemos ayudarte a conseguirlo a un costo muy accesible.</p>
                     </div>
                 </div>
 
@@ -198,7 +207,9 @@
                         <i class="faq-item__icon" data-lucide="chevron-down" aria-hidden="true"></i>
                     </button>
                     <div class="faq-item__body" aria-hidden="true">
-                        <p class="faq-item__answer">Depende de las necesidades de tu negocio. Desde un solo correo hasta soluciones para equipos completos. Contáctanos y te recomendamos la opción ideal según tu caso.</p>
+                        <p class="faq-item__answer">Depende de las necesidades de tu negocio. Desde un solo correo hasta
+                            soluciones para equipos completos. Contáctanos y te recomendamos la opción ideal según tu caso.
+                        </p>
                     </div>
                 </div>
 
@@ -208,7 +219,8 @@
                         <i class="faq-item__icon" data-lucide="chevron-down" aria-hidden="true"></i>
                     </button>
                     <div class="faq-item__body" aria-hidden="true">
-                        <p class="faq-item__answer">Lo configuramos en Outlook, Gmail, o cualquier gestor de correo que prefieras. También puedes acceder desde el navegador sin instalar nada.</p>
+                        <p class="faq-item__answer">Lo configuramos en Outlook, Gmail, o cualquier gestor de correo que
+                            prefieras. También puedes acceder desde el navegador sin instalar nada.</p>
                     </div>
                 </div>
 
@@ -218,7 +230,8 @@
                         <i class="faq-item__icon" data-lucide="chevron-down" aria-hidden="true"></i>
                     </button>
                     <div class="faq-item__body" aria-hidden="true">
-                        <p class="faq-item__answer">En la mayoría de casos en menos de 24 horas tienes tu correo funcionando. Todo depende de la disponibilidad de tu dominio y la complejidad del servicio.</p>
+                        <p class="faq-item__answer">En la mayoría de casos en menos de 24 horas tienes tu correo
+                            funcionando. Todo depende de la disponibilidad de tu dominio y la complejidad del servicio.</p>
                     </div>
                 </div>
 

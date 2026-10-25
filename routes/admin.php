@@ -1,14 +1,16 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\BillingController;
+use App\Http\Controllers\Admin\BlogCategoryController;
+use App\Http\Controllers\Admin\BlogPostController;
+use App\Http\Controllers\Admin\ContactController;
+use App\Http\Controllers\Admin\ContactNoteController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ServiceController;
+use App\Http\Controllers\Admin\SubscriberController;
+use App\Http\Controllers\Admin\SupportController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ContactController;
-use App\Http\Controllers\ContactNoteController;
-use App\Http\Controllers\BillingController;
-use App\Http\Controllers\ServiceController;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\SupportController;
-use App\Http\Controllers\SubscriberController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'verified', 'approved'])->group(function () {
@@ -118,6 +120,41 @@ Route::middleware(['auth', 'verified', 'approved'])->group(function () {
         Route::put('/admin/{user}', [AdminController::class, 'update'])->name('admin.update');
         Route::delete('/admin/{user}', [AdminController::class, 'destroy'])->name('admin.destroy');
         Route::post('/admin/{user}/convert-prospect', [AdminController::class, 'convertToProspect'])->name('admin.convert.prospect');
+    });
+
+    // ── Blog ── (admin en /admin/blog para no chocar con el blog público en /blog)
+    Route::prefix('admin/blog')->name('blog.')->group(function () {
+
+        Route::middleware('permission:view blog')->group(function () {
+            Route::get('/', [BlogPostController::class, 'index'])->name('index');
+        });
+
+        Route::middleware('permission:create blog')->group(function () {
+            Route::get('/create', [BlogPostController::class, 'create'])->name('create');
+            Route::post('/', [BlogPostController::class, 'store'])->name('store');
+            Route::post('/content-image', [BlogPostController::class, 'uploadContentImage'])->name('content-image');
+        });
+
+        // Categorías: van antes de /{post} para que "categories" no se tome como un post
+        Route::middleware('permission:edit blog')->group(function () {
+            Route::get('/categories', [BlogCategoryController::class, 'index'])->name('categories.index');
+            Route::post('/categories', [BlogCategoryController::class, 'store'])->name('categories.store');
+            Route::patch('/categories/{category}', [BlogCategoryController::class, 'update'])->name('categories.update');
+            Route::patch('/categories/{category}/default', [BlogCategoryController::class, 'setDefault'])->name('categories.default');
+        });
+
+        Route::middleware('permission:delete blog')->group(function () {
+            Route::delete('/categories/{category}', [BlogCategoryController::class, 'destroy'])->name('categories.destroy');
+        });
+
+        Route::middleware('permission:edit blog')->group(function () {
+            Route::get('/{post}/edit', [BlogPostController::class, 'edit'])->name('edit');
+            Route::put('/{post}', [BlogPostController::class, 'update'])->name('update');
+        });
+
+        Route::middleware('permission:delete blog')->group(function () {
+            Route::delete('/{post}', [BlogPostController::class, 'destroy'])->name('destroy');
+        });
     });
 
     // ── Profile ──

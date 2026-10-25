@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Contact;
 use App\Models\Invoice;
 use Illuminate\Http\Request;
@@ -31,7 +32,7 @@ class BillingController extends Controller
             ->orderBy('first_name')
             ->get();
 
-        return view('admin.billing', compact('contacts', 'search'));
+        return view('admin.billing.index', compact('contacts', 'search'));
     }
 
     // ========= Invoice detail =========

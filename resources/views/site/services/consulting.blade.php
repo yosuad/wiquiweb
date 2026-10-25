@@ -3,7 +3,7 @@
 @section('title', 'Consultoría Digital — Wiquiweb')
 
 @push('styles')
-    @vite('resources/css/pages/services/consulting.css')
+    @vite('resources/css/site/services/consulting.css')
 @endpush
 
 @section('content')
@@ -17,12 +17,15 @@
                     <li class="consulting-hero__breadcrumb-item">
                         <a href="{{ route('home') }}" class="consulting-hero__breadcrumb-link">Inicio</a>
                     </li>
-                    <li class="consulting-hero__breadcrumb-item consulting-hero__breadcrumb-item--sep" aria-hidden="true">/</li>
+                    <li class="consulting-hero__breadcrumb-item consulting-hero__breadcrumb-item--sep" aria-hidden="true">/
+                    </li>
                     <li class="consulting-hero__breadcrumb-item">
                         <a href="#" class="consulting-hero__breadcrumb-link">Servicios</a>
                     </li>
-                    <li class="consulting-hero__breadcrumb-item consulting-hero__breadcrumb-item--sep" aria-hidden="true">/</li>
-                    <li class="consulting-hero__breadcrumb-item consulting-hero__breadcrumb-item--active" aria-current="page">
+                    <li class="consulting-hero__breadcrumb-item consulting-hero__breadcrumb-item--sep" aria-hidden="true">/
+                    </li>
+                    <li class="consulting-hero__breadcrumb-item consulting-hero__breadcrumb-item--active"
+                        aria-current="page">
                         Consultoría Digital
                     </li>
                 </ol>
@@ -75,25 +78,29 @@
                 <div class="consulting-for-card">
                     <div class="consulting-for-card__icon"><i data-lucide="help-circle" aria-hidden="true"></i></div>
                     <h3 class="consulting-for-card__title">No sabes por dónde empezar</h3>
-                    <p class="consulting-for-card__text">Sabes que necesitas digitalizarte pero no tienes claro qué herramienta necesitas, cuánto cuesta o qué viene primero.</p>
+                    <p class="consulting-for-card__text">Sabes que necesitas digitalizarte pero no tienes claro qué
+                        herramienta necesitas, cuánto cuesta o qué viene primero.</p>
                 </div>
 
                 <div class="consulting-for-card">
                     <div class="consulting-for-card__icon"><i data-lucide="git-branch" aria-hidden="true"></i></div>
                     <h3 class="consulting-for-card__title">Tus procesos no están claros</h3>
-                    <p class="consulting-for-card__text">No tienes documentados los flujos de tu empresa — quién hace qué, cuándo y cómo. Eso hace imposible automatizar o delegar correctamente.</p>
+                    <p class="consulting-for-card__text">No tienes documentados los flujos de tu empresa — quién hace qué,
+                        cuándo y cómo. Eso hace imposible automatizar o delegar correctamente.</p>
                 </div>
 
                 <div class="consulting-for-card">
                     <div class="consulting-for-card__icon"><i data-lucide="trending-up" aria-hidden="true"></i></div>
                     <h3 class="consulting-for-card__title">Quieres crecer pero algo frena</h3>
-                    <p class="consulting-for-card__text">Tu negocio funciona pero sientes que podrías escalar más rápido si tuvieras la tecnología y los procesos correctos.</p>
+                    <p class="consulting-for-card__text">Tu negocio funciona pero sientes que podrías escalar más rápido si
+                        tuvieras la tecnología y los procesos correctos.</p>
                 </div>
 
                 <div class="consulting-for-card">
                     <div class="consulting-for-card__icon"><i data-lucide="database" aria-hidden="true"></i></div>
                     <h3 class="consulting-for-card__title">Necesitas un CRM o ERP</h3>
-                    <p class="consulting-for-card__text">Antes de implementar un sistema, necesitas tener claros tus procesos. Te ayudamos a mapearlo todo para que la implementación sea exitosa.</p>
+                    <p class="consulting-for-card__text">Antes de implementar un sistema, necesitas tener claros tus
+                        procesos. Te ayudamos a mapearlo todo para que la implementación sea exitosa.</p>
                 </div>
 
             </div>
@@ -120,7 +127,8 @@
                     <div class="consulting-item__number">01</div>
                     <div class="consulting-item__body">
                         <h3 class="consulting-item__title">Diagnóstico de tu situación actual</h3>
-                        <p class="consulting-item__text">Analizamos dónde estás, qué herramientas usas, qué problemas tienes y qué oportunidades estás dejando pasar.</p>
+                        <p class="consulting-item__text">Analizamos dónde estás, qué herramientas usas, qué problemas tienes
+                            y qué oportunidades estás dejando pasar.</p>
                     </div>
                 </div>
 
@@ -128,7 +136,8 @@
                     <div class="consulting-item__number">02</div>
                     <div class="consulting-item__body">
                         <h3 class="consulting-item__title">Diagrama de flujo de procesos</h3>
-                        <p class="consulting-item__text">Mapeamos visualmente cómo funciona tu empresa — desde que llega un cliente hasta que se cierra el proceso. Claridad total sobre quién hace qué y cuándo.</p>
+                        <p class="consulting-item__text">Mapeamos visualmente cómo funciona tu empresa — desde que llega un
+                            cliente hasta que se cierra el proceso. Claridad total sobre quién hace qué y cuándo.</p>
                     </div>
                 </div>
 
@@ -136,7 +145,8 @@
                     <div class="consulting-item__number">03</div>
                     <div class="consulting-item__body">
                         <h3 class="consulting-item__title">Hoja de ruta digital</h3>
-                        <p class="consulting-item__text">Te entregamos un plan de acción concreto con los pasos a seguir, las herramientas recomendadas y el orden correcto para implementarlas.</p>
+                        <p class="consulting-item__text">Te entregamos un plan de acción concreto con los pasos a seguir,
+                            las herramientas recomendadas y el orden correcto para implementarlas.</p>
                     </div>
                 </div>
 
@@ -161,7 +171,8 @@
                     <div class="consulting-step__number">01</div>
                     <div class="consulting-step__icon"><i data-lucide="calendar" aria-hidden="true"></i></div>
                     <h3 class="consulting-step__title">Agendas tu sesión</h3>
-                    <p class="consulting-step__text">Llenas el formulario de contacto y coordenamos una sesión de máximo 45 minutos.</p>
+                    <p class="consulting-step__text">Llenas el formulario de contacto y coordenamos una sesión de máximo 45
+                        minutos.</p>
                 </div>
 
                 <div class="consulting-step__connector" aria-hidden="true"></div>
@@ -170,7 +181,8 @@
                     <div class="consulting-step__number">02</div>
                     <div class="consulting-step__icon"><i data-lucide="video" aria-hidden="true"></i></div>
                     <h3 class="consulting-step__title">Sesión de consultoría</h3>
-                    <p class="consulting-step__text">Nos reunimos virtualmente. Escuchamos, analizamos y te damos claridad sobre tu situación.</p>
+                    <p class="consulting-step__text">Nos reunimos virtualmente. Escuchamos, analizamos y te damos claridad
+                        sobre tu situación.</p>
                 </div>
 
                 <div class="consulting-step__connector" aria-hidden="true"></div>
@@ -179,7 +191,8 @@
                     <div class="consulting-step__number">03</div>
                     <div class="consulting-step__icon"><i data-lucide="file-check" aria-hidden="true"></i></div>
                     <h3 class="consulting-step__title">Recibes tu plan</h3>
-                    <p class="consulting-step__text">Te entregamos un documento con los hallazgos, diagramas y pasos concretos a seguir.</p>
+                    <p class="consulting-step__text">Te entregamos un documento con los hallazgos, diagramas y pasos
+                        concretos a seguir.</p>
                 </div>
 
             </div>

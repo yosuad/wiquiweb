@@ -208,13 +208,6 @@
 
 @push('scripts')
     <script>
-        window.preciosData = @json(
-            \App\Models\ServicePrice::all()->mapWithKeys(fn($p) => [
-                    $p->service_id . '_' . $p->region . '_' . $p->client_type . '_' . $p->billing_cycle => [
-                        'price' => $p->price,
-                        'id' => $p->id,
-                        'currency' => $p->currency,
-                    ],
-                ]));
+        window.preciosData = @json($prices);
     </script>
 @endpush

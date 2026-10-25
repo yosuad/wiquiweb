@@ -2,10 +2,6 @@
 
 @section('title', 'Portafolio — Wiquiweb')
 
-@push('styles')
-    @vite('resources/css/pages/portfolio.css')
-@endpush
-
 @section('content')
 
     <!-- ════════════════ HERO ════════════════ -->
@@ -30,12 +26,10 @@
                 {{-- Tu Libro en Casa --}}
                 <article class="portfolio-card">
                     <div class="portfolio-card__image-wrapper">
-                        <img src="{{ asset('img/portafolio/tulibroencasa.webp') }}"
-                             alt="Tu Libro en Casa"
-                             class="portfolio-card__image"
-                             loading="lazy">
+                        <img src="{{ asset('img/portfolio/tulibroencasa.webp') }}" alt="Tu Libro en Casa"
+                            class="portfolio-card__image" loading="lazy">
                         <div class="portfolio-card__overlay">
-                            <a href="#" class="portfolio-card__btn">
+                            <a href="{{ route('portfolio.yosuad') }}" class="portfolio-card__btn">
                                 <i data-lucide="eye" aria-hidden="true"></i>
                                 Ver proyecto
                             </a>
@@ -48,8 +42,9 @@
                             <span class="portfolio-card__tag">Logo</span>
                         </div>
                         <h2 class="portfolio-card__title">Tu Libro en Casa</h2>
-                        <p class="portfolio-card__text">Identidad de marca completa y tienda en línea para librería independiente. Desde el logo hasta la pasarela de pagos.</p>
-                        <a href="#" class="portfolio-card__link">
+                        <p class="portfolio-card__text">Identidad de marca completa y tienda en línea para librería
+                            independiente. Desde el logo hasta la pasarela de pagos.</p>
+                        <a href="{{ route('portfolio.yosuad') }}" class="portfolio-card__link">
                             Ver proyecto <i data-lucide="arrow-right" aria-hidden="true"></i>
                         </a>
                     </div>
@@ -58,12 +53,11 @@
                 {{-- Enlace Tropical --}}
                 <article class="portfolio-card">
                     <div class="portfolio-card__image-wrapper">
-                        <img src="{{ asset('img/portafolio/enlacetropical.webp') }}"
-                             alt="Enlace Tropical"
-                             class="portfolio-card__image"
-                             loading="lazy">
+                        <img src="{{ asset('img/portfolio/enlacetropical.webp') }}" alt="Enlace Tropical"
+                            class="portfolio-card__image" loading="lazy">
                         <div class="portfolio-card__overlay">
-                            <a href="https://enlacetropical.com" target="_blank" rel="noopener noreferrer" class="portfolio-card__btn">
+                            <a href="https://enlacetropical.com" target="_blank" rel="noopener noreferrer"
+                                class="portfolio-card__btn">
                                 <i data-lucide="eye" aria-hidden="true"></i>
                                 Ver proyecto
                             </a>
@@ -75,8 +69,10 @@
                             <span class="portfolio-card__tag">Diseño Web</span>
                         </div>
                         <h2 class="portfolio-card__title">Enlace Tropical</h2>
-                        <p class="portfolio-card__text">Rediseño de identidad visual y desarrollo web para emisora comunitaria con presencia en múltiples plataformas digitales.</p>
-                        <a href="https://enlacetropical.com" target="_blank" rel="noopener noreferrer" class="portfolio-card__link">
+                        <p class="portfolio-card__text">Rediseño de identidad visual y desarrollo web para emisora
+                            comunitaria con presencia en múltiples plataformas digitales.</p>
+                        <a href="https://enlacetropical.com" target="_blank" rel="noopener noreferrer"
+                            class="portfolio-card__link">
                             Ver proyecto <i data-lucide="arrow-right" aria-hidden="true"></i>
                         </a>
                     </div>
@@ -85,12 +81,11 @@
                 {{-- Persianas y Cortinas Valencia --}}
                 <article class="portfolio-card">
                     <div class="portfolio-card__image-wrapper">
-                        <img src="{{ asset('img/portafolio/persianasycortinasvalencia.webp') }}"
-                             alt="Persianas y Cortinas Valencia"
-                             class="portfolio-card__image"
-                             loading="lazy">
+                        <img src="{{ asset('img/portfolio/persianasycortinasvalencia.webp') }}"
+                            alt="Persianas y Cortinas Valencia" class="portfolio-card__image" loading="lazy">
                         <div class="portfolio-card__overlay">
-                            <a href="https://wiquiweb.co/persianasycortinasvalencia" target="_blank" rel="noopener noreferrer" class="portfolio-card__btn">
+                            <a href="https://wiquiweb.co/persianasycortinasvalencia" target="_blank"
+                                rel="noopener noreferrer" class="portfolio-card__btn">
                                 <i data-lucide="eye" aria-hidden="true"></i>
                                 Ver proyecto
                             </a>
@@ -101,8 +96,10 @@
                             <span class="portfolio-card__tag">Landing Page</span>
                         </div>
                         <h2 class="portfolio-card__title">Persianas y Cortinas Valencia</h2>
-                        <p class="portfolio-card__text">Landing page optimizada para conversión de negocio local de persianas y cortinas.</p>
-                        <a href="https://wiquiweb.co/persianasycortinasvalencia" target="_blank" rel="noopener noreferrer" class="portfolio-card__link">
+                        <p class="portfolio-card__text">Landing page optimizada para conversión de negocio local de
+                            persianas y cortinas.</p>
+                        <a href="https://wiquiweb.co/persianasycortinasvalencia" target="_blank" rel="noopener noreferrer"
+                            class="portfolio-card__link">
                             Ver proyecto <i data-lucide="arrow-right" aria-hidden="true"></i>
                         </a>
                     </div>
@@ -111,12 +108,11 @@
                 {{-- Canal Zona 6 TV --}}
                 <article class="portfolio-card">
                     <div class="portfolio-card__image-wrapper">
-                        <img src="{{ asset('img/portafolio/canalzona6tv.webp') }}"
-                             alt="Canal Zona 6 TV"
-                             class="portfolio-card__image"
-                             loading="lazy">
+                        <img src="{{ asset('img/portfolio/canalzona6tv.webp') }}" alt="Canal Zona 6 TV"
+                            class="portfolio-card__image" loading="lazy">
                         <div class="portfolio-card__overlay">
-                            <a href="https://wiquiweb.co/canalzona6tv" target="_blank" rel="noopener noreferrer" class="portfolio-card__btn">
+                            <a href="https://wiquiweb.co/canalzona6tv" target="_blank" rel="noopener noreferrer"
+                                class="portfolio-card__btn">
                                 <i data-lucide="eye" aria-hidden="true"></i>
                                 Ver proyecto
                             </a>
@@ -127,8 +123,10 @@
                             <span class="portfolio-card__tag">Landing Page</span>
                         </div>
                         <h2 class="portfolio-card__title">Canal Zona 6 TV</h2>
-                        <p class="portfolio-card__text">Landing page para canal de televisión comunitario con información de programación y cobertura.</p>
-                        <a href="https://wiquiweb.co/canalzona6tv" target="_blank" rel="noopener noreferrer" class="portfolio-card__link">
+                        <p class="portfolio-card__text">Landing page para canal de televisión comunitario con información de
+                            programación y cobertura.</p>
+                        <a href="https://wiquiweb.co/canalzona6tv" target="_blank" rel="noopener noreferrer"
+                            class="portfolio-card__link">
                             Ver proyecto <i data-lucide="arrow-right" aria-hidden="true"></i>
                         </a>
                     </div>
@@ -137,12 +135,11 @@
                 {{-- Emisora Radio Visual --}}
                 <article class="portfolio-card">
                     <div class="portfolio-card__image-wrapper">
-                        <img src="{{ asset('img/portafolio/radiovisual.webp') }}"
-                             alt="Emisora Radio Visual"
-                             class="portfolio-card__image"
-                             loading="lazy">
+                        <img src="{{ asset('img/portfolio/radiovisual.webp') }}" alt="Emisora Radio Visual"
+                            class="portfolio-card__image" loading="lazy">
                         <div class="portfolio-card__overlay">
-                            <a href="https://www.emisoraradiovisual.com" target="_blank" rel="noopener noreferrer" class="portfolio-card__btn">
+                            <a href="https://www.emisoraradiovisual.com" target="_blank" rel="noopener noreferrer"
+                                class="portfolio-card__btn">
                                 <i data-lucide="eye" aria-hidden="true"></i>
                                 Ver proyecto
                             </a>
@@ -154,8 +151,10 @@
                             <span class="portfolio-card__tag">Diseño Web</span>
                         </div>
                         <h2 class="portfolio-card__title">Emisora Radio Visual</h2>
-                        <p class="portfolio-card__text">Sitio web con reproductor de streaming integrado para emisora de radio online.</p>
-                        <a href="https://www.emisoraradiovisual.com" target="_blank" rel="noopener noreferrer" class="portfolio-card__link">
+                        <p class="portfolio-card__text">Sitio web con reproductor de streaming integrado para emisora de
+                            radio online.</p>
+                        <a href="https://www.emisoraradiovisual.com" target="_blank" rel="noopener noreferrer"
+                            class="portfolio-card__link">
                             Ver proyecto <i data-lucide="arrow-right" aria-hidden="true"></i>
                         </a>
                     </div>
@@ -164,12 +163,11 @@
                 {{-- Las 10 Noticias --}}
                 <article class="portfolio-card">
                     <div class="portfolio-card__image-wrapper">
-                        <img src="{{ asset('img/portafolio/las10noticiasmasbuscadas.webp') }}"
-                             alt="Las 10 Noticias Más Buscadas"
-                             class="portfolio-card__image"
-                             loading="lazy">
+                        <img src="{{ asset('img/portfolio/las10noticiasmasbuscadas.webp') }}"
+                            alt="Las 10 Noticias Más Buscadas" class="portfolio-card__image" loading="lazy">
                         <div class="portfolio-card__overlay">
-                            <a href="https://las10noticiasmasbuscadas.com" target="_blank" rel="noopener noreferrer" class="portfolio-card__btn">
+                            <a href="https://las10noticiasmasbuscadas.com" target="_blank" rel="noopener noreferrer"
+                                class="portfolio-card__btn">
                                 <i data-lucide="eye" aria-hidden="true"></i>
                                 Ver proyecto
                             </a>
@@ -181,8 +179,10 @@
                             <span class="portfolio-card__tag">Noticias</span>
                         </div>
                         <h2 class="portfolio-card__title">Las 10 Noticias Más Buscadas</h2>
-                        <p class="portfolio-card__text">Portal de noticias con diseño editorial moderno y sistema de publicación de contenido.</p>
-                        <a href="https://las10noticiasmasbuscadas.com" target="_blank" rel="noopener noreferrer" class="portfolio-card__link">
+                        <p class="portfolio-card__text">Portal de noticias con diseño editorial moderno y sistema de
+                            publicación de contenido.</p>
+                        <a href="https://las10noticiasmasbuscadas.com" target="_blank" rel="noopener noreferrer"
+                            class="portfolio-card__link">
                             Ver proyecto <i data-lucide="arrow-right" aria-hidden="true"></i>
                         </a>
                     </div>
