@@ -19,6 +19,7 @@
         "vite": "^7.0.7"
     },
     "dependencies": {
+        "intl-tel-input": "^29.5.7",
         "lucide": "^0.577.0",
         "quill": "^2.0.3",
         "sweetalert2": "^11.26.23"

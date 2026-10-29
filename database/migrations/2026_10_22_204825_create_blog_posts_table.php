@@ -27,10 +27,7 @@ return new class extends Migration
             $table->enum('status', ['draft', 'published'])
                 ->default('draft');
 
-            $table->enum('featured_status', ['none', 'featured'])
-                ->default('none');
-
-            $table->unsignedTinyInteger('featured_order')->nullable();
+            $table->boolean('is_featured')->default(false);
 
             $table->foreignId('author_id')
                 ->constrained('users')

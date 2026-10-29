@@ -1,8 +1,10 @@
-/**************************************/
-/*           ERROR 404                */
-/**************************************/
+/* ======================================================
+   PÁGINAS DE ERROR — Diseño común
+   Plantilla: views/errors/layout.blade.php
+   Usado por: 403, 404, 419, 429, 500 y 503
+   ====================================================== */
 
-.error404 {
+.error-page {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -10,34 +12,35 @@
   text-align: center;
 }
 
-.error404__container {
+.error-page__container {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.8rem;
 }
 
-.error404__title {
+/* Código del error (404, 419…) */
+.error-page__title {
   font-size: 120px;
   font-weight: 700;
   margin: 0;
   color: var(--text-primary);
 }
 
-.error404__subtitle {
+.error-page__subtitle {
   font-size: 2rem;
   font-weight: 700;
   margin: 0;
   color: var(--text-primary);
 }
 
-.error404__text {
+.error-page__text {
   font-size: 1.1rem;
   color: var(--text-secondary);
   margin: 0;
 }
 
-.error404__actions {
+.error-page__actions {
   display: flex;
   gap: 1rem;
   justify-content: center;
@@ -45,8 +48,8 @@
   margin-top: 1rem;
 }
 
-/* ===== Botón — persiana desde los lados ===== */
-.error404__btn {
+/* ── Botón — persiana desde los lados ── */
+.error-page__btn {
   padding: 0.8rem 2rem;
   font-size: 0.85rem;
   font-family: 'Rajdhani', sans-serif;
@@ -60,7 +63,7 @@
   cursor: pointer;
 }
 
-.error404__btn--primary {
+.error-page__btn--primary {
   background: var(--primary-color);
   color: var(--white-color);
   border: 1px solid var(--primary-color);
@@ -70,7 +73,7 @@
   transition: color 0.5s ease, border-color 0.5s ease;
 }
 
-.error404__btn--primary::before {
+.error-page__btn--primary::before {
   content: "";
   position: absolute;
   top: 0;
@@ -83,32 +86,32 @@
   transition: left 0.5s ease, right 0.5s ease, opacity 0.5s ease;
 }
 
-.error404__btn--primary:hover::before {
+.error-page__btn--primary:hover::before {
   left: 0;
   right: 0;
   opacity: 0.18;
 }
 
-.error404__btn--primary:hover {
+.error-page__btn--primary:hover {
   color: var(--white-color);
   border-color: var(--primary-color);
 }
 
-/* ===== Responsive ===== */
+/* ── Responsive ── */
 @media (max-width: 768px) {
-  .error404 {
+  .error-page {
     padding: 0 1.5rem;
   }
 
-  .error404__title {
+  .error-page__title {
     font-size: 80px;
   }
 
-  .error404__subtitle {
+  .error-page__subtitle {
     font-size: 1.5rem;
   }
 
-  .error404__actions {
+  .error-page__actions {
     flex-direction: column;
     align-items: center;
   }

@@ -145,6 +145,8 @@
 .td-actions {
     text-align: left;
     white-space: nowrap;
+    cursor: default;
+    user-select: none;
 }
 
 .td-actions form {

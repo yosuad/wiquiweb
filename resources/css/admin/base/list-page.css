@@ -1,0 +1,344 @@
+/* ======================================================
+   LIST PAGE — Componentes compartidos de listados del panel
+   Usado por: Blog, Categorías del blog
+   (y próximamente Soporte y demás módulos)
+   ====================================================== */
+
+/* ── Encabezado de la página ── */
+.admin-page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+}
+
+.admin-page-header__subtitle {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.admin-page-header__actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+/* ── Filtros por estado (pestañas) ── */
+.admin-filters {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    font-size: 0.85rem;
+}
+
+.admin-filters__link {
+    color: var(--text-secondary);
+    font-weight: 600;
+}
+
+.admin-filters__link:hover {
+    color: var(--primary-color);
+}
+
+.admin-filters__link--active {
+    color: var(--primary-color);
+}
+
+.admin-filters__count {
+    opacity: 0.7;
+}
+
+.admin-filters__separator {
+    color: var(--border);
+}
+
+/* ── Buscador ── */
+.admin-toolbar {
+    margin-bottom: 1rem;
+}
+
+.admin-search {
+    position: relative;
+    max-width: 20rem;
+}
+
+.admin-search__icon {
+    position: absolute;
+    left: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0.9rem;
+    height: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.admin-search__input {
+    width: 100%;
+    padding: 0.55rem 0.9rem 0.55rem 2.2rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 0.85rem;
+    background-color: var(--white-color);
+}
+
+.admin-search__input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+/* ── Tabla ── */
+.admin-table-wrapper {
+    background-color: var(--white-color);
+    border-radius: 10px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    overflow-x: auto;
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+}
+
+.admin-table thead {
+    background-color: var(--bg-body);
+    border-bottom: 1px solid var(--border);
+}
+
+.admin-table th {
+    text-align: left;
+    padding: 0.85rem 1rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--text-secondary);
+    white-space: nowrap;
+}
+
+.admin-table__checkbox-col {
+    width: 2.5rem;
+}
+
+.admin-table__actions-col {
+    width: 8rem;
+}
+
+.admin-table__row {
+    border-bottom: 1px solid var(--border);
+}
+
+.admin-table__row:last-child {
+    border-bottom: none;
+}
+
+.admin-table__row:hover {
+    background-color: var(--bg-body);
+}
+
+.admin-table td {
+    padding: 0.85rem 1rem;
+    color: var(--text-primary);
+    white-space: nowrap;
+}
+
+.admin-table__title {
+    font-weight: 700;
+    color: var(--text-primary);
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    max-width: 22rem;
+}
+
+.admin-table__title:hover {
+    color: var(--primary-color);
+}
+
+/* ── Acciones de cada fila (editar, ver, eliminar) ── */
+.admin-table__actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.admin-table__action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 6px;
+    color: var(--text-secondary);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font: inherit;
+}
+
+.admin-table__action svg {
+    width: 0.9rem;
+    height: 0.9rem;
+}
+
+.admin-table__action:hover {
+    background-color: var(--bg-body);
+    color: var(--primary-color);
+}
+
+.admin-table__action--danger:hover {
+    color: var(--danger);
+}
+
+/* ← NUEVO: acción deshabilitada
+   Ej: candado en la categoría predeterminada (no se puede eliminar) */
+.admin-table__action--disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.admin-table__action--disabled:hover {
+    background: none;
+    color: var(--text-secondary);
+}
+
+/* ← NUEVO: botón tipo píldora dentro de la tabla
+   Ej: "Marcar como predeterminada" en categorías del blog */
+.admin-table__link-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background-color: var(--white-color);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.35rem 0.85rem;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.admin-table__link-button:hover {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: var(--white-color);
+}
+
+.admin-table__link-button-icon {
+    width: 0.85rem;
+    height: 0.85rem;
+}
+
+/* ── Mensaje sin registros ── */
+.admin-table__empty {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-secondary);
+}
+
+.admin-table__empty-link {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+/* ── Etiquetas (marcadores internos) ── */
+.tag-badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+}
+
+/* "Principal" en el listado del blog */
+.tag-badge--featured {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+}
+
+/* ← NUEVO: "Predeterminada" en categorías del blog */
+.tag-badge--default {
+    background-color: var(--secondary-color);
+    color: var(--white-color);
+}
+
+/* Sin etiqueta: muestra un guion "—" */
+.tag-badge--none {
+    color: var(--text-secondary);
+}
+
+/* ── Estados ── */
+.status-badge {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    color: var(--white-color);
+    white-space: nowrap;
+}
+
+.status-badge--published {
+    background-color: var(--paid);
+}
+
+.status-badge--draft {
+    background-color: var(--text-secondary);
+}
+
+/* ── Paginación (plantilla: views/vendor/pagination/admin.blade.php) ── */
+.admin-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1.25rem;
+}
+
+.admin-pagination__info {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.admin-pagination__links {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.admin-pagination__link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    background-color: var(--white-color);
+    border: 1px solid var(--border);
+}
+
+.admin-pagination__link svg {
+    width: 0.85rem;
+    height: 0.85rem;
+}
+
+.admin-pagination__link:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.admin-pagination__link--active {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: var(--white-color);
+}
+
+.admin-pagination__link--disabled {
+    opacity: 0.4;
+    pointer-events: none;
+}

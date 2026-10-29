@@ -12,6 +12,15 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
+/**
+ * Gestión de artículos del blog (panel admin).
+ *
+ * Reglas de negocio:
+ * - Estados: borrador (draft) o publicado (published).
+ * - Solo un artículo puede ser el principal (is_featured); el modelo
+ *   desmarca el anterior automáticamente al guardar uno nuevo.
+ * - La fecha de publicación se asigna al publicar, salvo que se escriba una.
+ */
 class BlogPostController extends Controller
 {
     /*
@@ -20,16 +29,15 @@ class BlogPostController extends Controller
     |--------------------------------------------------------------------
     */
 
+    /**
+     * Lista los artículos con filtro por estado y búsqueda por título.
+     * El artículo principal siempre aparece primero.
+     */
     public function index(Request $request)
     {
         $query = BlogPost::query()
             ->with(['category', 'author'])
-            ->orderByRaw("
-                CASE
-                    WHEN featured_status = 'featured' THEN featured_order
-                    ELSE 99
-                END
-            ")
+            ->orderByDesc('is_featured')
             ->orderByDesc('created_at');
 
         if ($request->filled('status')) {
@@ -42,6 +50,7 @@ class BlogPostController extends Controller
 
         $posts = $query->paginate(10)->withQueryString();
 
+        // Contadores para las pestañas de filtro
         $counts = [
             'all' => BlogPost::count(),
             'published' => BlogPost::where('status', 'published')->count(),
@@ -57,14 +66,21 @@ class BlogPostController extends Controller
     |--------------------------------------------------------------------
     */
 
+    /**
+     * Muestra el formulario de nuevo artículo.
+     * $currentFeatured: el artículo principal actual (para el aviso del formulario).
+     */
     public function create()
     {
         $categories = BlogCategory::orderBy('name')->get();
-        $slots = $this->getFeaturedSlots();
+        $currentFeatured = BlogPost::where('is_featured', true)->first();
 
-        return view('admin.blog.create', compact('categories', 'slots'));
+        return view('admin.blog.create', compact('categories', 'currentFeatured'));
     }
 
+    /**
+     * Guarda un artículo nuevo.
+     */
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -74,7 +90,7 @@ class BlogPostController extends Controller
             'excerpt' => ['nullable', 'string'],
             'content' => ['required', 'string'],
             'status' => ['required', 'in:draft,published'],
-            'featured_status' => ['required', 'in:none,featured_1,featured_2,featured_3'],
+            'is_featured' => ['nullable', 'boolean'],
             'published_at' => ['nullable', 'date'],
             'featured_image' => ['required', 'image', 'max:2048'],
             'thumbnail_image' => ['required', 'image', 'max:2048'],
@@ -90,16 +106,13 @@ class BlogPostController extends Controller
             $data['slug'] = $this->generateUniqueSlug($data['title']);
         }
 
-        // Subida de imágenes
+        // Subida de imágenes (el nombre del archivo se basa en el slug)
         $data['featured_image'] = $this->storeImage($request, 'featured_image', 'blog/featured', $data['slug']);
         $data['thumbnail_image'] = $this->storeImage($request, 'thumbnail_image', 'blog/thumbnails', $data['slug'].'-thumbnail');
 
+        $data['is_featured'] = $request->boolean('is_featured');
         $data['author_id'] = auth()->id();
         $data['published_at'] = $this->resolvePublishedAt($data['status'], $data['published_at'] ?? null);
-
-        [$data['featured_status'], $data['featured_order']] = $this->resolveFeaturedSlot(
-            $data['featured_status']
-        );
 
         $post = BlogPost::create($data);
 
@@ -109,7 +122,7 @@ class BlogPostController extends Controller
 
         return redirect()
             ->route('blog.index')
-            ->with('status', 'Artículo creado correctamente.');
+            ->with('success', 'Artículo creado correctamente.');
     }
 
     /*
@@ -118,15 +131,24 @@ class BlogPostController extends Controller
     |--------------------------------------------------------------------
     */
 
+    /**
+     * Muestra el formulario de edición.
+     * $currentFeatured excluye al propio artículo.
+     */
     public function edit(BlogPost $post)
     {
         $categories = BlogCategory::orderBy('name')->get();
-        $slots = $this->getFeaturedSlots($post->id);
         $authors = User::orderBy('name')->get();
+        $currentFeatured = BlogPost::where('is_featured', true)
+            ->where('id', '!=', $post->id)
+            ->first();
 
-        return view('admin.blog.edit', compact('post', 'categories', 'slots', 'authors'));
+        return view('admin.blog.edit', compact('post', 'categories', 'authors', 'currentFeatured'));
     }
 
+    /**
+     * Actualiza un artículo existente.
+     */
     public function update(Request $request, BlogPost $post)
     {
         $data = $request->validate([
@@ -136,7 +158,7 @@ class BlogPostController extends Controller
             'excerpt' => ['nullable', 'string'],
             'content' => ['required', 'string'],
             'status' => ['required', 'in:draft,published'],
-            'featured_status' => ['required', 'in:none,featured_1,featured_2,featured_3'],
+            'is_featured' => ['nullable', 'boolean'],
             'author_id' => ['nullable', 'exists:users,id'],
             'published_at' => ['nullable', 'date'],
             'featured_image' => ['nullable', 'image', 'max:2048'],
@@ -148,14 +170,14 @@ class BlogPostController extends Controller
             'slug.unique' => 'Ese slug ya está en uso por otro artículo. Prueba con uno distinto.',
         ]);
 
-        // Slug automático si se dejó vacío y el título cambió
+        // Slug automático si se dejó vacío: se regenera solo si cambió el título
         if (empty($data['slug'])) {
             $data['slug'] = $post->title !== $data['title']
                 ? $this->generateUniqueSlug($data['title'], $post->id)
                 : $post->slug;
         }
 
-        // Reemplazo de imágenes (borra la anterior)
+        // Reemplazo de imágenes (borra la anterior del disco)
         if ($request->hasFile('featured_image')) {
             if ($post->featured_image) {
                 Storage::disk('uploads')->delete($post->featured_image);
@@ -170,19 +192,16 @@ class BlogPostController extends Controller
             $data['thumbnail_image'] = $this->storeImage($request, 'thumbnail_image', 'blog/thumbnails', $data['slug'].'-thumbnail');
         }
 
+        // Si no se eligió autor, se conserva el actual
         if (empty($data['author_id'])) {
             unset($data['author_id']);
         }
 
+        $data['is_featured'] = $request->boolean('is_featured');
         $data['published_at'] = $this->resolvePublishedAt(
             $data['status'],
             $data['published_at'] ?? null,
             $post->published_at
-        );
-
-        [$data['featured_status'], $data['featured_order']] = $this->resolveFeaturedSlot(
-            $data['featured_status'],
-            $post->id
         );
 
         $post->update($data);
@@ -193,7 +212,7 @@ class BlogPostController extends Controller
 
         return redirect()
             ->route('blog.index')
-            ->with('status', 'Artículo actualizado correctamente.');
+            ->with('success', 'Artículo actualizado correctamente.');
     }
 
     /*
@@ -202,6 +221,9 @@ class BlogPostController extends Controller
     |--------------------------------------------------------------------
     */
 
+    /**
+     * Elimina un artículo y sus imágenes del disco.
+     */
     public function destroy(BlogPost $post)
     {
         if ($post->featured_image) {
@@ -216,7 +238,7 @@ class BlogPostController extends Controller
 
         return redirect()
             ->route('blog.index')
-            ->with('status', 'Artículo eliminado correctamente.');
+            ->with('success', 'Artículo eliminado correctamente.');
     }
 
     /*
@@ -225,6 +247,10 @@ class BlogPostController extends Controller
     |--------------------------------------------------------------------
     */
 
+    /**
+     * Sube una imagen insertada dentro del contenido y devuelve su URL.
+     * La llama form.js desde el botón de imagen del editor.
+     */
     public function uploadContentImage(Request $request)
     {
         $request->validate([
@@ -246,6 +272,7 @@ class BlogPostController extends Controller
 
     /**
      * Genera un slug único a partir del título.
+     * Si ya existe, agrega -1, -2, etc.
      */
     private function generateUniqueSlug(string $title, ?int $ignoreId = null): string
     {
@@ -306,38 +333,5 @@ class BlogPostController extends Controller
                 ['name' => $name]
             )->id;
         })->all();
-    }
-
-    /**
-     * Devuelve qué post ocupa cada una de las 3 posiciones destacadas.
-     */
-    private function getFeaturedSlots(?int $excludeId = null): array
-    {
-        $featured = BlogPost::query()
-            ->when($excludeId, fn ($q) => $q->where('id', '!=', $excludeId))
-            ->where('featured_status', 'featured')
-            ->orderBy('featured_order')
-            ->get()
-            ->keyBy('featured_order');
-
-        return [
-            'featured_1' => $featured->get(1),
-            'featured_2' => $featured->get(2),
-            'featured_3' => $featured->get(3),
-        ];
-    }
-
-    /**
-     * Convierte el valor del formulario en estado + orden.
-     * $value puede ser: none | featured_1 | featured_2 | featured_3
-     * Si la posición está ocupada, el modelo libera al anterior al guardar.
-     */
-    private function resolveFeaturedSlot(string $value, ?int $postId = null): array
-    {
-        if ($value === 'none') {
-            return ['none', null];
-        }
-
-        return ['featured', (int) str_replace('featured_', '', $value)];
     }
 }

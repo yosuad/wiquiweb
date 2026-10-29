@@ -1632,6 +1632,26 @@ select.start-contact__form-input {
   align-self: center;
 }
 
+/* ── Errores del formulario de contacto ──
+   Los muestra js/components/lead-form.js (data-lead-form="start-contact") */
+
+/* Mensaje de error debajo de cada campo (oculto si está vacío) */
+.start-contact__form-error {
+    display: block;
+    margin-top: 0.3rem;
+    font-size: var(--font-size-xs);
+    color: var(--danger);
+}
+
+.start-contact__form-error:empty {
+    display: none;
+}
+
+/* Campo con error: borde rojo */
+.start-contact__form-input--error {
+    border-color: var(--danger);
+}
+
 /* ===== WhatsApp Button ===== */
 .whatsapp-btn {
   position: fixed;

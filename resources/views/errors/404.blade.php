@@ -1,21 +1,6 @@
-@extends('layouts.app')
-@section('title', '404 - Página no encontrada')
+{{-- Error 404: la página no existe o fue movida --}}
+@extends('errors.layout')
 
-@section('content')  
-    <main class="error404">
-        <div class="error404__container">
-            <h1 class="error404__title">404</h1>
-            <h2 class="error404__subtitle">
-                Página no encontrada
-            </h2>
-            <p class="error404__text">
-                Lo sentimos, la página que estás buscando no existe o fue movida.
-            </p>
-            <div class="error404__actions">
-                <a href="{{ url('/') }}" class="error404__btn error404__btn--primary">
-                    Volver al inicio
-                </a>
-            </div>
-        </div>
-    </main>
-@endsection
+@section('code', '404')
+@section('heading', 'Página no encontrada')
+@section('message', 'Lo sentimos, la página que estás buscando no existe o fue movida.')

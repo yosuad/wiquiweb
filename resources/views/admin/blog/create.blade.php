@@ -2,6 +2,8 @@
 
 @section('title', 'Nuevo artículo')
 
+@php $pageTitle = 'Nuevo artículo'; @endphp
+
 @section('content')
-    @include('admin.blog._form', ['accion' => 'crear'])
+    @include('admin.blog._form', ['action' => 'create'])
 @endsection

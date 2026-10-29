@@ -1,5 +1,7 @@
 /* ═══════════════════════════════════════════
-   BLOG — blog.css
+   BLOG — site/blog/index.css
+   Listado público del blog.
+   Vista: views/site/blog/index.blade.php
    Variables: --color-page-* (app.css)
 ═══════════════════════════════════════════ */
 
@@ -165,6 +167,7 @@
     gap: 16px;
 }
 
+/* Línea de datos: categoría · fecha · vistas */
 .blog-featured__meta {
     display: flex;
     align-items: center;
@@ -296,10 +299,20 @@
     color: var(--color-page-primary);
 }
 
+/* Grilla de tarjetas: 3 columnas (2 en tablet, 1 en celular) */
 .blog-grid__posts {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 28px;
+}
+
+/* Mensaje cuando no hay artículos (ocupa todo el ancho de la grilla) */
+.blog-grid__empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 48px 0;
+    font-size: var(--font-size-base);
+    color: var(--color-page-text-secondary);
 }
 
 /* ── CARD DE ARTÍCULO ────────────────────── */
@@ -361,6 +374,7 @@
     flex: 1;
 }
 
+/* Línea de datos: fecha a la izquierda, vistas a la derecha */
 .blog-post__meta {
     display: flex;
     align-items: center;
@@ -370,10 +384,15 @@
 }
 
 .blog-post__date,
-.blog-post__read {
+.blog-post__views {
     display: flex;
     align-items: center;
     gap: 5px;
+}
+
+/* Vistas: al extremo derecho de la tarjeta (número + ícono) */
+.blog-post__views {
+    margin-left: auto;
 }
 
 .blog-post__meta-icon svg {
@@ -429,7 +448,7 @@
     height: 14px;
 }
 
-/* ── PAGINACIÓN ──────────────────────────── */
+/* ── PAGINACIÓN (plantilla: views/vendor/pagination/blog.blade.php) ── */
 .blog-grid__pagination {
     display: flex;
     align-items: center;
@@ -602,6 +621,8 @@
 }
 
 /* ══ RESPONSIVE ══════════════════════════════ */
+
+/* Tablet: destacado en una columna, grilla de 2 */
 @media (max-width: 900px) {
     .blog-featured__card {
         grid-template-columns: 1fr;
@@ -620,6 +641,7 @@
     }
 }
 
+/* Celular: todo en una columna */
 @media (max-width: 600px) {
     .blog-hero {
         padding: 100px 20px 60px;

@@ -1,6 +1,8 @@
-/**************************************/
-/*             FOOTER                 */
-/**************************************/
+/* ======================================================
+   FOOTER — Componente global (todas las páginas públicas)
+   Vista: views/components/footer.blade.php
+   Newsletter: js/components/newsletter.js
+   ====================================================== */
 
 .footer {
   background: var(--color-page-primary);
@@ -104,6 +106,54 @@
 .footer__btn-icon {
   width: 18px;
   height: 18px;
+}
+
+
+/* ===== Suscripción: éxito y error =====
+   Clases que agrega js/components/newsletter.js (data-newsletter="footer") */
+
+/* Al suscribirse: el formulario ocupa todo el ancho para el mensaje */
+.footer__form--done {
+  max-width: 100%;
+}
+
+/* Al suscribirse: el texto de arriba pierde su margen inferior */
+.footer__newsletter:has(.footer__form--done) .footer__newsletter-text {
+  margin: 0 auto;
+}
+
+/* Mensaje de éxito (reemplaza el formulario) */
+.footer__success {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  color: var(--color-page-white);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  width: 100%;
+  text-align: center;
+  cursor: default;
+}
+
+.footer__success svg {
+  flex-shrink: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.footer__success p {
+  margin: 0;
+  white-space: nowrap;
+}
+
+/* Mensaje de error (debajo del formulario, centrado como el resto del bloque) */
+.footer__error {
+  color: #fecaca;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  text-align: center;
+  margin-top: 0.75rem;
 }
 
 
@@ -242,34 +292,9 @@
 }
 
 
-/* ===== Éxito suscripción ===== */
-
-.footer__success {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
-  color: var(--color-page-white);
-  font-size: var(--font-size-xl);
-  font-weight: var(--font-weight-bold);
-  width: 100%;
-  text-align: center;
-}
-
-.footer__success svg {
-  flex-shrink: 0;
-  width: 2.5rem;
-  height: 2.5rem;
-}
-
-.footer__success p {
-  margin: 0;
-  white-space: nowrap;
-}
-
-
 /* ===== Responsive ===== */
 
+/* Tablet: marca arriba a todo el ancho, columnas centradas */
 @media (max-width: 1024px) {
   .footer__main {
     grid-template-columns: 1fr 1fr;
@@ -300,6 +325,7 @@
   }
 }
 
+/* Celular: todo en una columna */
 @media (max-width: 768px) {
   .footer__main {
     grid-template-columns: 1fr;

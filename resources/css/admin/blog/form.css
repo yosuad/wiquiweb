@@ -1,0 +1,230 @@
+/* ======================================================
+   BLOG — Formulario de crear / editar artículo
+   Dos columnas: contenido a la izquierda, cajas a la derecha.
+   Los campos usan las clases de base/forms.css:
+   form-group, form-input, form-error, form-row
+   ====================================================== */
+
+/* ── Encabezado: enlace "Volver" ── */
+.post-form__back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+}
+
+.post-form__back svg {
+    width: 0.85rem;
+    height: 0.85rem;
+}
+
+.post-form__back:hover {
+    color: var(--primary-color);
+}
+
+/* ── Rejilla de dos columnas ──
+   minmax(0, …) evita que un contenido largo estire las columnas */
+.post-form__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    gap: 1.5rem;
+    align-items: start;
+}
+
+.post-form__main {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    min-width: 0;
+}
+
+.post-form__sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    min-width: 0;
+}
+
+/* El editor parte las palabras largas en vez de ensanchar la columna */
+.post-form .ql-editor {
+    overflow-wrap: anywhere;
+}
+
+/* Vista previa de la imagen actual (al editar) */
+.post-form__preview {
+    width: 100%;
+    height: 10rem;
+    object-fit: cover;
+    border-radius: 8px;
+    background-color: var(--bg-body);
+}
+
+.post-form__preview--small {
+    height: 6rem;
+}
+
+/* ── Tarjeta principal (columna izquierda) ── */
+.form-card {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    padding: 1.5rem;
+    background-color: var(--bg-card);
+    border-radius: 10px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+/* ── Cajas del lado derecho ── */
+.form-box {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    padding: 1.25rem;
+    background-color: var(--bg-card);
+    border-radius: 10px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+.form-box__title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-align: left;
+}
+
+.form-box__title--icon {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+}
+
+.form-box__title--icon svg {
+    width: 1.15rem;
+    height: 1.15rem;
+    color: var(--primary-color);
+    flex-shrink: 0;
+}
+
+/* ── Texto de ayuda bajo un campo ── */
+.form-help {
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    margin-top: -0.2rem;
+}
+
+/* ── Campo de título más grande ── */
+.form-input--title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    padding: 0.85rem 1rem;
+}
+
+/* ── Botones apilados (Guardar / Cancelar en la caja lateral) ── */
+.form-actions--stacked {
+    flex-direction: column;
+    align-items: stretch;
+    margin-top: 0;
+}
+
+.form-actions--stacked > * {
+    justify-content: center;
+}
+
+/* ── Slug: prefijo /blog/ + campo ── */
+.slug-field {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    background-color: var(--bg-body);
+}
+
+.slug-field__prefix {
+    padding: 0.6rem 0.5rem 0.6rem 0.875rem;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    background-color: var(--bg-card);
+    white-space: nowrap;
+}
+
+.slug-field__input {
+    flex: 1;
+    min-width: 0;
+    border: none;
+    padding: 0.6rem 0.875rem 0.6rem 0.25rem;
+    font-size: 0.875rem;
+    color: var(--text-primary);
+    background: transparent;
+}
+
+.slug-field__input:focus {
+    outline: none;
+}
+
+/* ── Etiquetas ── */
+.tags-input {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    padding: 0.5rem;
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    background-color: var(--bg-body);
+}
+
+.tags-input__chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.3rem 0.5rem;
+    border-radius: 5px;
+}
+
+.tags-input__remove {
+    display: flex;
+    align-items: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-secondary);
+    padding: 0;
+    font-size: 1rem;
+    line-height: 1;
+}
+
+.tags-input__remove:hover {
+    color: var(--danger);
+}
+
+.tags-input__field {
+    flex: 1;
+    min-width: 8rem;
+    border: none;
+    font-size: 0.85rem;
+    padding: 0.3rem;
+    background: transparent;
+}
+
+.tags-input__field:focus {
+    outline: none;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1000px) {
+    .post-form__grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Las etiquetas se acomodan en la misma línea que el campo */
+.tags-input__chips {
+    display: contents;
+}

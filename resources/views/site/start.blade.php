@@ -407,80 +407,81 @@
                 </ul>
             </div>
 
-            <!-- ===== Lado derecho — Formulario ===== -->
+            <!-- ===== Lado derecho — Formulario =====
+                     Envío AJAX: js/components/lead-form.js | Servidor: LeadController@storeContact
+                     novalidate: valida el servidor y muestra todos los errores a la vez -->
             <div class="start-contact__form-wrapper">
+                <form class="start-contact__form" method="POST" action="{{ route('leads.store') }}" novalidate
+                    data-lead-form="start-contact">
+                    @csrf
 
-                @if (session('success'))
-                    <div class="start-contact__success">
-                        <i data-lucide="circle-check"></i>
-                        <h3>¡Mensaje enviado!</h3>
-                        <p>{{ session('success') }}</p>
+                    <div class="start-contact__form-header">
+                        <h3 class="start-contact__form-title">Cuéntanos sobre tu proyecto</h3>
+                        <p class="start-contact__form-subtitle">Completa el formulario y te contactamos</p>
                     </div>
-                @else
-                    <form class="start-contact__form" method="POST" action="{{ route('leads.store') }}">
-                        @csrf
 
-                        <input type="hidden" name="origin" value="web">
-
-                        <div class="start-contact__form-header">
-                            <h3 class="start-contact__form-title">Cuéntanos sobre tu proyecto</h3>
-                            <p class="start-contact__form-subtitle">Completa el formulario y te contactamos</p>
-                        </div>
-
-                        <div class="start-contact__form-row">
-                            <div class="start-contact__form-group">
-                                <label for="contact_first_name" class="start-contact__form-label">Nombre</label>
-                                <input type="text" id="contact_first_name" name="first_name"
-                                    class="start-contact__form-input" placeholder="Tu nombre" maxlength="50" required>
-                            </div>
-                            <div class="start-contact__form-group">
-                                <label for="contact_last_name" class="start-contact__form-label">Apellido</label>
-                                <input type="text" id="contact_last_name" name="last_name"
-                                    class="start-contact__form-input" placeholder="Tu apellido" maxlength="50" required>
-                            </div>
-                        </div>
-
+                    <div class="start-contact__form-row">
                         <div class="start-contact__form-group">
-                            <label for="contact_whatsapp" class="start-contact__form-label">WhatsApp</label>
-                            <input type="tel" id="contact_whatsapp" name="whatsapp"
-                                class="start-contact__form-input" placeholder="+57 320 413 25 00" maxlength="20"
-                                required>
+                            <label for="start_first_name" class="start-contact__form-label">Nombre</label>
+                            <input type="text" id="start_first_name" name="first_name"
+                                class="start-contact__form-input" placeholder="Tu nombre" maxlength="50"
+                                autocomplete="given-name" data-field="first_name">
+                            <span class="start-contact__form-error" data-error="first_name"></span>
                         </div>
-
                         <div class="start-contact__form-group">
-                            <label for="contact_email" class="start-contact__form-label">Correo electrónico</label>
-                            <input type="email" id="contact_email" name="email" class="start-contact__form-input"
-                                placeholder="tu@correo.com" maxlength="100">
+                            <label for="start_last_name" class="start-contact__form-label">Apellido</label>
+                            <input type="text" id="start_last_name" name="last_name"
+                                class="start-contact__form-input" placeholder="Tu apellido" maxlength="50"
+                                autocomplete="family-name" data-field="last_name">
+                            <span class="start-contact__form-error" data-error="last_name"></span>
                         </div>
+                    </div>
 
-                        <div class="start-contact__form-group">
-                            <label for="contact_service" class="start-contact__form-label">¿Qué necesitas?</label>
-                            <select id="contact_service" name="service_interest" class="start-contact__form-input">
-                                <option value="pagina_web">Página web</option>
-                                <option value="correos">Correos corporativos</option>
-                                <option value="diseno_grafico">Diseño gráfico</option>
-                                <option value="marketing">Marketing digital</option>
-                                <option value="otro">Otro</option>
-                            </select>
-                        </div>
+                    {{-- WhatsApp (con bandera y selector de país) --}}
+                    <div class="start-contact__form-group">
+                        <label for="start_whatsapp" class="start-contact__form-label">WhatsApp</label>
+                        <x-phone-input name="whatsapp" id="start_whatsapp" class="start-contact__form-input"
+                            placeholder="320 569 3258" data-field="whatsapp" />
+                        <span class="start-contact__form-error" data-error="whatsapp"></span>
+                    </div>
 
-                        {{-- Política de privacidad --}}
-                        <div class="start-contact__form-privacy">
-                            <input type="checkbox" id="privacy" name="privacy" required>
-                            <label for="privacy">
-                                He leído y acepto la
-                                <a href="{{ route('privacy') }}" target="_blank">Política de Privacidad</a>
-                            </label>
-                        </div>
+                    <div class="start-contact__form-group">
+                        <label for="start_email" class="start-contact__form-label">Correo electrónico</label>
+                        <input type="email" id="start_email" name="email" class="start-contact__form-input"
+                            placeholder="tu@correo.com" maxlength="100" autocomplete="email" data-field="email">
+                        <span class="start-contact__form-error" data-error="email"></span>
+                    </div>
 
-                        <button type="submit" class="start-contact__form-btn">
-                            <i data-lucide="send"></i>
-                            Enviar mensaje
-                        </button>
+                    {{-- Servicio: lista única en config/leads.php --}}
+                    <div class="start-contact__form-group">
+                        <label for="start_service" class="start-contact__form-label">¿Qué necesitas?</label>
+                        <select id="start_service" name="service_interest" class="start-contact__form-input"
+                            data-field="service_interest">
+                            @foreach (config('leads.services') as $value => $label)
+                                <option value="{{ $value }}">{{ $label }}</option>
+                            @endforeach
+                        </select>
+                        <span class="start-contact__form-error" data-error="service_interest"></span>
+                    </div>
 
-                    </form>
-                @endif
+                    {{-- Política de privacidad --}}
+                    <div class="start-contact__form-privacy">
+                        <input type="checkbox" id="start_privacy" name="privacy" value="1" data-field="privacy">
+                        <label for="start_privacy">
+                            He leído y acepto la
+                            <a href="{{ route('privacy') }}" target="_blank">Política de Privacidad</a>
+                        </label>
+                    </div>
+                    <span class="start-contact__form-error" data-error="privacy"></span>
 
+                    {{-- Error general (ej: la página estuvo abierta mucho tiempo) --}}
+                    <span class="start-contact__form-error" data-error="form"></span>
+
+                    <button type="submit" class="start-contact__form-btn">
+                        <i data-lucide="send"></i>
+                        Enviar mensaje
+                    </button>
+                </form>
             </div>
 
         </div>

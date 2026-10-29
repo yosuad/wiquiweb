@@ -20,8 +20,7 @@ class BlogPost extends Model
         'excerpt',
         'content',
         'status',
-        'featured_status',
-        'featured_order',
+        'is_featured',
         'author_id',
         'views',
         'published_at',
@@ -30,26 +29,25 @@ class BlogPost extends Model
     protected function casts(): array
     {
         return [
+            'is_featured' => 'boolean',
             'published_at' => 'datetime',
         ];
     }
 
     /**
-     * Solo puede haber un post destacado por orden (1, 2 o 3).
-     * Al guardar uno con featured_status = 'featured', libera
-     * automáticamente cualquier otro que ocupara esa misma posición.
+     * Solo puede haber un post destacado (el banner del blog).
+     * Al guardar uno como destacado, se desmarca automáticamente el anterior.
      */
     protected static function booted(): void
     {
         static::saving(function (BlogPost $post) {
-            if ($post->featured_status !== 'featured') {
+            if (! $post->is_featured) {
                 return;
             }
 
             static::where('id', '!=', $post->id ?? 0)
-                ->where('featured_status', 'featured')
-                ->where('featured_order', $post->featured_order)
-                ->update(['featured_status' => 'none', 'featured_order' => null]);
+                ->where('is_featured', true)
+                ->update(['is_featured' => false]);
         });
     }
 

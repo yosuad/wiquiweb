@@ -1,0 +1,24 @@
+/* ======================================================
+   PHONE INPUT — Ajustes al campo de teléfono internacional
+   Componente: views/components/phone-input.blade.php
+   JS: js/components/phone-input.js (importa este archivo)
+   Sobrescribe lo mínimo del CSS de la librería intl-tel-input.
+   ====================================================== */
+
+/* El contenedor que crea la librería ocupa todo el ancho,
+   igual que los demás campos del formulario */
+.iti {
+    width: 100%;
+}
+
+/* El selector de país y su lista usan la fuente del sitio */
+.iti,
+.iti__dropdown-content {
+    font-family: inherit;
+}
+
+/* La lista de países queda por encima de otros elementos
+   (por ejemplo, la barra de filtros fija del blog) */
+.iti__dropdown-content {
+    z-index: 50;
+}

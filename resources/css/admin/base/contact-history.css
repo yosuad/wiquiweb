@@ -1,0 +1,43 @@
+/* ======================================================
+   CONTACT HISTORY — Historial de un contacto (panel)
+   Componente: views/components/contact-history.blade.php
+   Usado en: editar prospecto y editar cliente
+   (los puntos y textos usan las clases dash-activity existentes)
+   ====================================================== */
+
+/* Separación respecto al formulario de arriba */
+.contact-history {
+    margin-top: 1.5rem;
+}
+
+/* Título: ícono y texto en la misma línea, alineado a la izquierda */
+.contact-history__title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-align: left;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.contact-history__icon {
+    width: 1rem;
+    height: 1rem;
+    color: var(--primary-color);
+}
+
+/* Badge pequeño (estados dentro del historial) */
+.badge--sm {
+    font-size: 0.7rem;
+}
+
+/* Flecha entre los dos estados: Prospecto → Perdido */
+.contact-history__arrow {
+    margin: 0 0.25rem;
+    color: var(--text-secondary);
+    font-weight: 700;
+}

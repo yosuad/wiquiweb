@@ -358,3 +358,24 @@ select.contact-page__form-input {
         font-size: 1.9rem;
     }
 }
+
+
+/* ── Errores del formulario ──
+   Los muestra js/site/contact.js con la respuesta del servidor */
+
+/* Mensaje de error debajo de cada campo (oculto si está vacío) */
+.contact-page__form-error {
+    display: block;
+    margin-top: 0.3rem;
+    font-size: var(--font-size-xs);
+    color: var(--danger);
+}
+
+.contact-page__form-error:empty {
+    display: none;
+}
+
+/* Campo con error: borde rojo */
+.contact-page__form-input--error {
+    border-color: var(--danger);
+}

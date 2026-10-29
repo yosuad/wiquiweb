@@ -1,5 +1,6 @@
 /* ═══════════════════════════════════════
    FORMS — Admin
+   Clases base de los formularios del panel
    ═══════════════════════════════════════ */
 
 /* ---- Form Container ---- */
@@ -10,6 +11,12 @@
     padding: 2rem;
     margin: 0 auto;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+/* ← NUEVO: contenedor de datos informativos (solo lectura) sobre un formulario.
+   Ej: origen, tipo de cliente y servicio en "Editar cliente" */
+.form-container--info {
+    margin-bottom: 1rem;
 }
 
 /* ---- Form Group ---- */
@@ -55,6 +62,13 @@
 
 select.form-input {
     cursor: pointer;
+}
+
+/* ← NUEVO: dato de solo lectura con la apariencia de un campo
+   (no se puede editar; se usa en un <div>, no en un <input>) */
+.form-input--readonly {
+    background: var(--bg-body);
+    cursor: default;
 }
 
 /* ---- Validation ---- */

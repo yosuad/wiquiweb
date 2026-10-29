@@ -1,0 +1,20 @@
+/* ======================================================
+   BLOG — Categorías (panel admin)
+   Dos columnas: formulario para crear a la izquierda,
+   listado de categorías a la derecha.
+   Vista: views/admin/blog/categories/index.blade.php
+   ====================================================== */
+
+.blog-categories {
+    display: grid;
+    grid-template-columns: minmax(0, 20rem) minmax(0, 1fr);
+    gap: 1.5rem;
+    align-items: start;
+}
+
+/* ── Responsive: en pantallas pequeñas, una sola columna ── */
+@media (max-width: 900px) {
+    .blog-categories {
+        grid-template-columns: 1fr;
+    }
+}

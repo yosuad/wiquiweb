@@ -12,6 +12,13 @@ use App\Models\ServicePrice;
 use App\Models\User;
 use Illuminate\Http\Request;
 
+/**
+ * Prospectos y clientes del CRM (panel admin).
+ *
+ * Teléfonos: antes de validar se normalizan a formato E.164 (+573205693258)
+ * con Contact::normalizePhone(), para que la regla "unique" compare
+ * siempre el mismo formato.
+ */
 class ContactController extends Controller
 {
     // ========= Helper: filtrar por rol =========
@@ -24,6 +31,26 @@ class ContactController extends Controller
         }
 
         return $query->where('assigned_to', $user->id);
+    }
+
+    // ========= Helper: normalizar teléfonos antes de validar =========
+    private function normalizePhones(Request $request): void
+    {
+        $request->merge([
+            'whatsapp' => Contact::normalizePhone($request->input('whatsapp')),
+            'phone' => Contact::normalizePhone($request->input('phone')),
+        ]);
+    }
+
+    // ========= Helper: mensajes de validación de contacto =========
+    private function contactMessages(): array
+    {
+        return [
+            'whatsapp.unique' => 'Este WhatsApp ya está registrado en otro contacto.',
+            'whatsapp.phone' => 'Revisa el número de WhatsApp: no parece válido para el país elegido.',
+            'phone.phone' => 'Revisa el número de teléfono: no parece válido para el país elegido.',
+            'email.unique' => 'Este correo ya está registrado en otro contacto.',
+        ];
     }
 
     // ========= List prospects =========
@@ -91,18 +118,29 @@ class ContactController extends Controller
             abort(403);
         }
 
+        $this->normalizePhones($request);
+
+        // Un cliente debe tener todos sus datos (se usan en las facturas).
+        // Solo dejan de ser obligatorios si se marca como Perdido.
         $request->validate([
             'first_name' => 'required|string|max:255',
-            'last_name' => 'nullable|string|max:255',
-            'email' => 'nullable|email|unique:contacts,email,'.$contact->id,
-            'phone' => 'nullable|string|max:30',
-            'whatsapp' => 'nullable|string|max:30',
-            'company_name' => 'nullable|string|max:255',
-            'document_type' => 'nullable|in:national_id,tax_id,rut,foreign_id,passport,ein',
-            'document_number' => 'nullable|string|max:30',
-            'address' => 'nullable|string|max:255',
-            'assigned_to' => 'nullable|exists:users,id',
+            'last_name' => 'required_if:status,customer|nullable|string|max:255',
+            'email' => 'required|email|unique:contacts,email,'.$contact->id,
+            'phone' => 'nullable|phone:INTERNATIONAL',
+            'whatsapp' => 'required|phone:INTERNATIONAL|unique:contacts,whatsapp,'.$contact->id,
+            'company_name' => 'required_if:status,customer|nullable|string|max:255',
+            'document_type' => 'required_if:status,customer|nullable|in:national_id,tax_id,rut,foreign_id,passport,ein',
+            'document_number' => 'required_if:status,customer|nullable|string|max:30',
+            'address' => 'required_if:status,customer|nullable|string|max:255',
+            'assigned_to' => 'required_if:status,customer|nullable|exists:users,id',
             'status' => 'nullable|in:customer,lost',
+        ], $this->contactMessages() + [
+            'last_name.required_if' => 'El apellido es obligatorio para un cliente.',
+            'company_name.required_if' => 'La empresa es obligatoria para un cliente.',
+            'document_type.required_if' => 'El tipo de documento es obligatorio para un cliente.',
+            'document_number.required_if' => 'El número de documento es obligatorio para un cliente.',
+            'address.required_if' => 'La dirección es obligatoria para un cliente.',
+            'assigned_to.required_if' => 'Asigna un agente al cliente.',
         ]);
 
         if ($request->assigned_to && $request->assigned_to != $contact->assigned_to) {
@@ -146,19 +184,21 @@ class ContactController extends Controller
 
     public function store(Request $request)
     {
+        $this->normalizePhones($request);
+
         $request->validate([
             'first_name' => 'required|string|max:255',
             'last_name' => 'nullable|string|max:255',
-            'email' => 'nullable|email|',
-            'phone' => 'nullable|string|max:30',
-            'whatsapp' => 'required|string|max:30|unique:contacts,whatsapp',
+            'email' => 'required|email|unique:contacts,email',
+            'phone' => 'nullable|phone:INTERNATIONAL',
+            'whatsapp' => 'required|phone:INTERNATIONAL|unique:contacts,whatsapp',
             'company_name' => 'nullable|string|max:255',
             'origin' => 'nullable|in:facebook,instagram,referido,web,agente,meta',
             'client_type' => 'nullable|in:persona_natural,empresa,emprendimiento,artista,organizacion_social',
             'service_interest' => 'nullable|string|max:255',
             'assigned_to' => 'nullable|exists:users,id',
             'status' => 'nullable|in:prospect,customer,lost',
-        ]);
+        ], $this->contactMessages());
 
         $contact = Contact::create([
             'first_name' => $request->first_name,
@@ -208,18 +248,29 @@ class ContactController extends Controller
             abort(403);
         }
 
+        $this->normalizePhones($request);
+
+        // Al pasar a Cliente ("customer") todos los datos son obligatorios:
+        // se usan para el cierre y la factura. "required_if" lo valida en el servidor.
         $request->validate([
             'first_name' => 'required|string|max:255',
-            'last_name' => 'nullable|string|max:255',
-            'email' => 'nullable|email|unique:contacts,email,'.$contact->id,
-            'phone' => 'nullable|string|max:30',
-            'whatsapp' => 'nullable|string|max:30',
-            'company_name' => 'nullable|string|max:255',
-            'origin' => 'nullable|in:facebook,instagram,referido,web,agente,meta',
-            'client_type' => 'nullable|in:persona_natural,empresa,emprendimiento,artista,organizacion_social',
-            'service_interest' => 'nullable|string|max:255',
-            'assigned_to' => 'nullable|exists:users,id',
+            'last_name' => 'required_if:status,customer|nullable|string|max:255',
+            'email' => 'required|email|unique:contacts,email,'.$contact->id,
+            'phone' => 'nullable|phone:INTERNATIONAL',
+            'whatsapp' => 'required|phone:INTERNATIONAL|unique:contacts,whatsapp,'.$contact->id,
+            'company_name' => 'required_if:status,customer|nullable|string|max:255',
+            'origin' => 'required_if:status,customer|nullable|in:facebook,instagram,referido,web,agente,meta',
+            'client_type' => 'required_if:status,customer|nullable|in:persona_natural,empresa,emprendimiento,artista,organizacion_social',
+            'service_interest' => 'required_if:status,customer|nullable|string|max:255',
+            'assigned_to' => 'required_if:status,customer|nullable|exists:users,id',
             'status' => 'nullable|in:prospect,customer,lost',
+        ], $this->contactMessages() + [
+            'last_name.required_if' => 'El apellido es obligatorio para pasar a Cliente.',
+            'company_name.required_if' => 'La empresa es obligatoria para pasar a Cliente.',
+            'origin.required_if' => 'El origen es obligatorio para pasar a Cliente.',
+            'client_type.required_if' => 'El tipo de cliente es obligatorio para pasar a Cliente.',
+            'service_interest.required_if' => 'El servicio de interés es obligatorio para pasar a Cliente.',
+            'assigned_to.required_if' => 'Asigna un agente para pasar a Cliente.',
         ]);
 
         if ($request->status && $request->status !== $contact->status && $request->status !== 'customer') {
